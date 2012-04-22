@@ -70,12 +70,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompleteGridController.cs" />
+    <Compile Include="Controllers\SelectGridController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\GridController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CompletePiFModel.cs" />
+    <Compile Include="Models\SelectPiFModel.cs" />
+    <Compile Include="Models\SessionPiFRepository.cs" />
     <Compile Include="Models\NewPiFModel.cs" />
     <Compile Include="Controllers\PiFController.cs" />
     <Compile Include="Models\PiF.cs">
@@ -141,6 +146,44 @@
     <Content Include="Content\2012.1.214\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.1.214\Windows7\sprite.png" />
     <Content Include="Global.asax" />
+    <Content Include="Models\Scripts\2012.1.214\jquery-1.7.1.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\jquery.validate.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.all.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.autocomplete.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.calendar.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.chart.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.combobox.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.common.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.datepicker.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.datetimepicker.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.draganddrop.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.editor.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.editing.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.filtering.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.grouping.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.reordering.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.grid.resizing.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.imagebrowser.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.list.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.menu.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.panelbar.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.slider.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.splitter.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.tabstrip.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.textbox.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.timepicker.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.treeview.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.upload.min.js" />
+    <Content Include="Models\Scripts\2012.1.214\telerik.window.min.js" />
+    <Content Include="Models\Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Models\Scripts\MicrosoftAjax.js" />
+    <Content Include="Models\Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Models\Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Models\Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Models\Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Models\Scripts\modernizr-1.7.js" />
+    <Content Include="Models\Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\2012.1.214\jquery-1.7.1.min.js" />
     <Content Include="Scripts\2012.1.214\jquery.validate.min.js" />
     <Content Include="Scripts\2012.1.214\telerik.all.min.js" />
@@ -205,7 +248,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PiF\NewPiF.cshtml" />
+    <Content Include="Views\PiF\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\PiF.dbml">
@@ -214,6 +257,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\PiF\EditorTemplates\GameList.cshtml" />
+    <Content Include="Views\PiF\Complete.cshtml" />
+    <Content Include="Views\PiF\EditorTemplates\UserList.cshtml" />
+    <Content Include="Views\PiF\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

@@ -101,35 +101,35 @@ namespace PiF.Controllers
                     var userIP = Utilites.GetHash(HttpContext.Request.UserHostAddress);
                     var db = new PiFDataContext();
 
-                    var query = db.Users.Where(u => u.username == model.UserName);
+                    var query = db.Users.Where(u => u.Username == model.UserName);
 
                     User user;
                     if (!query.Any())
                     {
-                        var ip = new User_IP
+                        var ip = new UserIP
                             {
-                                created_date = DateTime.Now.Date,
-                                hashed_ip = userIP
+                                CreatedDate = DateTime.Now.Date,
+                                HashedIP = userIP
                             };
 
-                        user = new User { username = model.UserName, record_created_date = DateTime.Now.Date };
+                        user = new User { Username = model.UserName, RecordCreatedDate = DateTime.Now.Date };
 
-                        user.User_IPs.Add(ip);
+                        user.UserIPs.Add(ip);
                         db.Users.InsertOnSubmit(user);
                     }
                     else
                     {
                         user = query.First();
-                        if (user.User_IPs.All(ips => ips.hashed_ip != userIP))
+                        if (user.UserIPs.All(ips => ips.HashedIP != userIP))
                         {
-                            user = new User { username = model.UserName, record_created_date = DateTime.Now.Date };
+                            user = new User { Username = model.UserName, RecordCreatedDate = DateTime.Now.Date };
 
-                            var ip = new User_IP
+                            var ip = new UserIP
                             {
-                                created_date = DateTime.Now.Date,
-                                hashed_ip = userIP
+                                CreatedDate = DateTime.Now.Date,
+                                HashedIP = userIP
                             };
-                            user.User_IPs.Add(ip);
+                            user.UserIPs.Add(ip);
                         }
                     }
 
