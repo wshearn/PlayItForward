@@ -1,7 +1,7 @@
 ﻿// <copyright file="PiFController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
-namespace PiF.Models
+namespace PiF.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -14,33 +14,25 @@ namespace PiF.Models
     using System.Web.Script.Serialization;
     using System.Web.Security;
 
+    using PiF.Models;
+
     public class PiFController : Controller
     {
-        // GET: /PiF/
-
-        // GET: /NewPiF/Create
-
         public ActionResult Index()
         {
             return this.View();
         }
 
+        // POST: /PiF/Select
+        [HttpPost]
+        public ActionResult Select(SelectPiFModel model)
+        {
+            return this.View(model);
+        }
+
         [Authorize]
         public ActionResult Complete()
         {
-            if (this.Request.Cookies["ModHash"].Value != null && this.Session["ModHash"] == null)
-            {
-                this.Session["ModHash"] = this.Request.Cookies["ModHash"].Value;
-            }
-            if (this.Request.Cookies["RedditCookie"].Value != null && this.Session["RedditCookie"] == null)
-            {
-                this.Session["RedditCookie"] = this.Request.Cookies["RedditCookie"];
-            }
-            if (this.Request.Cookies["Username"].Value != null && this.Session["Username"] == null)
-            {
-                this.Session["Username"] = this.Request.Cookies["Username"].Value;
-            }
-
             this.ViewData["Message"] = "Complete PiF";
 
 
@@ -89,7 +81,7 @@ namespace PiF.Models
             return this.View(new NewPiFModel());
         }
 
-        // POST: /NewPiF/Create
+        // POST: /PiF/New
         [HttpPost]
         public ActionResult New(NewPiFModel model)
         {

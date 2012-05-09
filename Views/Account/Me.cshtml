@@ -41,18 +41,18 @@
     </script>
 }
 @{
-    ViewBag.Title = "Select a PiF to edit";
+    ViewBag.Title = "Username goes here";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@(Html.Telerik().Grid<CompletePiFModel>()
+@(Html.Telerik().Grid<SelectPiFModel>()
         .Name("Grid")
         .DataKeys(keys => keys.Add(p => p.ID))
         .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
         .DataBinding(dataBinding => dataBinding.Ajax()
-            .Select("SelectAjaxEditing", "Grid")
-            .Delete("DeleteAjaxEditing", "Grid"))
+            .Select("Select", "Grid")
+            .Delete("Delete", "Grid"))
         .Columns(columns =>
         {
             columns.Bound(p => p.ThreadTitle);

@@ -11,8 +11,8 @@
     public class Utilites
     {
         /// <summary>Gets the SHA-2 Hash of a file.</summary>
-        /// <param name="file">The full path to the file to calculate the hash.</param>
-        /// <returns>The SHA-2 Hash of the file.</returns>
+        /// <param name="str">The string to calulate hash.</param>
+        /// <returns>The SHA-2 Hash.</returns>
         public static string GetHash(string str)
         {
             var buff = new StringBuilder(10);

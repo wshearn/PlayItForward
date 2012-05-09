@@ -91,7 +91,7 @@ namespace PiF.Controllers
 
                 if (response["json"]["errors"].Length > 0)
                 {
-                    if (response["json"]["errors"][0][0] == "INVALID_PASSWORD" || "RATELIMIT")
+                    if (response["json"]["errors"][0][0] == "INVALID_PASSWORD" || response["json"]["errors"][0][0] == "RATELIMIT")
                     {
                         this.ModelState.AddModelError(string.Empty, response["json"]["errors"][0][1]);
                     }
@@ -119,7 +119,7 @@ namespace PiF.Controllers
                     }
                     else
                     {
-                        user = query.First();
+                        user = query.Single();
                         if (user.UserIPs.All(ips => ips.HashedIP != userIP))
                         {
                             user = new User { Username = model.UserName, RecordCreatedDate = DateTime.Now.Date };
@@ -134,12 +134,13 @@ namespace PiF.Controllers
                     }
 
                     // Set Session vars in case user doesn't use cookies.
-
                     this.Session["ModHash"] = response["json"]["data"]["modhash"];
 
-                    var redditCookie = new HttpCookie("reddit_session");
-                    redditCookie.Value = Server.UrlEncode(response["json"]["data"]["cookie"]);
-                    redditCookie.Expires = DateTime.Now.AddYears(1);
+                    var redditCookie = new HttpCookie("reddit_session")
+                        {
+                            Value = this.Server.UrlEncode(response["json"]["data"]["cookie"]),
+                            Expires = DateTime.Now.AddYears(1)
+                        };
                     this.Session["RedditCookie"] = redditCookie;
                     this.Session["Username"] = model.UserName;
 
@@ -152,6 +153,7 @@ namespace PiF.Controllers
                         this.Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
                         this.Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
                     }
+
                     db.SubmitChanges();
 
 

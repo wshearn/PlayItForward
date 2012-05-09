@@ -18,6 +18,7 @@ namespace PiF.Models
             {
                 HttpContext.Current.Session["PiF"] = result = new List<PiF>();
             }
+
             return result;
         }
 

@@ -68,31 +68,6 @@
       <Association Name="User_ThreadGame" Member="User" ThisKey="WinnerID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.[User]" Member="Users">
-    <Type Name="User">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Username" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="RecordCreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Cookie" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="AccountGroupID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="IsMod" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsWarned" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ReceivedCount" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="GivenCount" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="BannedUntil" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
-      <Column Name="ModHash" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="User_UserWarned" Member="UserWarneds" ThisKey="id" OtherKey="UserID" Type="UserWarned" />
-      <Association Name="User_UserWarned1" Member="UserWarneds1" ThisKey="id" OtherKey="WarnedByModID" Type="UserWarned" />
-      <Association Name="User_Comment" Member="Comments" ThisKey="id" OtherKey="UserID" Type="Comment" />
-      <Association Name="User_ModAlert" Member="ModAlerts" ThisKey="id" OtherKey="ModID" Type="ModAlert" />
-      <Association Name="User_Thread" Member="Threads" ThisKey="id" OtherKey="UserID" Type="Thread" />
-      <Association Name="User_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="WinnerID" Type="ThreadGame" />
-      <Association Name="User_UserIP" Member="UserIPs" ThisKey="id" OtherKey="UserID" Type="UserIP" />
-      <Association Name="User_UserScoreModifier" Member="UserScoreModifiers" ThisKey="id" OtherKey="UserID" Type="UserScoreModifier" />
-      <Association Name="User_UserScoreModifier1" Member="UserScoreModifiers1" ThisKey="id" OtherKey="AddedByModID" Type="UserScoreModifier" />
-      <Association Name="User_UserSteamID" Member="UserSteamIDs" ThisKey="id" OtherKey="UserID" Type="UserSteamID" />
-    </Type>
-  </Table>
   <Table Name="dbo.UserIP" Member="UserIPs">
     <Type Name="UserIP">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -120,6 +95,30 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SteamID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Association Name="User_UserSteamID" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordCreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AccountGroupID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsMod" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsWarned" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ReceivedCount" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="GivenCount" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="BannedUntil" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="ModHash" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="User_UserWarned" Member="UserWarneds" ThisKey="id" OtherKey="UserID" Type="UserWarned" />
+      <Association Name="User_UserWarned1" Member="UserWarneds1" ThisKey="id" OtherKey="WarnedByModID" Type="UserWarned" />
+      <Association Name="User_Comment" Member="Comments" ThisKey="id" OtherKey="UserID" Type="Comment" />
+      <Association Name="User_ModAlert" Member="ModAlerts" ThisKey="id" OtherKey="ModID" Type="ModAlert" />
+      <Association Name="User_Thread" Member="Threads" ThisKey="id" OtherKey="UserID" Type="Thread" />
+      <Association Name="User_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="WinnerID" Type="ThreadGame" />
+      <Association Name="User_UserIP" Member="UserIPs" ThisKey="id" OtherKey="UserID" Type="UserIP" />
+      <Association Name="User_UserScoreModifier" Member="UserScoreModifiers" ThisKey="id" OtherKey="UserID" Type="UserScoreModifier" />
+      <Association Name="User_UserScoreModifier1" Member="UserScoreModifiers1" ThisKey="id" OtherKey="AddedByModID" Type="UserScoreModifier" />
+      <Association Name="User_UserSteamID" Member="UserSteamIDs" ThisKey="id" OtherKey="UserID" Type="UserSteamID" />
     </Type>
   </Table>
 </Database>

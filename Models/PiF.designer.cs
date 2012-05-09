@@ -48,9 +48,6 @@ namespace PiF.Models
     partial void InsertThreadGame(ThreadGame instance);
     partial void UpdateThreadGame(ThreadGame instance);
     partial void DeleteThreadGame(ThreadGame instance);
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
     partial void InsertUserIP(UserIP instance);
     partial void UpdateUserIP(UserIP instance);
     partial void DeleteUserIP(UserIP instance);
@@ -60,6 +57,9 @@ namespace PiF.Models
     partial void InsertUserSteamID(UserSteamID instance);
     partial void UpdateUserSteamID(UserSteamID instance);
     partial void DeleteUserSteamID(UserSteamID instance);
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
     #endregion
 		
 		public PiFDataContext() : 
@@ -140,14 +140,6 @@ namespace PiF.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<User> Users
-		{
-			get
-			{
-				return this.GetTable<User>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UserIP> UserIPs
 		{
 			get
@@ -169,6 +161,14 @@ namespace PiF.Models
 			get
 			{
 				return this.GetTable<UserSteamID>();
+			}
+		}
+		
+		public System.Data.Linq.Table<User> Users
+		{
+			get
+			{
+				return this.GetTable<User>();
 			}
 		}
 	}
@@ -1622,588 +1622,6 @@ namespace PiF.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[User]")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _Username;
-		
-		private System.DateTime _RecordCreatedDate;
-		
-		private string _Cookie;
-		
-		private System.Nullable<int> _AccountGroupID;
-		
-		private bool _IsMod;
-		
-		private bool _IsWarned;
-		
-		private short _ReceivedCount;
-		
-		private short _GivenCount;
-		
-		private System.Nullable<System.DateTime> _BannedUntil;
-		
-		private string _ModHash;
-		
-		private EntitySet<UserWarned> _UserWarneds;
-		
-		private EntitySet<UserWarned> _UserWarneds1;
-		
-		private EntitySet<Comment> _Comments;
-		
-		private EntitySet<ModAlert> _ModAlerts;
-		
-		private EntitySet<Thread> _Threads;
-		
-		private EntitySet<ThreadGame> _ThreadGames;
-		
-		private EntitySet<UserIP> _UserIPs;
-		
-		private EntitySet<UserScoreModifier> _UserScoreModifiers;
-		
-		private EntitySet<UserScoreModifier> _UserScoreModifiers1;
-		
-		private EntitySet<UserSteamID> _UserSteamIDs;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnUsernameChanging(string value);
-    partial void OnUsernameChanged();
-    partial void OnRecordCreatedDateChanging(System.DateTime value);
-    partial void OnRecordCreatedDateChanged();
-    partial void OnCookieChanging(string value);
-    partial void OnCookieChanged();
-    partial void OnAccountGroupIDChanging(System.Nullable<int> value);
-    partial void OnAccountGroupIDChanged();
-    partial void OnIsModChanging(bool value);
-    partial void OnIsModChanged();
-    partial void OnIsWarnedChanging(bool value);
-    partial void OnIsWarnedChanged();
-    partial void OnReceivedCountChanging(short value);
-    partial void OnReceivedCountChanged();
-    partial void OnGivenCountChanging(short value);
-    partial void OnGivenCountChanged();
-    partial void OnBannedUntilChanging(System.Nullable<System.DateTime> value);
-    partial void OnBannedUntilChanged();
-    partial void OnModHashChanging(string value);
-    partial void OnModHashChanged();
-    #endregion
-		
-		public User()
-		{
-			this._UserWarneds = new EntitySet<UserWarned>(new Action<UserWarned>(this.attach_UserWarneds), new Action<UserWarned>(this.detach_UserWarneds));
-			this._UserWarneds1 = new EntitySet<UserWarned>(new Action<UserWarned>(this.attach_UserWarneds1), new Action<UserWarned>(this.detach_UserWarneds1));
-			this._Comments = new EntitySet<Comment>(new Action<Comment>(this.attach_Comments), new Action<Comment>(this.detach_Comments));
-			this._ModAlerts = new EntitySet<ModAlert>(new Action<ModAlert>(this.attach_ModAlerts), new Action<ModAlert>(this.detach_ModAlerts));
-			this._Threads = new EntitySet<Thread>(new Action<Thread>(this.attach_Threads), new Action<Thread>(this.detach_Threads));
-			this._ThreadGames = new EntitySet<ThreadGame>(new Action<ThreadGame>(this.attach_ThreadGames), new Action<ThreadGame>(this.detach_ThreadGames));
-			this._UserIPs = new EntitySet<UserIP>(new Action<UserIP>(this.attach_UserIPs), new Action<UserIP>(this.detach_UserIPs));
-			this._UserScoreModifiers = new EntitySet<UserScoreModifier>(new Action<UserScoreModifier>(this.attach_UserScoreModifiers), new Action<UserScoreModifier>(this.detach_UserScoreModifiers));
-			this._UserScoreModifiers1 = new EntitySet<UserScoreModifier>(new Action<UserScoreModifier>(this.attach_UserScoreModifiers1), new Action<UserScoreModifier>(this.detach_UserScoreModifiers1));
-			this._UserSteamIDs = new EntitySet<UserSteamID>(new Action<UserSteamID>(this.attach_UserSteamIDs), new Action<UserSteamID>(this.detach_UserSteamIDs));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
-		public string Username
-		{
-			get
-			{
-				return this._Username;
-			}
-			set
-			{
-				if ((this._Username != value))
-				{
-					this.OnUsernameChanging(value);
-					this.SendPropertyChanging();
-					this._Username = value;
-					this.SendPropertyChanged("Username");
-					this.OnUsernameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordCreatedDate", DbType="DateTime NOT NULL")]
-		public System.DateTime RecordCreatedDate
-		{
-			get
-			{
-				return this._RecordCreatedDate;
-			}
-			set
-			{
-				if ((this._RecordCreatedDate != value))
-				{
-					this.OnRecordCreatedDateChanging(value);
-					this.SendPropertyChanging();
-					this._RecordCreatedDate = value;
-					this.SendPropertyChanged("RecordCreatedDate");
-					this.OnRecordCreatedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cookie", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Cookie
-		{
-			get
-			{
-				return this._Cookie;
-			}
-			set
-			{
-				if ((this._Cookie != value))
-				{
-					this.OnCookieChanging(value);
-					this.SendPropertyChanging();
-					this._Cookie = value;
-					this.SendPropertyChanged("Cookie");
-					this.OnCookieChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountGroupID", DbType="Int")]
-		public System.Nullable<int> AccountGroupID
-		{
-			get
-			{
-				return this._AccountGroupID;
-			}
-			set
-			{
-				if ((this._AccountGroupID != value))
-				{
-					this.OnAccountGroupIDChanging(value);
-					this.SendPropertyChanging();
-					this._AccountGroupID = value;
-					this.SendPropertyChanged("AccountGroupID");
-					this.OnAccountGroupIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsMod", DbType="Bit NOT NULL")]
-		public bool IsMod
-		{
-			get
-			{
-				return this._IsMod;
-			}
-			set
-			{
-				if ((this._IsMod != value))
-				{
-					this.OnIsModChanging(value);
-					this.SendPropertyChanging();
-					this._IsMod = value;
-					this.SendPropertyChanged("IsMod");
-					this.OnIsModChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWarned", DbType="Bit NOT NULL")]
-		public bool IsWarned
-		{
-			get
-			{
-				return this._IsWarned;
-			}
-			set
-			{
-				if ((this._IsWarned != value))
-				{
-					this.OnIsWarnedChanging(value);
-					this.SendPropertyChanging();
-					this._IsWarned = value;
-					this.SendPropertyChanged("IsWarned");
-					this.OnIsWarnedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceivedCount", DbType="SmallInt NOT NULL")]
-		public short ReceivedCount
-		{
-			get
-			{
-				return this._ReceivedCount;
-			}
-			set
-			{
-				if ((this._ReceivedCount != value))
-				{
-					this.OnReceivedCountChanging(value);
-					this.SendPropertyChanging();
-					this._ReceivedCount = value;
-					this.SendPropertyChanged("ReceivedCount");
-					this.OnReceivedCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GivenCount", DbType="SmallInt NOT NULL")]
-		public short GivenCount
-		{
-			get
-			{
-				return this._GivenCount;
-			}
-			set
-			{
-				if ((this._GivenCount != value))
-				{
-					this.OnGivenCountChanging(value);
-					this.SendPropertyChanging();
-					this._GivenCount = value;
-					this.SendPropertyChanged("GivenCount");
-					this.OnGivenCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BannedUntil", DbType="SmallDateTime")]
-		public System.Nullable<System.DateTime> BannedUntil
-		{
-			get
-			{
-				return this._BannedUntil;
-			}
-			set
-			{
-				if ((this._BannedUntil != value))
-				{
-					this.OnBannedUntilChanging(value);
-					this.SendPropertyChanging();
-					this._BannedUntil = value;
-					this.SendPropertyChanged("BannedUntil");
-					this.OnBannedUntilChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModHash", DbType="VarChar(255)")]
-		public string ModHash
-		{
-			get
-			{
-				return this._ModHash;
-			}
-			set
-			{
-				if ((this._ModHash != value))
-				{
-					this.OnModHashChanging(value);
-					this.SendPropertyChanging();
-					this._ModHash = value;
-					this.SendPropertyChanged("ModHash");
-					this.OnModHashChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserWarned", Storage="_UserWarneds", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<UserWarned> UserWarneds
-		{
-			get
-			{
-				return this._UserWarneds;
-			}
-			set
-			{
-				this._UserWarneds.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserWarned1", Storage="_UserWarneds1", ThisKey="id", OtherKey="WarnedByModID")]
-		public EntitySet<UserWarned> UserWarneds1
-		{
-			get
-			{
-				return this._UserWarneds1;
-			}
-			set
-			{
-				this._UserWarneds1.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Comment", Storage="_Comments", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<Comment> Comments
-		{
-			get
-			{
-				return this._Comments;
-			}
-			set
-			{
-				this._Comments.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ModAlert", Storage="_ModAlerts", ThisKey="id", OtherKey="ModID")]
-		public EntitySet<ModAlert> ModAlerts
-		{
-			get
-			{
-				return this._ModAlerts;
-			}
-			set
-			{
-				this._ModAlerts.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Thread", Storage="_Threads", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<Thread> Threads
-		{
-			get
-			{
-				return this._Threads;
-			}
-			set
-			{
-				this._Threads.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ThreadGame", Storage="_ThreadGames", ThisKey="id", OtherKey="WinnerID")]
-		public EntitySet<ThreadGame> ThreadGames
-		{
-			get
-			{
-				return this._ThreadGames;
-			}
-			set
-			{
-				this._ThreadGames.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserIP", Storage="_UserIPs", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<UserIP> UserIPs
-		{
-			get
-			{
-				return this._UserIPs;
-			}
-			set
-			{
-				this._UserIPs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserScoreModifier", Storage="_UserScoreModifiers", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<UserScoreModifier> UserScoreModifiers
-		{
-			get
-			{
-				return this._UserScoreModifiers;
-			}
-			set
-			{
-				this._UserScoreModifiers.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserScoreModifier1", Storage="_UserScoreModifiers1", ThisKey="id", OtherKey="AddedByModID")]
-		public EntitySet<UserScoreModifier> UserScoreModifiers1
-		{
-			get
-			{
-				return this._UserScoreModifiers1;
-			}
-			set
-			{
-				this._UserScoreModifiers1.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSteamID", Storage="_UserSteamIDs", ThisKey="id", OtherKey="UserID")]
-		public EntitySet<UserSteamID> UserSteamIDs
-		{
-			get
-			{
-				return this._UserSteamIDs;
-			}
-			set
-			{
-				this._UserSteamIDs.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_UserWarneds(UserWarned entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserWarneds(UserWarned entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_UserWarneds1(UserWarned entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = this;
-		}
-		
-		private void detach_UserWarneds1(UserWarned entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = null;
-		}
-		
-		private void attach_Comments(Comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Comments(Comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_ModAlerts(ModAlert entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_ModAlerts(ModAlert entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_Threads(Thread entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Threads(Thread entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_ThreadGames(ThreadGame entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_ThreadGames(ThreadGame entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_UserIPs(UserIP entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserIPs(UserIP entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_UserScoreModifiers(UserScoreModifier entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserScoreModifiers(UserScoreModifier entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_UserScoreModifiers1(UserScoreModifier entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = this;
-		}
-		
-		private void detach_UserScoreModifiers1(UserScoreModifier entity)
-		{
-			this.SendPropertyChanging();
-			entity.User1 = null;
-		}
-		
-		private void attach_UserSteamIDs(UserSteamID entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserSteamIDs(UserSteamID entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserIP")]
 	public partial class UserIP : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2791,6 +2209,564 @@ namespace PiF.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[User]")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _Username;
+		
+		private System.DateTime _RecordCreatedDate;
+		
+		private System.Nullable<int> _AccountGroupID;
+		
+		private bool _IsMod;
+		
+		private bool _IsWarned;
+		
+		private short _ReceivedCount;
+		
+		private short _GivenCount;
+		
+		private System.Nullable<System.DateTime> _BannedUntil;
+		
+		private string _ModHash;
+		
+		private EntitySet<UserWarned> _UserWarneds;
+		
+		private EntitySet<UserWarned> _UserWarneds1;
+		
+		private EntitySet<Comment> _Comments;
+		
+		private EntitySet<ModAlert> _ModAlerts;
+		
+		private EntitySet<Thread> _Threads;
+		
+		private EntitySet<ThreadGame> _ThreadGames;
+		
+		private EntitySet<UserIP> _UserIPs;
+		
+		private EntitySet<UserScoreModifier> _UserScoreModifiers;
+		
+		private EntitySet<UserScoreModifier> _UserScoreModifiers1;
+		
+		private EntitySet<UserSteamID> _UserSteamIDs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnUsernameChanging(string value);
+    partial void OnUsernameChanged();
+    partial void OnRecordCreatedDateChanging(System.DateTime value);
+    partial void OnRecordCreatedDateChanged();
+    partial void OnAccountGroupIDChanging(System.Nullable<int> value);
+    partial void OnAccountGroupIDChanged();
+    partial void OnIsModChanging(bool value);
+    partial void OnIsModChanged();
+    partial void OnIsWarnedChanging(bool value);
+    partial void OnIsWarnedChanged();
+    partial void OnReceivedCountChanging(short value);
+    partial void OnReceivedCountChanged();
+    partial void OnGivenCountChanging(short value);
+    partial void OnGivenCountChanged();
+    partial void OnBannedUntilChanging(System.Nullable<System.DateTime> value);
+    partial void OnBannedUntilChanged();
+    partial void OnModHashChanging(string value);
+    partial void OnModHashChanged();
+    #endregion
+		
+		public User()
+		{
+			this._UserWarneds = new EntitySet<UserWarned>(new Action<UserWarned>(this.attach_UserWarneds), new Action<UserWarned>(this.detach_UserWarneds));
+			this._UserWarneds1 = new EntitySet<UserWarned>(new Action<UserWarned>(this.attach_UserWarneds1), new Action<UserWarned>(this.detach_UserWarneds1));
+			this._Comments = new EntitySet<Comment>(new Action<Comment>(this.attach_Comments), new Action<Comment>(this.detach_Comments));
+			this._ModAlerts = new EntitySet<ModAlert>(new Action<ModAlert>(this.attach_ModAlerts), new Action<ModAlert>(this.detach_ModAlerts));
+			this._Threads = new EntitySet<Thread>(new Action<Thread>(this.attach_Threads), new Action<Thread>(this.detach_Threads));
+			this._ThreadGames = new EntitySet<ThreadGame>(new Action<ThreadGame>(this.attach_ThreadGames), new Action<ThreadGame>(this.detach_ThreadGames));
+			this._UserIPs = new EntitySet<UserIP>(new Action<UserIP>(this.attach_UserIPs), new Action<UserIP>(this.detach_UserIPs));
+			this._UserScoreModifiers = new EntitySet<UserScoreModifier>(new Action<UserScoreModifier>(this.attach_UserScoreModifiers), new Action<UserScoreModifier>(this.detach_UserScoreModifiers));
+			this._UserScoreModifiers1 = new EntitySet<UserScoreModifier>(new Action<UserScoreModifier>(this.attach_UserScoreModifiers1), new Action<UserScoreModifier>(this.detach_UserScoreModifiers1));
+			this._UserSteamIDs = new EntitySet<UserSteamID>(new Action<UserSteamID>(this.attach_UserSteamIDs), new Action<UserSteamID>(this.detach_UserSteamIDs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Username
+		{
+			get
+			{
+				return this._Username;
+			}
+			set
+			{
+				if ((this._Username != value))
+				{
+					this.OnUsernameChanging(value);
+					this.SendPropertyChanging();
+					this._Username = value;
+					this.SendPropertyChanged("Username");
+					this.OnUsernameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordCreatedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RecordCreatedDate
+		{
+			get
+			{
+				return this._RecordCreatedDate;
+			}
+			set
+			{
+				if ((this._RecordCreatedDate != value))
+				{
+					this.OnRecordCreatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._RecordCreatedDate = value;
+					this.SendPropertyChanged("RecordCreatedDate");
+					this.OnRecordCreatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountGroupID", DbType="Int")]
+		public System.Nullable<int> AccountGroupID
+		{
+			get
+			{
+				return this._AccountGroupID;
+			}
+			set
+			{
+				if ((this._AccountGroupID != value))
+				{
+					this.OnAccountGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._AccountGroupID = value;
+					this.SendPropertyChanged("AccountGroupID");
+					this.OnAccountGroupIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsMod", DbType="Bit NOT NULL")]
+		public bool IsMod
+		{
+			get
+			{
+				return this._IsMod;
+			}
+			set
+			{
+				if ((this._IsMod != value))
+				{
+					this.OnIsModChanging(value);
+					this.SendPropertyChanging();
+					this._IsMod = value;
+					this.SendPropertyChanged("IsMod");
+					this.OnIsModChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWarned", DbType="Bit NOT NULL")]
+		public bool IsWarned
+		{
+			get
+			{
+				return this._IsWarned;
+			}
+			set
+			{
+				if ((this._IsWarned != value))
+				{
+					this.OnIsWarnedChanging(value);
+					this.SendPropertyChanging();
+					this._IsWarned = value;
+					this.SendPropertyChanged("IsWarned");
+					this.OnIsWarnedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReceivedCount", DbType="SmallInt NOT NULL")]
+		public short ReceivedCount
+		{
+			get
+			{
+				return this._ReceivedCount;
+			}
+			set
+			{
+				if ((this._ReceivedCount != value))
+				{
+					this.OnReceivedCountChanging(value);
+					this.SendPropertyChanging();
+					this._ReceivedCount = value;
+					this.SendPropertyChanged("ReceivedCount");
+					this.OnReceivedCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GivenCount", DbType="SmallInt NOT NULL")]
+		public short GivenCount
+		{
+			get
+			{
+				return this._GivenCount;
+			}
+			set
+			{
+				if ((this._GivenCount != value))
+				{
+					this.OnGivenCountChanging(value);
+					this.SendPropertyChanging();
+					this._GivenCount = value;
+					this.SendPropertyChanged("GivenCount");
+					this.OnGivenCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BannedUntil", DbType="SmallDateTime")]
+		public System.Nullable<System.DateTime> BannedUntil
+		{
+			get
+			{
+				return this._BannedUntil;
+			}
+			set
+			{
+				if ((this._BannedUntil != value))
+				{
+					this.OnBannedUntilChanging(value);
+					this.SendPropertyChanging();
+					this._BannedUntil = value;
+					this.SendPropertyChanged("BannedUntil");
+					this.OnBannedUntilChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModHash", DbType="VarChar(255)")]
+		public string ModHash
+		{
+			get
+			{
+				return this._ModHash;
+			}
+			set
+			{
+				if ((this._ModHash != value))
+				{
+					this.OnModHashChanging(value);
+					this.SendPropertyChanging();
+					this._ModHash = value;
+					this.SendPropertyChanged("ModHash");
+					this.OnModHashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserWarned", Storage="_UserWarneds", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<UserWarned> UserWarneds
+		{
+			get
+			{
+				return this._UserWarneds;
+			}
+			set
+			{
+				this._UserWarneds.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserWarned1", Storage="_UserWarneds1", ThisKey="id", OtherKey="WarnedByModID")]
+		public EntitySet<UserWarned> UserWarneds1
+		{
+			get
+			{
+				return this._UserWarneds1;
+			}
+			set
+			{
+				this._UserWarneds1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Comment", Storage="_Comments", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<Comment> Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				this._Comments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ModAlert", Storage="_ModAlerts", ThisKey="id", OtherKey="ModID")]
+		public EntitySet<ModAlert> ModAlerts
+		{
+			get
+			{
+				return this._ModAlerts;
+			}
+			set
+			{
+				this._ModAlerts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Thread", Storage="_Threads", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<Thread> Threads
+		{
+			get
+			{
+				return this._Threads;
+			}
+			set
+			{
+				this._Threads.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_ThreadGame", Storage="_ThreadGames", ThisKey="id", OtherKey="WinnerID")]
+		public EntitySet<ThreadGame> ThreadGames
+		{
+			get
+			{
+				return this._ThreadGames;
+			}
+			set
+			{
+				this._ThreadGames.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserIP", Storage="_UserIPs", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<UserIP> UserIPs
+		{
+			get
+			{
+				return this._UserIPs;
+			}
+			set
+			{
+				this._UserIPs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserScoreModifier", Storage="_UserScoreModifiers", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<UserScoreModifier> UserScoreModifiers
+		{
+			get
+			{
+				return this._UserScoreModifiers;
+			}
+			set
+			{
+				this._UserScoreModifiers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserScoreModifier1", Storage="_UserScoreModifiers1", ThisKey="id", OtherKey="AddedByModID")]
+		public EntitySet<UserScoreModifier> UserScoreModifiers1
+		{
+			get
+			{
+				return this._UserScoreModifiers1;
+			}
+			set
+			{
+				this._UserScoreModifiers1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSteamID", Storage="_UserSteamIDs", ThisKey="id", OtherKey="UserID")]
+		public EntitySet<UserSteamID> UserSteamIDs
+		{
+			get
+			{
+				return this._UserSteamIDs;
+			}
+			set
+			{
+				this._UserSteamIDs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_UserWarneds(UserWarned entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UserWarneds(UserWarned entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UserWarneds1(UserWarned entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = this;
+		}
+		
+		private void detach_UserWarneds1(UserWarned entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = null;
+		}
+		
+		private void attach_Comments(Comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Comments(Comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_ModAlerts(ModAlert entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_ModAlerts(ModAlert entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Threads(Thread entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Threads(Thread entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_ThreadGames(ThreadGame entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_ThreadGames(ThreadGame entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UserIPs(UserIP entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UserIPs(UserIP entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UserScoreModifiers(UserScoreModifier entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UserScoreModifiers(UserScoreModifier entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UserScoreModifiers1(UserScoreModifier entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = this;
+		}
+		
+		private void detach_UserScoreModifiers1(UserScoreModifier entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = null;
+		}
+		
+		private void attach_UserSteamIDs(UserSteamID entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UserSteamIDs(UserSteamID entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 	}
 }

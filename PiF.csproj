@@ -259,7 +259,7 @@
     <Content Include="Views\PiF\EditorTemplates\GameList.cshtml" />
     <Content Include="Views\PiF\Complete.cshtml" />
     <Content Include="Views\PiF\EditorTemplates\UserList.cshtml" />
-    <Content Include="Views\PiF\Select.cshtml" />
+    <Content Include="Views\Account\Me.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
