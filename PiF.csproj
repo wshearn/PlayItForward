@@ -64,8 +64,8 @@
     <Reference Include="System.Web.WebPages.Administration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Telerik.Web.Mvc">
-      <HintPath>.\Telerik.Web.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Web.Mvc, Version=2012.1.214.340, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>Telerik.Web.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +260,7 @@
     <Content Include="Views\PiF\Complete.cshtml" />
     <Content Include="Views\PiF\EditorTemplates\UserList.cshtml" />
     <Content Include="Views\Account\Me.cshtml" />
+    <Content Include="Views\GetGames.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

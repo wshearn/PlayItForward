@@ -11,24 +11,18 @@ namespace PiF.Models
     [KnownType(typeof(PiF))]
     public class PiF
     {
-        /// <summary>
-        /// Gets or sets the ID.
-        /// </summary>
+        /// <summary>Gets or sets the name of the game.</summary>
+        [ReadOnly(true)]
+        [DisplayName("Game")]
+        public string Game { get; set; }
+
+        /// <summary>Gets or sets the ID.</summary>
         [ReadOnly(true)]
         [DisplayName("ID")]
         [Required]
         public int ID { get; set; }
 
-        /// <summary>
-        /// Gets or sets the name of the game.
-        /// </summary>
-        [ReadOnly(true)]
-        [DisplayName("Game")]
-        public string Game { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of points the game is worth.
-        /// </summary>
+        /// <summary>Gets or sets the number of points the game is worth.</summary>
         [Required]
         [DataType("Integer")]
         [DisplayName("Points")]
@@ -36,19 +30,14 @@ namespace PiF.Models
         [ReadOnly(true)]
         public int PointWorth { get; set; }
 
-        /// <summary>
-        /// Gets or sets the steam ID of the game.
-        /// </summary>
+        /// <summary>Gets or sets the steam ID of the game.</summary>
         [ReadOnly(true)]
         [DisplayName("SteamID")]
         public int SteamAppID { get; set; }
 
-        /// <summary>
-        /// Gets or sets the username who received the game.
-        /// </summary>
+        /// <summary>Gets or sets the username who received the game.</summary>
         [UIHint("UserList")]
         [DisplayName("User")]
         public string Username { get; set; }
-                
     }
 }

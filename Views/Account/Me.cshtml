@@ -27,6 +27,7 @@
                 }
             }
         }
+
         function Grid_onEdit(e) {
             if (e.mode == "insert") {
                 $(e.form).find('#ID').data('tDropDownList').select(function(dataItem) {
@@ -34,35 +35,25 @@
                 });
             }
 
-            if ( e.mode == "edit") {
+            if (e.mode == "edit") {
                 $('#ID').data('tDropDownList').disable();
             }
         }
     </script>
 }
 @{
-    ViewBag.Title = "Username goes here";
+    ViewBag.Title = this.Context.User.Identity;
+
 }
 
 <h2>@ViewBag.Title</h2>
 
-@(Html.Telerik().Grid<SelectPiFModel>()
-        .Name("Grid")
-        .DataKeys(keys => keys.Add(p => p.ID))
-        .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
-        .DataBinding(dataBinding => dataBinding.Ajax()
-            .Select("Select", "Grid")
-            .Delete("Delete", "Grid"))
-        .Columns(columns =>
-        {
-            columns.Bound(p => p.ThreadTitle);
-            columns.Command(commands =>
-            {
-                commands.Select().ButtonType(GridButtonType.Text);
-                commands.Delete().ButtonType(GridButtonType.Text);
-            }).Width(180).Title("Commands");
-        })
-        .Scrollable()
-        .Sortable()
-        .ClientEvents(events => events.OnError("Grid_onError"))
-        )
+@(Html.Telerik().Grid<SelectPiFModel>().Name("Grid").DataKeys(keys => keys.Add(p => p.ID)).ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text)).DataBinding(dataBinding => dataBinding.Ajax().Select("Select", "Grid").Delete("Delete", "Grid")).Columns(columns =>
+      {
+          columns.Bound(p => p.ThreadTitle);
+          columns.Command(commands =>
+              {
+                  commands.Select().ButtonType(GridButtonType.Text);
+                  commands.Delete().ButtonType(GridButtonType.Text);
+              }).Width(180).Title("Commands");
+      }).Scrollable().Sortable().ClientEvents(events => events.OnError("Grid_onError")))

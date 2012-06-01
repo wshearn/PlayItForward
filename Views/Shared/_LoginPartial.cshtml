@@ -1,7 +1,9 @@
-﻿@if(Request.IsAuthenticated) {
-    <text>Welcome <strong>@User.Identity.Name</strong>!
-    [ @Html.ActionLink("Sign out", "LogOff", "Account") ]</text>
+﻿@if (this.Request.IsAuthenticated)
+{
+    <text>Welcome <strong>@this.User.Identity.Name</strong>!
+        [ @this.Html.ActionLink("Sign out", "LogOff", "Account") ]</text>
 }
-else {
-    @:[ @Html.ActionLink("Sign in", "Login", "Account") ]
+else
+{
+    @:[ @this.Html.ActionLink("Sign in", "Login", "Account") ]
 }

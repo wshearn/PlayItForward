@@ -1,8 +1,8 @@
 ﻿// <copyright file="GridController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
 namespace PiF.Controllers
 {
-    using System;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -12,32 +12,24 @@ namespace PiF.Controllers
 
     public class GridController : Controller
     {
-        #region Public Methods
 
-        [GridAction] 
+        //public ActionResult _AutoCompleteAjaxLoading(string term)
+        //{
+        //    var data = new PiFDataContext().Games.Select(x => x.Name).ToArray();
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+
+        [GridAction]
         public ActionResult ClientEditTemplates()
         {
             this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return View();
-        }
-
-        [GridAction]
-        public ActionResult _ClientEditTemplates()
-        {
-            this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return View(new GridModel(SessionGamesRepository.All()));
-        }
-
-        [GridAction]
-        public ActionResult EditingAjax()
-        {
             return this.View();
         }
 
         [GridAction]
         public ActionResult ClientSideEvents()
         {
-            return View();
+            return this.View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -48,8 +40,14 @@ namespace PiF.Controllers
             SessionGamesRepository.Delete(id);
 
             // Rebind the grid
-            //this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View(new GridModel(SessionGamesRepository.All()));
+        }
+
+        [GridAction]
+        public ActionResult EditingAjax()
+        {
+            return this.View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -60,12 +58,12 @@ namespace PiF.Controllers
             var game = new PiFGame();
 
             // Perform model binding (fill the game properties and validate it).
-            if (TryUpdateModel(game))
+            if (this.TryUpdateModel(game))
             {
                 //// I can't figure out how to put the ID in ID field, keeps going into the game field. So for now, I convert the string to an int, then assign the correct game name to it.
-                //game.ID = Convert.ToInt32(game.Name);
+                // game.ID = Convert.ToInt32(game.Name);
                 // The model is valid - insert the game.
-                var dbGame = new PiFDataContext().Games.First(g => g.id == game.ID);
+                Game dbGame = new PiFDataContext().Games.First(g => g.id == game.ID);
 
                 game.PointWorth = dbGame.PointWorth;
                 game.SteamAppID = dbGame.SteamID;
@@ -77,29 +75,34 @@ namespace PiF.Controllers
             return this.View(new GridModel(SessionGamesRepository.All()));
         }
 
+        [GridAction]
+        public ActionResult SelectAjaxEditing()
+        {
+            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            return this.View(new GridModel(SessionGamesRepository.All()));
+        }
+
         [AcceptVerbs(HttpVerbs.Post)]
         [GridAction]
         public ActionResult UpdateAjaxEditing(int id)
         {
-            var game = SessionGamesRepository.One(p => p.ID == id);
+            PiFGame game = SessionGamesRepository.One(p => p.ID == id);
 
             this.TryUpdateModel(game);
 
-            var dbGame = new PiFDataContext().Games.First(g => g.id == id);
+            Game dbGame = new PiFDataContext().Games.First(g => g.id == id);
 
             game.PointWorth = dbGame.PointWorth * game.Count;
             game.Name = dbGame.Name;
             game.ID = dbGame.id;
-            return View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All()));
         }
 
         [GridAction]
-        public ActionResult SelectAjaxEditing()
+        public ActionResult _ClientEditTemplates()
         {
-            //this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return View(new GridModel(SessionGamesRepository.All()));
+            this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            return this.View(new GridModel(SessionGamesRepository.All()));
         }
-
-        #endregion
     }
 }

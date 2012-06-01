@@ -3,7 +3,6 @@
 
 namespace PiF.Controllers
 {
-    using System;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -13,12 +12,10 @@ namespace PiF.Controllers
 
     public class SelectGridController : Controller
     {
-        #region Public Methods
-
         [GridAction]
         public ActionResult ClientSideEvents()
         {
-            return View();
+            return this.View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -26,26 +23,23 @@ namespace PiF.Controllers
         public ActionResult Delete(int id)
         {
             var db = new PiFDataContext();
-            var query = db.Threads.Where(u => u.id == id);
-            var thread = query.First();
+            IQueryable<Thread> query = db.Threads.Where(u => u.id == id);
+            Thread thread = query.First();
 
             // Delete the record
             db.Threads.DeleteOnSubmit(thread);
 
-
             // Rebind the grid
 
-            //this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View(new GridModel(SessionPiFRepository.All()));
         }
 
         [GridAction]
         public ActionResult Select()
         {
-            //this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return View(new GridModel(SessionGamesRepository.All()));
+            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            return this.View(new GridModel(SessionGamesRepository.All()));
         }
-
-        #endregion
     }
 }

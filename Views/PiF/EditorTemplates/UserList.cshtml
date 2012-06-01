@@ -1,6 +1,3 @@
 ﻿@using System.Collections
 @using Telerik.Web.Mvc.UI
-@(Html.Telerik().DropDownList()
-        .Name("ID")
-        .BindTo(new SelectList((IEnumerable)ViewData["users"], "ID", "Username"))
-      )
+@this.Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList((IEnumerable)this.ViewData["users"], "ID", "Username"))

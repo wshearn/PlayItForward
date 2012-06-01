@@ -6,18 +6,14 @@ namespace PiF.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    /// <summary>
-    /// Properties containing data when completing a PiF
-    /// </summary>
+    /// <summary>Properties containing data when completing a PiF</summary>
     public class SelectPiFModel
     {
-        /// <summary>
-        /// Gets or sets the thread title.
-        /// </summary>
+        public string ID { get; set; }
+
+        /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread title")]
         [Required]
         public string ThreadTitle { get; set; }
-
-        public string ID { get; set; }
     }
 }

@@ -18,12 +18,11 @@ namespace PiF.Models
             {
                 HttpContext.Current.Session["PiFGames"] = result = new List<PiFGame>();
             }
+
             return result;
         }
 
-        /// <summary>
-        /// Deletes the game from the table.
-        /// </summary>
+        /// <summary>Deletes the game from the table.</summary>
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
@@ -34,9 +33,7 @@ namespace PiF.Models
             }
         }
 
-        /// <summary>
-        /// Insert a game into the table.
-        /// </summary>
+        /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
         public static void Insert(PiFGame game)
         {

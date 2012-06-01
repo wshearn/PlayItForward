@@ -6,9 +6,7 @@ namespace PiF.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    /// <summary>
-    /// Properties containing data when creating a new PiF
-    /// </summary>
+    /// <summary>Properties containing data when creating a new PiF</summary>
     public class NewPiFModel
     {
         public NewPiFModel()
@@ -19,28 +17,20 @@ namespace PiF.Models
             }
         }
 
-        /// <summary>
-        /// Gets or sets the captcha code
-        /// </summary>
+        /// <summary>Gets or sets the captcha code</summary>
         [DisplayName("Captcha")]
         [Required]
         public string Captcha { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether a captcah code is needed.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether a captcah code is needed.</summary>
         public bool CaptchaRequired { get; set; }
 
-        /// <summary>
-        /// Gets or sets the self text for the post.
-        /// </summary>
+        /// <summary>Gets or sets the self text for the post.</summary>
         [DisplayName("Self text")]
         [Required]
         public string SelfText { get; set; }
 
-        /// <summary>
-        /// Gets or sets the thread title.
-        /// </summary>
+        /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread title")]
         [Required]
         public string ThreadTitle { get; set; }

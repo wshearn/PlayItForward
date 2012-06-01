@@ -2,37 +2,36 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    @RenderSection("HeadContent", required:false)
-    @RenderSection("head", required: false)
-</head>
-<body>
-    <div class="page">
-        <header>
-            <div id="title">
-                <h1>PiF App</h1>
-            </div>
-            <div id="logindisplay">
-                @Html.Partial("_LoginPartial")
-            </div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("New PiF", "New", "PiF")</li>
-                    <li>@Html.ActionLink("Complete PiF", "Complete", "PiF")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
-            </nav>
-        </header>
-        <section id="main">
-            @RenderBody()
-        </section>
-        <footer>
-        </footer>
-    </div>
-    @Html.Telerik().ScriptRegistrar()
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>@this.ViewBag.Title</title>
+        <link href="@this.Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+        @this.RenderSection("HeadContent", required: false)
+        @this.RenderSection("head", required: false)
+    </head>
+    <body>
+        <div class="page">
+            <header>
+                <div id="title">
+                    <h1>PiF App</h1>
+                </div>
+                <div id="logindisplay">
+                    @this.Html.Partial("_LoginPartial")
+                </div>
+                <nav>
+                    <ul id="menu">
+                        <li>@this.Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@this.Html.ActionLink("New PiF", "New", "PiF")</li>
+                        <li>@this.Html.ActionLink("Complete PiF", "Complete", "PiF")</li>
+                        <li>@this.Html.ActionLink("About", "About", "Home")</li>
+                    </ul>
+                </nav>
+            </header>
+            <section id="main">
+                @this.RenderBody()
+            </section>
+            <footer>
+            </footer>
+        </div>
+    </body>
 </Html>

@@ -1,7 +1,9 @@
-﻿namespace PiF
+﻿// <copyright file="Utilites.cs" project="PiF">Robert Baker</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+namespace PiF
 {
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Security.Cryptography;
@@ -10,24 +12,6 @@
 
     public class Utilites
     {
-        /// <summary>Gets the SHA-2 Hash of a file.</summary>
-        /// <param name="str">The string to calulate hash.</param>
-        /// <returns>The SHA-2 Hash.</returns>
-        public static string GetHash(string str)
-        {
-            var buff = new StringBuilder(10);
-            using (var sha2 = new SHA256Cng())
-            {
-                sha2.ComputeHash(Encoding.Unicode.GetBytes(str));
-                foreach (var hashByte in sha2.Hash)
-                {
-                    buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
-                }
-            }
-
-            return buff.ToString();
-        }
-
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
         {
             var httpCookie = new HttpCookie(cookie.Name);
@@ -45,23 +29,39 @@
             httpCookie.Secure = cookie.Secure;
 
             return httpCookie;
+        }
 
+        /// <summary>Gets the SHA-2 Hash of a file.</summary>
+        /// <param name="str">The string to calulate hash.</param>
+        /// <returns>The SHA-2 Hash.</returns>
+        public static string GetHash(string str)
+        {
+            var buff = new StringBuilder(10);
+            using (var sha2 = new SHA256Cng())
+            {
+                sha2.ComputeHash(Encoding.Unicode.GetBytes(str));
+                foreach (byte hashByte in sha2.Hash)
+                {
+                    buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
+                }
+            }
+
+            return buff.ToString();
         }
 
         public static Cookie HttpCookieToCookie(HttpCookie httpCookie)
         {
             var cookie = new Cookie
                 {
-                    Domain = httpCookie.Domain,
-                    Expires = httpCookie.Expires,
-                    HttpOnly = httpCookie.HttpOnly,
-                    Path = httpCookie.Path,
-                    Secure = httpCookie.Secure,
+                    Domain = httpCookie.Domain, 
+                    Expires = httpCookie.Expires, 
+                    HttpOnly = httpCookie.HttpOnly, 
+                    Path = httpCookie.Path, 
+                    Secure = httpCookie.Secure, 
                     Value = httpCookie.Value
                 };
 
             return cookie;
-
         }
     }
 }

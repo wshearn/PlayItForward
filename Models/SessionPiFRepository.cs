@@ -22,22 +22,18 @@ namespace PiF.Models
             return result;
         }
 
-        /// <summary>
-        /// Deletes the game from the table.
-        /// </summary>
+        /// <summary>Deletes the game from the table.</summary>
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
-            var target = One(p => p.ID == index);
+            PiF target = One(p => p.ID == index);
             if (target != null)
             {
                 All().Remove(target);
             }
         }
 
-        /// <summary>
-        /// Insert a game into the table.
-        /// </summary>
+        /// <summary>Insert a game into the table.</summary>
         /// <param name="pif">The game object to insert.</param>
         public static void Insert(PiF pif)
         {

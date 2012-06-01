@@ -18,16 +18,12 @@ namespace PiF.Controllers
 
     public class PiFController : Controller
     {
-        public ActionResult Index()
-        {
-            return this.View();
-        }
 
-        // POST: /PiF/Select
-        [HttpPost]
-        public ActionResult Select(SelectPiFModel model)
+        public ActionResult List(string term)
         {
-            return this.View(model);
+            var results =
+                new PiFDataContext().Games.Where(m => m.Name.StartsWith(term)).Select(m => new { label = m.Name, m.id });
+            return Json(results.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -35,9 +31,8 @@ namespace PiF.Controllers
         {
             this.ViewData["Message"] = "Complete PiF";
 
-
             // TODO get the list of entries in the PiF from either reddit or the database.
-            //   this.ViewData["users"] = new PiFDataContext().Threads.
+            // this.ViewData["users"] = new PiFDataContext().Threads.
             var list = new List<User>();
 
             var user = new User { Username = "TestUser1" };
@@ -60,18 +55,28 @@ namespace PiF.Controllers
             return this.View(model);
         }
 
+        public ActionResult Index()
+        {
+            return this.View();
+        }
+
         [Authorize]
         public ActionResult New()
         {
-            if (this.Request.Cookies["ModHash"].Value != null && this.Session["ModHash"] == null)
+            var httpCookie = this.Request.Cookies["ModHash"];
+            if (httpCookie != null && (httpCookie.Value != null && this.Session["ModHash"] == null))
             {
                 this.Session["ModHash"] = this.Request.Cookies["ModHash"].Value;
             }
-            if (this.Request.Cookies["RedditCookie"].Value != null && this.Session["RedditCookie"] == null)
+
+            var cookie = this.Request.Cookies["RedditCookie"];
+            if (cookie != null && (cookie.Value != null && this.Session["RedditCookie"] == null))
             {
                 this.Session["RedditCookie"] = this.Request.Cookies["RedditCookie"];
             }
-            if (this.Request.Cookies["Username"].Value != null && this.Session["Username"] == null)
+
+            var httpCookie1 = this.Request.Cookies["Username"];
+            if (httpCookie1 != null && (httpCookie1.Value != null && this.Session["Username"] == null))
             {
                 this.Session["Username"] = this.Request.Cookies["Username"].Value;
             }
@@ -92,10 +97,10 @@ namespace PiF.Controllers
             }
 
             dynamic response = this.PostPiF(
-                model.ThreadTitle,
-                model.SelfText,
-                (string)this.Session["ModHash"],
-                model.Captcha,
+                model.ThreadTitle, 
+                model.SelfText, 
+                (string)this.Session["ModHash"], 
+                model.Captcha, 
                 (string)this.Session["CaptchaID"]);
 
             if (response["json"]["errors"].Length > 0)
@@ -122,12 +127,13 @@ namespace PiF.Controllers
 
                 // TODO: Handle errors such as rate limiting
                 var thread = new Thread
-                    { CreatedDate = DateTime.Now.Date, Title = model.ThreadTitle, Url = url, User = query.First() };
+                    {
+                       CreatedDate = DateTime.Now.Date, Title = model.ThreadTitle, Url = url, User = query.First() 
+                    };
 
-                foreach (
-                    var threadGame in
-                        SessionGamesRepository.All().Select(
-                            game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.ID), }))
+                foreach (var threadGame in
+                    SessionGamesRepository.All().Select(
+                        game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.ID), }))
                 {
                     thread.ThreadGames.Add(threadGame);
                 }
@@ -143,6 +149,12 @@ namespace PiF.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Select(SelectPiFModel model)
+        {
             return this.View(model);
         }
 
@@ -164,9 +176,9 @@ namespace PiF.Controllers
         {
             string data =
                 string.Format(
-                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward",
-                    modhash,
-                    text,
+                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward", 
+                    modhash, 
+                    text, 
                     title);
 
             if (!string.IsNullOrWhiteSpace(iden) && !string.IsNullOrWhiteSpace(captcha))
@@ -177,9 +189,7 @@ namespace PiF.Controllers
             return this.SendPost(data, "http://www.reddit.com/api/submit");
         }
 
-        /// <summary>
-        /// Sends data in POST to the specified URI
-        /// </summary>
+        /// <summary>Sends data in POST to the specified URI</summary>
         /// <param name="data">POST data</param>
         /// <param name="uri">URI to POST data to</param>
         /// <returns>True/false based on success (NYI)</returns>

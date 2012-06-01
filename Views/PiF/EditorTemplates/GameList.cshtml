@@ -1,6 +1,15 @@
 ﻿@using System.Collections
 @using Telerik.Web.Mvc.UI
-@(Html.Telerik().DropDownList()
-        .Name("ID")
-        .BindTo(new SelectList((IEnumerable)ViewData["games"], "ID", "Name"))
-      )
+@using PiF.Models
+@model PiFGame
+@*@this.Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList((IEnumerable)this.ViewData["games"], "ID", "Name"))*@
+
+
+@(Html.Telerik().AutoComplete()
+            .Name("ID")
+            .Encode(false)
+            .BindTo(Model.All().Select(x => x.Name))
+            .AutoFill(true)
+            .HtmlAttributes(new { style = "width:350px"})
+            .HighlightFirstMatch(true)
+            .Filterable(filtering => filtering.FilterMode(AutoCompleteFilterMode.Contains)))

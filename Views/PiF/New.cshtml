@@ -1,11 +1,20 @@
 ﻿@using System.Collections
-@using Telerik.Web.Mvc.UI
 @using PiF.Models
+@using Telerik.Web.Mvc.UI
 @model NewPiFModel
 @section HeadContent {
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"></script>
+     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"></script>
+    @this.Html.Telerik().ScriptRegistrar().jQuery(false);
     <link href="@Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
+
     <script type="text/javascript">
+//        $("#Name").autocomplete({
+//            source: '@Url.Action("List")'
+//        });
+
         function Grid_onError(e) {
             //`this` is the DOM element of the grid
             var grid = $(this).data("tGrid");
@@ -27,57 +36,45 @@
                 }
             }
         }
-        function Grid_onEdit(e) {
-            if (e.mode == "insert") {
-                $(e.form).find('#ID').data('tDropDownList').select(function(dataItem) {
-                    return dataItem.Text == e.dataItem['Name'];
-                });
-            }
 
-            if ( e.mode == "edit") {
-                $('#ID').data('tDropDownList').disable();
-            }
-        }
+//        function Grid_onEdit(e) {
+//            if (e.mode == "insert") {
+//                $(e.form).find('#ID').data('tDropDownList').select(function(dataItem) {
+//                    return dataItem.Text == e.dataItem['Name'];
+//                });
+//            }
+
+//            if (e.mode == "edit") {
+//                $('#ID').data('tDropDownList').disable();
+//            }
+//        }
     </script>
 }
 @{
     ViewBag.Title = "Create a new PiF";
+
 }
 <h2>@ViewBag.Title</h2>
 @Html.ValidationSummary(true)
 <div class="editor-label">
     @Html.Label("Grid", "Add the games you want to PiF")
 </div>
-@(Html.Telerik().Grid<PiFGame>()
-        .Name("Grid")
-        .DataKeys(keys => keys.Add(p => p.ID))
-        .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
-        .DataBinding(dataBinding => dataBinding.Ajax()
-            .Select("SelectAjaxEditing", "Grid")
-            .Insert("InsertAjaxEditing", "Grid")
-            .Update("UpdateAjaxEditing", "Grid")
-            .Delete("DeleteAjaxEditing", "Grid"))
-        .Columns(columns =>
-        {
-            columns.Bound(p => p.SteamAppID).Width(80);
-            //columns.Bound(p => p.Name).Width(350);
-            columns.ForeignKey(o => o.ID, (IEnumerable)ViewData["games"], "ID", "Name").Width(400);
-            columns.Bound(p => p.Count).Width(80);
-            columns.Bound(p => p.PointWorth).Width(80);
-            columns.Command(commands =>
-            {
-                commands.Edit().ButtonType(GridButtonType.Text);
-                commands.Delete().ButtonType(GridButtonType.Text);
-            }).Width(180).Title("Commands");
-        })
-        .Editable(editing => editing.Mode(GridEditMode.InLine))
-        .Pageable()
-        .Scrollable()
-        .Sortable()
-        .ClientEvents(events => events.OnError("Grid_onError").OnEdit("Grid_onEdit"))
-        )
+@(Html.Telerik().Grid<PiFGame>().Name("Grid").DataKeys(keys => keys.Add(p => p.ID)).ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text)).DataBinding(dataBinding => dataBinding.Ajax().Select("SelectAjaxEditing", "Grid").Insert("InsertAjaxEditing", "Grid").Update("UpdateAjaxEditing", "Grid").Delete("DeleteAjaxEditing", "Grid")).Columns(columns =>
+      {
+          columns.Bound(p => p.SteamAppID).Width(80);
+
+          columns.Bound(p => p.Name).Width(400);
+         // columns.ForeignKey(o => o.ID, (IEnumerable)ViewData["games"], "ID", "Name").Width(400);
+          columns.Bound(p => p.Count).Width(80);
+          columns.Bound(p => p.PointWorth).Width(80);
+          columns.Command(commands =>
+              {
+                  commands.Edit().ButtonType(GridButtonType.Text);
+                  commands.Delete().ButtonType(GridButtonType.Text);
+              }).Width(180).Title("Commands");
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().ClientEvents(events => events.OnError("Grid_onError")))
 <br />
-@using (Html.BeginForm("NewPiF", "PiF"))
+@using (Html.BeginForm("New", "PiF"))
 {
     <div class="editor-label">
         @Html.LabelFor(m => m.ThreadTitle)
@@ -104,5 +101,6 @@
         </div>
         @Html.ValidationMessageFor(m => m.Captcha)
     }
+
     <input type="submit" value="Create PiF" />
 }

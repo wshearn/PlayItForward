@@ -253,9 +253,6 @@ html body div.t-grid tbody .t-button-icon{min-width:0;width:auto}
 /* ComboBox & Drop-down*/.t-combobox,.t-dropdown,.t-selectbox{display:inline-block;*display:inline;zoom:1;position:relative;overflow:hidden;white-space:nowrap;width:150px;border-width:0}
 *+html .t-combobox{overflow:visible}
 /*positions icon properly*/* html .t-combobox{overflow:visible}
-.t-widget.t-dropdown.t-header.t-state-disabled { background:none!important;}
-.t-state-disabled .t-arrow-down { background:none!important}
-.t-state-disabled .t-dropdown-wrap { border:none!important}
 .t-dropdown-wrap,.t-picker-wrap{position:relative;display:block;cursor:default}
 .t-picker-wrap{padding:0 25px 0 0}
 .t-dropdown-wrap{padding-right:16px;/* icon width*/border-width:1px;border-style:solid}
@@ -280,7 +277,7 @@ html body div.t-grid tbody .t-button-icon{min-width:0;width:auto}
 .t-combobox .t-input{height:18px;line-height:18px;padding:1px 3px;border:0;margin:0}
 .t-picker-wrap .t-select,.t-dropdown-wrap .t-select{height:20px;line-height:20px}
 .t-popup{border-width:1px;border-style:solid}
-.t-popup .t-item{padding:1px 1px 1px 1px;cursor:default;font-family: "Segoe UI",Arial,sans-serif;line-height:normal;}
+.t-popup .t-item{padding:1px 5px 1px 3px;cursor:default}
 /* Calendar */.t-calendar{display:inline-block;*display:inline;zoom:1;width:203px;position:relative;overflow:hidden}
 .t-calendar .t-link{text-decoration:none}
 .t-calendar .t-action-link{text-decoration:underline}

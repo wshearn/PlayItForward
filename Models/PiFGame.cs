@@ -3,6 +3,8 @@
 
 namespace PiF.Models
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
@@ -18,32 +20,31 @@ namespace PiF.Models
             }
         }
 
-        /// <summary>
-        /// Gets or sets the number of copies being given.
-        /// </summary>
+        /// <summary>Gets all the games available.</summary>
+        /// <returns></returns>
+        public IEnumerable<Game> All()
+        {
+            return new PiFDataContext().Games;
+        }
+
+        /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
         [DataType("Integer")]
         [DisplayName("Quanity")]
         [DefaultValue(1)]
         public int Count { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ID of the game.
-        /// </summary>
+        /// <summary>Gets or sets the ID of the game.</summary>
         [DisplayName("Game")]
         [Required]
         [UIHint("GameList")]
         public int ID { get; set; }
 
-        /// <summary>
-        /// Gets or sets the name of the game.
-        /// </summary>
+        /// <summary>Gets or sets the name of the game.</summary>
         [DisplayName("Game")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the number of copies being given.
-        /// </summary>
+        /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
         [DataType("Integer")]
         [DisplayName("Points")]
@@ -51,9 +52,7 @@ namespace PiF.Models
         [ReadOnly(true)]
         public int PointWorth { get; set; }
 
-        /// <summary>
-        /// Gets or sets the steam ID of the game.
-        /// </summary>
+        /// <summary>Gets or sets the steam ID of the game.</summary>
         [ReadOnly(true)]
         [DisplayName("SteamID")]
         public int? SteamAppID { get; set; }

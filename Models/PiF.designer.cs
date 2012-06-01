@@ -2594,7 +2594,7 @@ namespace PiF.Models
 		
 		private string _Name;
 		
-		private System.Nullable<int> _SubID;
+		private System.Nullable<int> _SteamID;
 		
 		private byte _PointWorth;
 		
@@ -2603,8 +2603,6 @@ namespace PiF.Models
 		private bool _IsDLC;
 		
 		private System.Nullable<int> _RequiredID;
-		
-		private System.Nullable<int> _SteamID;
 		
 		private EntitySet<ThreadGame> _ThreadGames;
 		
@@ -2616,8 +2614,8 @@ namespace PiF.Models
     partial void OnidChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnSubIDChanging(System.Nullable<int> value);
-    partial void OnSubIDChanged();
+    partial void OnSteamIDChanging(System.Nullable<int> value);
+    partial void OnSteamIDChanged();
     partial void OnPointWorthChanging(byte value);
     partial void OnPointWorthChanged();
     partial void OnIsSteamSubscriptionChanging(bool value);
@@ -2626,8 +2624,6 @@ namespace PiF.Models
     partial void OnIsDLCChanged();
     partial void OnRequiredIDChanging(System.Nullable<int> value);
     partial void OnRequiredIDChanged();
-    partial void OnSteamIDChanging(System.Nullable<int> value);
-    partial void OnSteamIDChanged();
     #endregion
 		
 		public Game()
@@ -2676,22 +2672,22 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubID", DbType="Int")]
-		public System.Nullable<int> SubID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamID", DbType="Int")]
+		public System.Nullable<int> SteamID
 		{
 			get
 			{
-				return this._SubID;
+				return this._SteamID;
 			}
 			set
 			{
-				if ((this._SubID != value))
+				if ((this._SteamID != value))
 				{
-					this.OnSubIDChanging(value);
+					this.OnSteamIDChanging(value);
 					this.SendPropertyChanging();
-					this._SubID = value;
-					this.SendPropertyChanged("SubID");
-					this.OnSubIDChanged();
+					this._SteamID = value;
+					this.SendPropertyChanged("SteamID");
+					this.OnSteamIDChanged();
 				}
 			}
 		}
@@ -2772,26 +2768,6 @@ namespace PiF.Models
 					this._RequiredID = value;
 					this.SendPropertyChanged("RequiredID");
 					this.OnRequiredIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamID", DbType="Int")]
-		public System.Nullable<int> SteamID
-		{
-			get
-			{
-				return this._SteamID;
-			}
-			set
-			{
-				if ((this._SteamID != value))
-				{
-					this.OnSteamIDChanging(value);
-					this.SendPropertyChanging();
-					this._SteamID = value;
-					this.SendPropertyChanged("SteamID");
-					this.OnSteamIDChanged();
 				}
 			}
 		}
