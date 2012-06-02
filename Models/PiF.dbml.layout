@@ -50,14 +50,14 @@
         <elementListCompartment Id="562fe806-98fe-4691-8bb1-5c6fd49a3787" absoluteBounds="3.5150000005960464, 3.4600000008940697, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 15.375); (5.875 : 15); (5.875 : 13.1354484045878); (6.25 : 13.1354484045878)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 15.375); (5.875 : 15); (5.875 : 13.1354484045878); (6.25 : 13.1354484045878)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/Thread/Thread_Comment" />
       <nodes>
         <classShapeMoniker Id="f261950a-306d-40b1-9ccb-e4c64fb4c3be" />
         <classShapeMoniker Id="c22334dc-711f-4800-b14d-3d45de334215" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 16.1330501887524); (6.25 : 16.1330501887524)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 16.1330501887524); (6.25 : 16.1330501887524)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/Thread/Thread_ThreadGame" />
       <nodes>
         <classShapeMoniker Id="f261950a-306d-40b1-9ccb-e4c64fb4c3be" />
@@ -70,70 +70,70 @@
         <elementListCompartment Id="46123428-c334-4d33-82b0-ed254dafdb2d" absoluteBounds="0.76500000059604645, 9.33500000089407, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 9.10659912135452); (3.5 : 9.10659912135452)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 9.10659912135452); (3.5 : 9.10659912135452)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserWarned" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="a99da345-8db2-4c60-9a99-f4c47cb1720e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 8.92829956067726); (3.5 : 8.92829956067726)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 8.92829956067726); (3.5 : 8.92829956067726)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserWarned1" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="a99da345-8db2-4c60-9a99-f4c47cb1720e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 11.6074039712548); (1.75 : 12.40625); (1.93229291666667 : 12.40625 : JumpStart); (2.09895958333333 : 12.40625 : JumpEnd); (2.19791916666667 : 12.40625 : JumpStart); (2.36458583333333 : 12.40625 : JumpEnd); (2.46354541666667 : 12.40625 : JumpStart); (2.63021208333333 : 12.40625 : JumpEnd); (6.25 : 12.40625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 11.6074039712548); (1.75 : 12.40625); (1.93229291666667 : 12.40625 : JumpStart); (2.09895958333333 : 12.40625 : JumpEnd); (6.25 : 12.40625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_Comment" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="c22334dc-711f-4800-b14d-3d45de334215" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 11.6074039712548); (2.2812525 : 13.6065991213545); (2.46354541666667 : 13.6065991213545 : JumpStart); (2.63021208333333 : 13.6065991213545 : JumpEnd); (3.5 : 13.6065991213545)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.2812525 : 11.6074039712548); (2.2812525 : 13.6065991213545); (2.46354541666667 : 13.6065991213545 : JumpStart); (2.63021208333333 : 13.6065991213545 : JumpEnd); (3.5 : 13.6065991213545)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_ModAlert" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="d35cf7a6-f542-47c4-84a3-83c096b66b3b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.2187475 : 11.6074039712548); (1.2187475 : 16.3565991213545); (1.40104041666667 : 16.3565991213545 : JumpStart); (1.56770708333333 : 16.3565991213545 : JumpEnd); (1.93229291666667 : 16.3565991213545 : JumpStart); (2.09895958333333 : 16.3565991213545 : JumpEnd); (3.5 : 16.3565991213545)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.2187475 : 11.6074039712548); (1.2187475 : 16.3565991213545); (3.5 : 16.3565991213545)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_Thread" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="f261950a-306d-40b1-9ccb-e4c64fb4c3be" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.54687875 : 11.6074039712548); (2.54687875 : 15.28125); (5.51041666666667 : 15.28125 : JumpStart); (5.67708333333333 : 15.28125 : JumpEnd); (6.25 : 15.28125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.54687875 : 11.6074039712548); (2.54687875 : 15.28125); (5.51041666666667 : 15.28125 : JumpStart); (5.67708333333333 : 15.28125 : JumpEnd); (6.25 : 15.28125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_ThreadGame" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="37cebce4-a31a-410f-b1e4-a9f10e5a7c8f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 8.875); (1.75 : 5.91429768875241); (2.19791916666667 : 5.91429768875241 : JumpStart); (2.36458583333333 : 5.91429768875241 : JumpEnd); (3.5 : 5.91429768875241)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 8.875); (1.75 : 5.91429768875241); (2.19791916666667 : 5.91429768875241 : JumpStart); (2.36458583333333 : 5.91429768875241 : JumpEnd); (3.5 : 5.91429768875241)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserIP" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="f19b8368-91f9-4ca1-82f3-f1451afaf75f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.01562625 : 11.6074039712548); (2.01562625 : 19.1065991213545); (3.5 : 19.1065991213545)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.01562625 : 11.6074039712548); (2.01562625 : 19.1065991213545); (3.5 : 19.1065991213545)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserScoreModifier" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="befc5fde-c5e1-499e-a322-fe181d83df0e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.48437375 : 11.6074039712548); (1.48437375 : 18.5845470606773); (1.93229291666667 : 18.5845470606773 : JumpStart); (2.09895958333333 : 18.5845470606773 : JumpEnd); (3.5 : 18.5845470606773)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.48437375 : 11.6074039712548); (1.48437375 : 18.5845470606773); (1.93229291666667 : 18.5845470606773 : JumpStart); (2.09895958333333 : 18.5845470606773 : JumpEnd); (3.5 : 18.5845470606773)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserScoreModifier1" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
         <classShapeMoniker Id="befc5fde-c5e1-499e-a322-fe181d83df0e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 8.875); (2.2812525 : 3.69314697291702); (3.5 : 3.69314697291702)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.2812525 : 8.875); (2.2812525 : 3.69314697291702); (3.5 : 3.69314697291702)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/User/User_UserSteamID" />
       <nodes>
         <classShapeMoniker Id="3dedde38-699e-4001-b504-5d0975999478" />
@@ -146,7 +146,7 @@
         <elementListCompartment Id="8ac3d696-d223-45ec-b4bd-10efd443d1cc" absoluteBounds="3.5149999999999997, 21.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 22.0777498372396); (7.25 : 22.0777498372396); (7.25 : 16.8285953775048)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 22.0777498372396); (7.25 : 22.0777498372396); (7.25 : 16.8285953775048)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PiFDataContext/Game/Game_ThreadGame" />
       <nodes>
         <classShapeMoniker Id="c824c219-8a00-460e-aef5-7a2cb28700bc" />

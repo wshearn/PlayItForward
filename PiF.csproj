@@ -97,6 +97,10 @@
     <Compile Include="Utilites.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Database.mdf" />
+    <Content Include="App_Data\Database_log.ldf">
+      <DependentUpon>Database.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\2012.1.214\Default\editor.png" />
     <Content Include="Content\2012.1.214\Default\imagebrowser.png" />
     <Content Include="Content\2012.1.214\Default\loading.gif" />
@@ -241,9 +245,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
