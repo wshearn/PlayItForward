@@ -131,7 +131,7 @@ namespace PiF.Controllers
 
                 foreach (var threadGame in
                     SessionGamesRepository.All().Select(
-                        game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.ID), }))
+                        game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.Game.id), }))
                 {
                     thread.ThreadGames.Add(threadGame);
                 }

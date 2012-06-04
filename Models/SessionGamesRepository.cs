@@ -26,11 +26,9 @@ namespace PiF.Models
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
-            PiFGame target = One(p => p.ID == index);
+            PiFGame target = One(p => p.Game.id == index);
             if (target != null)
-            {
                 All().Remove(target);
-            }
         }
 
         /// <summary>Insert a game into the table.</summary>

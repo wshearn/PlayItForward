@@ -62,10 +62,8 @@
     .Insert("InsertAjaxEditing", "Grid").Update("UpdateAjaxEditing", "Grid").Delete("DeleteAjaxEditing", "Grid"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.SteamAppID).Width(80);
-
+        columns.Bound(p => p.Game.id).ReadOnly(true).Width(80);
         columns.Bound(p => p.Name).Width(400);
-         //columns.ForeignKey(o => o.ID, (IEnumerable)ViewData["games"], "ID", "Name").Width(400);
         columns.Bound(p => p.Count).Width(80);
         columns.Bound(p => p.PointWorth).Width(80);
         columns.Command(commands =>
