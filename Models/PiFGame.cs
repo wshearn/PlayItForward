@@ -14,10 +14,11 @@ namespace PiF.Models
 
         public PiFGame() { }
 
-        /// <summary>Gets the unique ID of the Game, or 0 if one is not yet selected.</summary>
+        /// <summary>Gets the game id.</summary>
         [Required]
         [DataType("Integer")]
         [DisplayName("ID")]
+        [ScaffoldColumn(false)]
         [DefaultValue(0)]
         public int ID { get { return Game == null ? 0 : Game.id; } }
 

@@ -62,10 +62,10 @@
     .Insert("InsertAjaxEditing", "Grid").Update("UpdateAjaxEditing", "Grid").Delete("DeleteAjaxEditing", "Grid"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Game.id).ReadOnly(true).Title("ID").Width(80);
         columns.Bound(p => p.Name).Width(400);
         columns.Bound(p => p.Count).Width(80);
         columns.Bound(p => p.PointWorth).Width(80);
+        columns.Bound(p => p.Game.SteamID).ReadOnly(true).Title("Steam ID").Width(80);
         columns.Command(commands =>
             {
                 commands.Edit().ButtonType(GridButtonType.Text);
