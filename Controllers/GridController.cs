@@ -15,7 +15,6 @@ namespace PiF.Controllers
         [GridAction]
         public ActionResult ClientEditTemplates()
         {
-            this.ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View();
         }
 
@@ -57,7 +56,8 @@ namespace PiF.Controllers
                 Game dbGame = new PiFDataContext().Games.First(g => g.Name == game.Name);
 
                 game.SteamAppID = dbGame.SteamID;
-                game.PointWorth = dbGame.PointWorth;
+                game.PointWorth = dbGame.PointWorth * game.Count;
+                game.ID = dbGame.id;
                 SessionGamesRepository.Insert(game);
             }
 
@@ -80,18 +80,18 @@ namespace PiF.Controllers
 
             this.TryUpdateModel(game);
 
-            Game dbGame = new PiFDataContext().Games.First(g => g.id == id);
+            Game dbGame = new PiFDataContext().Games.First(g => g.Name == game.Name);
 
             game.PointWorth = dbGame.PointWorth * game.Count;
             game.Name = dbGame.Name;
             game.ID = dbGame.id;
+            game.SteamAppID = dbGame.SteamID;
             return this.View(new GridModel(SessionGamesRepository.All()));
         }
 
         [GridAction]
         public ActionResult _ClientEditTemplates()
         {
-            this.ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View(new GridModel(SessionGamesRepository.All()));
         }
     }
