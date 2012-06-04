@@ -36,20 +36,20 @@ namespace PiF.Models
 
         /// <summary>Gets or sets the ID of the game.</summary>
         [DisplayName("Game")]
-        [Required]
         public int ID { get; set; }
 
         /// <summary>Gets or sets the name of the game.</summary>
         [DisplayName("Game")]
         [UIHint("GameList")]
+        [Required]
         public string Name { get; set; }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
-        [Required]
         [DataType("Integer")]
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
+        [Required]
         public int PointWorth { get; set; }
 
         /// <summary>Gets or sets the steam ID of the game.</summary>

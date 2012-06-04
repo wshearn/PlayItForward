@@ -51,16 +51,13 @@ namespace PiF.Controllers
             var game = new PiFGame();
 
             // Perform model binding (fill the game properties and validate it).
+
             if (this.TryUpdateModel(game))
             {
-                //// I can't figure out how to put the ID in ID field, keeps going into the game field. So for now, I convert the string to an int, then assign the correct game name to it.
-                // game.ID = Convert.ToInt32(game.Name);
-                // The model is valid - insert the game.
-                Game dbGame = new PiFDataContext().Games.First(g => g.id == game.ID);
+                Game dbGame = new PiFDataContext().Games.First(g => g.Name == game.Name);
 
-                game.PointWorth = dbGame.PointWorth;
                 game.SteamAppID = dbGame.SteamID;
-                game.Name = dbGame.Name;
+                game.PointWorth = dbGame.PointWorth;
                 SessionGamesRepository.Insert(game);
             }
 
