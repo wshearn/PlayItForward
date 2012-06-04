@@ -9,3 +9,5 @@ _ReSharper
 *.stylecop
 *.cache
 *.vs10x
+/App_Data/Database.mdf
+/App_Data/Database_log.ldf
