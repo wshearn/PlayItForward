@@ -20,6 +20,7 @@ namespace PiF.Models
         /// <summary>Gets the unique ID of the Game, or 0 if one is not yet selected.</summary>
         [Required]
         [DataType("Integer")]
+        [DisplayName("ID")]
         [DefaultValue(0)]
         public int ID { get { return Game == null ? 0 : Game.id; } }
 
