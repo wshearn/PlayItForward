@@ -1,49 +1,42 @@
 ﻿// <copyright file="AccountController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Security;
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
-    using System.Web.Security;
-
-    using PiF.Models;
-
     public class AccountController : Controller
     {
         public ActionResult LogOff()
         {
-            this.Session.Clear();
+            Session.Clear();
             FormsAuthentication.SignOut();
-            var httpCookie = this.Request.Cookies["RedditCookie"];
+            var httpCookie = Request.Cookies.Get("RedditCookie");
             if (httpCookie != null)
-            {
                 httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            }
-            var cookie = this.Request.Cookies["Username"];
-            if (cookie != null)
-            {
-                cookie.Expires = DateTime.Now.AddDays(-1d);
-            }
-            var httpCookie1 = this.Request.Cookies["ModHash"];
-            if (httpCookie1 != null)
-            {
-                httpCookie1.Expires = DateTime.Now.AddDays(-1d);
-            }
+            httpCookie = Request.Cookies.Get("Username");
+            if (httpCookie != null)
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            httpCookie = Request.Cookies.Get("ModHash");
+            if (httpCookie != null)
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
 
-            this.Session.Abandon();
-            return this.RedirectToAction("Index", "Home");
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Login()
         {
-            return this.View();
+            return View();
         }
 
         [HttpPost]
@@ -51,19 +44,17 @@ namespace PiF.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                dynamic response = this.Login(model.UserName, model.Password);
+                dynamic response = Login(model.UserName, model.Password);
 
                 if (response["json"]["errors"].Length > 0)
                 {
-                    if (response["json"]["errors"][0][0] == "INVALID_PASSWORD"
-                        || response["json"]["errors"][0][0] == "RATELIMIT")
-                    {
+                    string error = response["json"]["errors"][0][0];
+                    if (error == "INVALID_PASSWORD" || error == "WRONG_PASSWORD" || error == "RATELIMIT")
                         this.ModelState.AddModelError(string.Empty, response["json"]["errors"][0][1]);
-                    }
                 }
                 else
                 {
-                    string userIP = Utilites.GetHash(this.HttpContext.Request.UserHostAddress);
+                    string userIP = Utilites.GetHash(HttpContext.Request.UserHostAddress);
                     var db = new PiFDataContext();
 
                     IQueryable<User> query = db.Users.Where(u => u.Username == model.UserName);
@@ -91,31 +82,30 @@ namespace PiF.Controllers
                     }
 
                     // Set Session vars in case user doesn't use cookies.
-                    this.Session["ModHash"] = response["json"]["data"]["modhash"];
+                    Session["ModHash"] = response["json"]["data"]["modhash"];
 
                     var redditCookie = new HttpCookie("reddit_session")
                         {
-                            Value = this.Server.UrlEncode(response["json"]["data"]["cookie"]), 
+                            Value = Server.UrlEncode(response["json"]["data"]["cookie"]),
                             Expires = DateTime.Now.AddYears(1)
                         };
-                    this.Session["RedditCookie"] = redditCookie;
-                    this.Session["Username"] = model.UserName;
+                    Session["RedditCookie"] = redditCookie;
+                    Session["Username"] = model.UserName;
 
                     if (model.RememberMe)
                     {
-                        this.Response.Cookies["Username"].Value = model.UserName;
-                        this.Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
-                        this.Response.Cookies["RedditCookie"].Value =
-                            this.Server.UrlEncode(response["json"]["data"]["cookie"]);
-                        this.Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
-                        this.Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
-                        this.Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
+                        Response.Cookies["Username"].Value = model.UserName;
+                        Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
+                        Response.Cookies["RedditCookie"].Value = Server.UrlEncode(response["json"]["data"]["cookie"]);
+                        Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
+                        Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
+                        Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
                     }
 
                     db.SubmitChanges();
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return this.RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
@@ -147,9 +137,7 @@ namespace PiF.Controllers
 
             string resp;
             using (var reader = new StreamReader(response.GetResponseStream()))
-            {
                 resp = reader.ReadToEnd();
-            }
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }

@@ -1,15 +1,13 @@
 ﻿// <copyright file="GridController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Linq;
+using System.Web.Mvc;
+using PiF.Models;
+using Telerik.Web.Mvc;
+
 namespace PiF.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using PiF.Models;
-
-    using Telerik.Web.Mvc;
-
     public class GridController : Controller
     {
         [GridAction]
@@ -32,8 +30,7 @@ namespace PiF.Controllers
             SessionGamesRepository.Delete(id);
 
             // Rebind the grid
-            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
 
         [GridAction]
@@ -66,14 +63,14 @@ namespace PiF.Controllers
             }
 
             // Rebind the grid
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
 
         [GridAction]
         public ActionResult SelectAjaxEditing()
         {
             // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -98,13 +95,13 @@ namespace PiF.Controllers
                         pifgame.Game = dbGame;
                 }
             }
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
 
         [GridAction]
         public ActionResult _ClientEditTemplates()
         {
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
     }
 }

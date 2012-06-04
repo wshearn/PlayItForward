@@ -1,28 +1,25 @@
 ﻿// <copyright file="CompleteGridController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Data.Linq;
+using System.Web.Mvc;
+using PiF.Models;
+using Telerik.Web.Mvc;
+
 namespace PiF.Controllers
 {
-    using System.Data.Linq;
-    using System.Web.Mvc;
-
-    using PiF.Models;
-
-    using Telerik.Web.Mvc;
-
     public class CompleteGridController : Controller
     {
         [GridAction]
         public ActionResult ClientEditTemplates()
         {
-            // this.ViewData["users"] = new PiFDataContext().Users.ToList();
-            return this.View();
+            return View();
         }
 
         [GridAction]
         public ActionResult ClientSideEvents()
         {
-            return this.View();
+            return View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -33,14 +30,13 @@ namespace PiF.Controllers
             SessionPiFRepository.Delete(id);
 
             // Rebind the grid
-            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return this.View(new GridModel(SessionGamesRepository.All));
         }
 
         [GridAction]
         public ActionResult EditingAjax()
         {
-            return this.View();
+            return View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -65,34 +61,29 @@ namespace PiF.Controllers
             // }
 
             // Rebind the grid
-            return this.View(new GridModel(SessionPiFRepository.All()));
+            return View(new GridModel(SessionPiFRepository.All));
         }
 
         [GridAction]
         public ActionResult SelectAjaxEditing()
         {
-            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return View(new GridModel(SessionGamesRepository.All));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [GridAction]
         public ActionResult UpdateAjaxEditing(int id)
         {
-            PiF game = SessionPiFRepository.One(p => p.ID == id);
-
-            this.TryUpdateModel(game);
-
+            var game = SessionPiFRepository.One(p => p.ID == id);
+            TryUpdateModel(game);
             Table<Thread> pif = new PiFDataContext().Threads;
-
-            return this.View(new GridModel(SessionPiFRepository.All()));
+            return View(new GridModel(SessionPiFRepository.All));
         }
 
         [GridAction]
         public ActionResult _ClientEditTemplates()
         {
-            // this.ViewData["users"] = new PiFDataContext().Users.ToList();
-            return this.View(new GridModel(SessionPiFRepository.All()));
+            return View(new GridModel(SessionPiFRepository.All));
         }
     }
 }

@@ -1,21 +1,19 @@
 ﻿// <copyright file="SelectGridController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Linq;
+using System.Web.Mvc;
+using PiF.Models;
+using Telerik.Web.Mvc;
+
 namespace PiF.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using PiF.Models;
-
-    using Telerik.Web.Mvc;
-
     public class SelectGridController : Controller
     {
         [GridAction]
         public ActionResult ClientSideEvents()
         {
-            return this.View();
+            return View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -30,16 +28,13 @@ namespace PiF.Controllers
             db.Threads.DeleteOnSubmit(thread);
 
             // Rebind the grid
-
-            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionPiFRepository.All()));
+            return View(new GridModel(SessionPiFRepository.All));
         }
 
         [GridAction]
         public ActionResult Select()
         {
-            // this.ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new GridModel(SessionGamesRepository.All()));
+            return View(new GridModel(SessionGamesRepository.All));
         }
     }
 }

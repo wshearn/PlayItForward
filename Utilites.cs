@@ -1,15 +1,15 @@
 ﻿// <copyright file="Utilites.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
+
 namespace PiF
 {
-    using System.Globalization;
-    using System.Linq;
-    using System.Net;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Web;
-
     public class Utilites
     {
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
@@ -18,9 +18,7 @@ namespace PiF
 
             /*Copy keys and values*/
             foreach (var val in cookie.Value.Split('&').Select(value => value.Split('=')))
-            {
                 httpCookie.Values.Add(val[0], val[1]); /* or httpCookie[val[0]] = val[1];  */
-            }
 
             httpCookie.Domain = cookie.Domain;
             httpCookie.Expires = cookie.Expires;
@@ -41,9 +39,7 @@ namespace PiF
             {
                 sha2.ComputeHash(Encoding.Unicode.GetBytes(str));
                 foreach (byte hashByte in sha2.Hash)
-                {
                     buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
-                }
             }
 
             return buff.ToString();

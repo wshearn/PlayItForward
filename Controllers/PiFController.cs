@@ -1,21 +1,20 @@
 ﻿// <copyright file="PiFController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Security;
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
-    using System.Web.Security;
-
-    using PiF.Models;
-
     public class PiFController : Controller
     {
         [HttpPost]
@@ -61,26 +60,20 @@ namespace PiF.Controllers
         [Authorize]
         public ActionResult New()
         {
-            var httpCookie = this.Request.Cookies["ModHash"];
-            if (httpCookie != null && (httpCookie.Value != null && this.Session["ModHash"] == null))
-            {
-                this.Session["ModHash"] = this.Request.Cookies["ModHash"].Value;
-            }
+            var httpCookie = Request.Cookies.Get("ModHash");
+            if (httpCookie != null && (httpCookie.Value != null && Session["ModHash"] == null))
+                Session["ModHash"] = Request.Cookies.Get("ModHash").Value;
+            
+            httpCookie = Request.Cookies.Get("RedditCookie");
+            if (httpCookie != null && (httpCookie.Value != null && Session["RedditCookie"] == null))
+                Session["RedditCookie"] = Request.Cookies.Get("RedditCookie");
 
-            var cookie = this.Request.Cookies["RedditCookie"];
-            if (cookie != null && (cookie.Value != null && this.Session["RedditCookie"] == null))
-            {
-                this.Session["RedditCookie"] = this.Request.Cookies["RedditCookie"];
-            }
+            httpCookie = Request.Cookies.Get("Username");
+            if (httpCookie != null && (httpCookie.Value != null && Session["Username"] == null))
+                Session["Username"] = Request.Cookies.Get("Username").Value;
 
-            var httpCookie1 = this.Request.Cookies["Username"];
-            if (httpCookie1 != null && (httpCookie1.Value != null && this.Session["Username"] == null))
-            {
-                this.Session["Username"] = this.Request.Cookies["Username"].Value;
-            }
-
-            this.ViewData["Message"] = "Create a new PiF";
-            this.ViewData["games"] = new PiFDataContext().Games.ToList();
+            ViewData["Message"] = "Create a new PiF";
+            ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View(new NewPiFModel());
         }
 
@@ -88,55 +81,53 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult New(NewPiFModel model)
         {
-            if (!SessionGamesRepository.All().Any())
+            if (!SessionGamesRepository.All.Any())
             {
                 this.ModelState.AddModelError(string.Empty, "At least 1 game is required to PiF");
                 return this.View(model);
             }
 
-            dynamic response = this.PostPiF(
-                model.ThreadTitle, 
-                model.SelfText, 
-                (string)this.Session["ModHash"], 
-                model.Captcha, 
-                (string)this.Session["CaptchaID"]);
+            dynamic response = PostPiF(
+                model.ThreadTitle,
+                model.SelfText,
+                Session["ModHash"].ToString(),
+                model.Captcha,
+                Session["CaptchaID"].ToString());
 
             if (response["json"]["errors"].Length > 0)
             {
                 if (response["json"]["errors"][0][0] == "BAD_CAPTCHA")
                 {
-                    this.ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
-                    this.Session["CaptchaID"] = response["json"]["captcha"];
+                    ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
+                    Session["CaptchaID"] = response["json"]["captcha"];
                     model.CaptchaRequired = true;
                 }
 
-                this.ViewData["games"] = new PiFDataContext().Games.ToList();
+                ViewData["games"] = new PiFDataContext().Games.ToList();
 
-                return this.View(model);
+                return View(model);
             }
 
             if (this.ModelState.IsValid)
             {
                 // DataContext takes a connection string.
                 var db = new PiFDataContext();
-                IQueryable<User> query = db.Users.Where(u => u.Username == (string)this.Session["Username"]);
+                IQueryable<User> query = db.Users.Where(u => u.Username == Session["Username"].ToString());
 
                 // TODO: Handle errors such as rate limiting
                 var thread = new Thread
                     {
-                       CreatedDate = DateTime.Now.Date, Title = model.ThreadTitle, ThingID = response["json"]["data"]["id"], User = query.First() 
+                        CreatedDate = DateTime.Now.Date,
+                        Title = model.ThreadTitle,
+                        ThingID = response["json"]["data"]["id"],
+                        User = query.First()
                     };
 
-                foreach (var threadGame in
-                    SessionGamesRepository.All().Select(
-                        game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.Game.id), }))
-                {
+                foreach (var threadGame in SessionGamesRepository.All.Select(game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.Game.id), }))
                     thread.ThreadGames.Add(threadGame);
-                }
 
                 // Get a typed table to run queries and insert the data into the table.
                 db.Threads.InsertOnSubmit(thread);
-
                 db.SubmitChanges();
 
                 // TODO: Handle errors.
@@ -162,27 +153,25 @@ namespace PiF.Controllers
         private ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            this.Session.Clear();
-            this.Session.Abandon();
-            this.Response.Cookies.Clear();
-            return this.RedirectToAction("Index", "Home");
+            Session.Clear();
+            Session.Abandon();
+            Response.Cookies.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         private dynamic PostPiF(string title, string text, string modhash, string captcha = null, string iden = null)
         {
             string data =
                 string.Format(
-                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward", 
-                    modhash, 
-                    text, 
+                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward",
+                    modhash,
+                    text,
                     title);
 
             if (!string.IsNullOrWhiteSpace(iden) && !string.IsNullOrWhiteSpace(captcha))
-            {
                 data += string.Format("&iden={0}&captcha={1}", iden, captcha);
-            }
 
-            return this.SendPost(data, "http://www.reddit.com/api/submit");
+            return SendPost(data, "http://www.reddit.com/api/submit");
         }
 
         /// <summary>Sends data in POST to the specified URI</summary>
@@ -192,9 +181,9 @@ namespace PiF.Controllers
         private dynamic SendPost(string data, string uri)
         {
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
-            connect.Headers["COOKIE"] = ((HttpCookie)this.Session["RedditCookie"]).Value;
+            connect.Headers["COOKIE"] = (Session["RedditCookie"] as HttpCookie).Value;
             connect.CookieContainer = new CookieContainer();
-            Cookie cookie = Utilites.HttpCookieToCookie((HttpCookie)this.Session["RedditCookie"]);
+            Cookie cookie = Utilites.HttpCookieToCookie(Session["RedditCookie"] as HttpCookie);
             cookie.Domain = ".reddit.com";
             cookie.Name = "reddit_session";
             connect.CookieContainer.Add(cookie);
@@ -213,9 +202,7 @@ namespace PiF.Controllers
 
             string resp;
             using (var reader = new StreamReader(response.GetResponseStream()))
-            {
                 resp = reader.ReadToEnd();
-            }
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
