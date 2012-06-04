@@ -3,7 +3,6 @@
 
 namespace PiF.Models
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -13,40 +12,49 @@ namespace PiF.Models
     [KnownType(typeof(PiFGame))]
     public class PiFGame
     {
-        private Game game = new Game();
-        private int count = 1;
+        public PiFGame()
+        {
+            if (this.Count == 0)
+            {
+                this.Count = 1;
+            }
+        }
 
-        public PiFGame() { }
-
-        /// <summary>Gets the unique ID of the Game, or 0 if one is not yet selected.</summary>
-        [Required]
-        [DataType("Integer")]
-        [DefaultValue(0)]
-        public int ID { get { return Game == null ? 0 : Game.id; } }
+        /// <summary>Gets all the games available.</summary>
+        /// <returns></returns>
+        public IEnumerable<Game> All()
+        {
+            return new PiFDataContext().Games;
+        }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
         [DataType("Integer")]
         [DisplayName("Quanity")]
         [DefaultValue(1)]
-        public int Count { get { return count; } set { count = Math.Max(0, value); } }
+        public int Count { get; set; }
 
-        /// <summary>Gets the Game class that represents the Name and SteamAppID</summary>
-        [Required]
-        public Game Game { get { return game; } set { game = value; } }
+        /// <summary>Gets or sets the row ID of the game from the database.</summary>
+        [DisplayName("Game")]
+        public int ID { get; set; }
 
-        /// <summary>Gets or sets the game name.</summary>
-        [Required]
-        [DataType("String")]
+        /// <summary>Gets or sets the name of the game.</summary>
+        [DisplayName("Game")]
         [UIHint("GameList")]
+        [Required]
         public string Name { get; set; }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
-        [Required]
         [DataType("Integer")]
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
-        public int PointWorth { get { return Game == null ? 0 : Game.PointWorth * Count; } }
+        [Required]
+        public int PointWorth { get; set; }
+
+        /// <summary>Gets or sets the steam ID of the game.</summary>
+        [ReadOnly(true)]
+        [DisplayName("SteamID")]
+        public int? SteamAppID { get; set; }
     }
 }
