@@ -21,9 +21,21 @@ namespace PiF.Controllers
         {
             this.Session.Clear();
             FormsAuthentication.SignOut();
-            this.Request.Cookies["RedditCookie"].Expires = DateTime.Now.AddDays(-1d);
-            this.Request.Cookies["Username"].Expires = DateTime.Now.AddDays(-1d);
-            this.Request.Cookies["ModHash"].Expires = DateTime.Now.AddDays(-1d);
+            var httpCookie = this.Request.Cookies["RedditCookie"];
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            var cookie = this.Request.Cookies["Username"];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            var httpCookie1 = this.Request.Cookies["ModHash"];
+            if (httpCookie1 != null)
+            {
+                httpCookie1.Expires = DateTime.Now.AddDays(-1d);
+            }
 
             this.Session.Abandon();
             return this.RedirectToAction("Index", "Home");
