@@ -34,7 +34,7 @@ namespace PiF.Models
         [DefaultValue(1)]
         public int Count { get; set; }
 
-        /// <summary>Gets or sets the ID of the game.</summary>
+        /// <summary>Gets or sets the row ID of the game from the database.</summary>
         [DisplayName("Game")]
         public int ID { get; set; }
 

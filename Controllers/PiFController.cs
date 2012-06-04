@@ -115,8 +115,6 @@ namespace PiF.Controllers
                 return this.View(model);
             }
 
-            string url = "http://reddit.com";
-
             if (this.ModelState.IsValid)
             {
                 // DataContext takes a connection string.
@@ -126,7 +124,7 @@ namespace PiF.Controllers
                 // TODO: Handle errors such as rate limiting
                 var thread = new Thread
                     {
-                       CreatedDate = DateTime.Now.Date, Title = model.ThreadTitle, Url = url, User = query.First() 
+                       CreatedDate = DateTime.Now.Date, Title = model.ThreadTitle, ThingID = response["json"]["data"]["id"], User = query.First() 
                     };
 
                 foreach (var threadGame in
