@@ -18,12 +18,11 @@ namespace PiF.Controllers
 
     public class PiFController : Controller
     {
-
-        public ActionResult List(string term)
+        [HttpPost]
+        public ActionResult _AutoCompleteAjaxLoading(string text)
         {
-            var results =
-                new PiFDataContext().Games.Where(m => m.Name.StartsWith(term)).Select(m => new { label = m.Name, m.id });
-            return Json(results.ToArray(), JsonRequestBehavior.AllowGet);
+            var data = new PiFDataContext().Games.Where(p => p.Name.StartsWith(text));
+            return new JsonResult { Data = data.Select(n => n.Name).ToList() };
         }
 
         [Authorize]
@@ -34,7 +33,6 @@ namespace PiF.Controllers
             // TODO get the list of entries in the PiF from either reddit or the database.
             // this.ViewData["users"] = new PiFDataContext().Threads.
             var list = new List<User>();
-
             var user = new User { Username = "TestUser1" };
             list.Add(user);
             user.Username = "TestUser2";

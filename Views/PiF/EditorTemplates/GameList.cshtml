@@ -8,8 +8,10 @@
 @(Html.Telerik().AutoComplete()
             .Name("ID")
             .Encode(false)
-            .BindTo(Model.All().Select(x => x.Name))
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteAjaxLoading", "PiF"))
             .AutoFill(true)
             .HtmlAttributes(new { style = "width:350px"})
             .HighlightFirstMatch(true)
-            .Filterable(filtering => filtering.FilterMode(AutoCompleteFilterMode.Contains)))
+      .Filterable(filtering => filtering.FilterMode(AutoCompleteFilterMode.Contains)))
+
+

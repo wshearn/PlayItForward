@@ -12,13 +12,6 @@ namespace PiF.Controllers
 
     public class GridController : Controller
     {
-
-        //public ActionResult _AutoCompleteAjaxLoading(string term)
-        //{
-        //    var data = new PiFDataContext().Games.Select(x => x.Name).ToArray();
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-        //}
-
         [GridAction]
         public ActionResult ClientEditTemplates()
         {

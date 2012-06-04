@@ -37,11 +37,11 @@ namespace PiF.Models
         /// <summary>Gets or sets the ID of the game.</summary>
         [DisplayName("Game")]
         [Required]
-        [UIHint("GameList")]
         public int ID { get; set; }
 
         /// <summary>Gets or sets the name of the game.</summary>
         [DisplayName("Game")]
+        [UIHint("GameList")]
         public string Name { get; set; }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
