@@ -15,150 +15,175 @@ using PiF.Models;
 
 namespace PiF.Controllers
 {
+    [Authorize]
     public class PiFController : Controller
     {
+        #region Ajax
         [HttpPost]
         public ActionResult _AutoCompleteAjaxLoading(string text)
         {
-            var data = new PiFDataContext().Games.Where(p => p.Name.StartsWith(text));
+            var data = GameHelper.GetGameList().Where(p => p.Name.StartsWith(text));
             return new JsonResult { Data = data.Select(n => n.Name).ToList() };
         }
+        #endregion
 
-        [Authorize]
-        public ActionResult Complete()
-        {
-            this.ViewData["Message"] = "Complete PiF";
-
-            // TODO get the list of entries in the PiF from either reddit or the database.
-            // this.ViewData["users"] = new PiFDataContext().Threads.
-            var list = new List<User>();
-            var user = new User { Username = "TestUser1" };
-            list.Add(user);
-            user.Username = "TestUser2";
-            list.Add(user);
-            user.Username = "TestUser3";
-            list.Add(user);
-            user.Username = "TestUser4";
-            list.Add(user);
-            user.Username = "TestUser5";
-            list.Add(user);
-            this.ViewData["users"] = list;
-            return this.View(new CompletePiFModel());
-        }
-
-        [HttpPost]
-        public ActionResult Complete(CompletePiFModel model)
-        {
-            return this.View(model);
-        }
-
+        #region Index
         public ActionResult Index()
         {
-            return this.View();
+            return View();
         }
+        #endregion
 
-        [Authorize]
+        #region New
         public ActionResult New()
         {
-            var httpCookie = Request.Cookies.Get("ModHash");
-            if (httpCookie != null && (httpCookie.Value != null && Session["ModHash"] == null))
-                Session["ModHash"] = Request.Cookies.Get("ModHash").Value;
-            
-            httpCookie = Request.Cookies.Get("RedditCookie");
-            if (httpCookie != null && (httpCookie.Value != null && Session["RedditCookie"] == null))
-                Session["RedditCookie"] = Request.Cookies.Get("RedditCookie");
-
-            httpCookie = Request.Cookies.Get("Username");
-            if (httpCookie != null && (httpCookie.Value != null && Session["Username"] == null))
-                Session["Username"] = Request.Cookies.Get("Username").Value;
-
             ViewData["Message"] = "Create a new PiF";
-            ViewData["games"] = new PiFDataContext().Games.ToList();
-            return this.View(new NewPiFModel());
+            SessionNewGamesRepository.Clear();
+            return View(new NewPiFModel());
         }
 
         // POST: /PiF/New
         [HttpPost]
         public ActionResult New(NewPiFModel model)
         {
-            if (!SessionGamesRepository.All.Any())
+            if (!SessionNewGamesRepository.All().Any())
             {
                 this.ModelState.AddModelError(string.Empty, "At least 1 game is required to PiF");
-                return this.View(model);
+                return View(model);
             }
 
-            dynamic response = PostPiF(
+            bool debug = false;
+            string thingID = String.Empty;
+            dynamic response;
+#if DEBUG //We don't want to send an actual Self.PlayItForward thread to reddit if we are debugging, we will generate a random string instead
+            debug = true;
+#endif
+            if (debug == false)
+            {
+                response = PostPiF(
                 model.ThreadTitle,
                 model.SelfText,
                 Session["ModHash"].ToString(),
                 model.Captcha,
                 Session["CaptchaID"].ToString());
 
-            if (response["json"]["errors"].Length > 0)
-            {
-                if (response["json"]["errors"][0][0] == "BAD_CAPTCHA")
+                if (response["json"]["errors"].Length > 0)
                 {
-                    ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
-                    Session["CaptchaID"] = response["json"]["captcha"];
-                    model.CaptchaRequired = true;
+                    if (response["json"]["errors"][0][0] == "BAD_CAPTCHA")
+                    {
+                        ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
+                        Session["CaptchaID"] = response["json"]["captcha"];
+                        model.CaptchaRequired = true;
+                    }
+                    return View(model);
                 }
-
-                ViewData["games"] = new PiFDataContext().Games.ToList();
-
-                return View(model);
+                thingID = response["json"]["data"]["id"];
             }
 
             if (this.ModelState.IsValid)
             {
                 // DataContext takes a connection string.
                 var db = new PiFDataContext();
-                IQueryable<User> query = db.Users.Where(u => u.Username == Session["Username"].ToString());
 
                 // TODO: Handle errors such as rate limiting
+                Random r = new Random();
                 var thread = new Thread
                     {
-                        CreatedDate = DateTime.Now.Date,
+                        CreatedDate = DateTime.UtcNow,
                         Title = model.ThreadTitle,
-                        ThingID = response["json"]["data"]["id"],
-                        User = query.First()
+                        ThingID = debug == false ? thingID : String.Format("{0}{1}{2}{3}{4}", (char)r.Next(97, 123), (char)r.Next(97, 123), (char)r.Next(97, 123), (char)r.Next(97, 123), (char)r.Next(97, 123)),
+                        UserID = AccountHelper.CurrentUser.id
                     };
-
-                foreach (var threadGame in SessionGamesRepository.All.Select(game => new ThreadGame { Thread = thread, Game = db.Games.First(u => u.id == game.Game.id), }))
-                    thread.ThreadGames.Add(threadGame);
+                foreach (PiFGame pifgame in SessionNewGamesRepository.All())
+                {
+                    for (int i = 1; i <= pifgame.Count; i++)
+                        thread.ThreadGames.Add(new ThreadGame { Thread = thread, Game = pifgame.Game });
+                }
 
                 // Get a typed table to run queries and insert the data into the table.
                 db.Threads.InsertOnSubmit(thread);
                 db.SubmitChanges();
+                SessionNewGamesRepository.Clear();
 
                 // TODO: Handle errors.
                 // TODO: Redirect to the PiF Edit/Complete page.
-                return this.RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form
-            return this.View(model);
+            return View(model);
+        }
+        #endregion
+
+        #region List
+        public ActionResult List()
+        {
+            return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
+        }
+        #endregion
+
+        #region View
+        public ActionResult View(int id)
+        {
+            if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
+                return RedirectToAction("List");
+            return View(AccountHelper.CurrentUser.Threads.Single(t => t.id == id));
+        }
+        #endregion
+
+        #region Edit
+        public ActionResult Edit(int id)
+        {
+            if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
+                return RedirectToAction("List");
+
+            if (AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames.Any(tg => tg.WinnerID == null))
+            {
+                SessionEditGamesRepository.Clear();
+                foreach (ThreadGame tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
+                {
+                    if (SessionEditGamesRepository.One(p => p.ID == tg.Game.id) != null)
+                        SessionEditGamesRepository.One(p => p.ID == tg.Game.id).Count += 1;
+                    else
+                        SessionEditGamesRepository.Insert(new PiFGame { Count = 1, Game = tg.Game, Name = tg.Game.Name });
+                }
+                return View(new EditPiFModel());
+            }
+            else
+                return RedirectToAction("View", "PiF", new { id = id });
         }
 
         [HttpPost]
-        public ActionResult Select(SelectPiFModel model)
+        public ActionResult Edit(EditPiFModel model)
         {
-            return this.View(model);
+            return View(model);
+        }
+        #endregion
+
+        #region Complete
+        public ActionResult Complete(int id)
+        {
+            if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
+                return RedirectToAction("List");
+
+            SessionCompleteGamesRepository.Clear();
+            foreach (ThreadGame tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
+                SessionCompleteGamesRepository.Insert(tg);
+
+            this.ViewData["Message"] = "Complete PiF";
+
+            // TODO get the list of entries in the PiF from either reddit or the database.
+            return View(new CompletePiFModel());
         }
 
-        public ActionResult ViewPiFs()
+        [HttpPost]
+        public ActionResult Complete(CompletePiFModel model)
         {
-            return this.View();
+            return View(model);
         }
+        #endregion
 
-        private ActionResult Logoff()
-        {
-            FormsAuthentication.SignOut();
-            Session.Clear();
-            Session.Abandon();
-            Response.Cookies.Clear();
-            return RedirectToAction("Index", "Home");
-        }
-
+        #region PostPiF - Create reddit self post to r/PlayItForward
         private dynamic PostPiF(string title, string text, string modhash, string captcha = null, string iden = null)
         {
             string data =
@@ -206,5 +231,6 @@ namespace PiF.Controllers
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
+        #endregion
     }
 }

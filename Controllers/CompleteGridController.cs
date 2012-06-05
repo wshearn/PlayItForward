@@ -27,10 +27,10 @@ namespace PiF.Controllers
         public ActionResult DeleteAjaxEditing(int id)
         {
             // Delete the record
-            SessionPiFRepository.Delete(id);
+            SessionCompleteGamesRepository.Delete(id);
 
             // Rebind the grid
-            return this.View(new GridModel(SessionGamesRepository.All));
+            return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
 
         [GridAction]
@@ -61,29 +61,29 @@ namespace PiF.Controllers
             // }
 
             // Rebind the grid
-            return View(new GridModel(SessionPiFRepository.All));
+            return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
 
         [GridAction]
         public ActionResult SelectAjaxEditing()
         {
-            return View(new GridModel(SessionGamesRepository.All));
+            return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         [GridAction]
         public ActionResult UpdateAjaxEditing(int id)
         {
-            var game = SessionPiFRepository.One(p => p.ID == id);
+            var game = SessionCompleteGamesRepository.One(p => p.id == id);
             TryUpdateModel(game);
             Table<Thread> pif = new PiFDataContext().Threads;
-            return View(new GridModel(SessionPiFRepository.All));
+            return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
 
         [GridAction]
         public ActionResult _ClientEditTemplates()
         {
-            return View(new GridModel(SessionPiFRepository.All));
+            return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
     }
 }

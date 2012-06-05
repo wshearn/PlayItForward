@@ -1,3 +1,4 @@
-﻿@using System.Collections
+﻿@using PiF.Models;
+@using System.Collections
 @using Telerik.Web.Mvc.UI
-@this.Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList((IEnumerable)this.ViewData["users"], "ID", "Username"))
+@this.Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(AccountHelper.GetAllUsers(), "ID", "Username"))

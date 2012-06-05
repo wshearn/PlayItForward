@@ -1,11 +1,11 @@
 ﻿@using System.Collections
 @using PiF.Models
 @using Telerik.Web.Mvc.UI
-@model NewPiFModel
+@model EditPiFModel
 @section HeadContent {
     <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
-    @Html.Telerik().ScriptRegistrar().jQuery(false);
+    @*@Html.Telerik().ScriptRegistrar().jQuery(false);*@
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
@@ -47,27 +47,22 @@
     </script>
 }
 @{
-    this.ViewBag.Title = "Create a new PiF";
+    ViewBag.Title = "Edit PiF";
 }
 
-<h2>@this.ViewBag.Title</h2>
-
-@this.Html.ValidationSummary(true)
-<div class="editor-label">
-    @this.Html.Label("Grid", "Add the games you want to PiF")
-</div>
+<h2>@ViewBag.Title</h2>
 
 @(this.Html.Telerik().Grid<PiFGame>()
-.Name("NewGameGrid")
+.Name("EditGameGrid")
 .DataKeys(keys => keys.Add(p => p.ID))
 .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
 .DataBinding(dataBinding =>
     {
         dataBinding.Ajax()
-            .Select("SelectAjaxEditing", "NewGameGrid")
-            .Insert("InsertAjaxEditing", "NewGameGrid")
-            .Update("UpdateAjaxEditing", "NewGameGrid")
-            .Delete("DeleteAjaxEditing", "NewGameGrid");
+            .Select("SelectAjaxEditing", "EditGameGrid")
+            .Insert("InsertAjaxEditing", "EditGameGrid")
+            .Update("UpdateAjaxEditing", "EditGameGrid")
+            .Delete("DeleteAjaxEditing", "EditGameGrid");
     })
     .Columns(columns =>
     {
@@ -86,36 +81,5 @@
     .Pageable()
     .Scrollable()
     .Sortable()
-    .BindTo(SessionNewGamesRepository.All())
+    .BindTo(SessionEditGamesRepository.All())
     .ClientEvents(events => events.OnError("Grid_onError")))
-<br />
-@using (this.Html.BeginForm("New", "PiF"))
-{
-    <div class="editor-label">
-        @this.Html.LabelFor(m => m.ThreadTitle)
-    </div>
-    <div class="editor-field">
-        @this.Html.TextBoxFor(m => m.ThreadTitle, new { maxlength = 300 })
-        @this.Html.ValidationMessageFor(m => m.ThreadTitle)
-    </div>
-    <div class="editor-label">
-        @this.Html.LabelFor(m => m.SelfText)
-    </div>
-    <div class="editor-field">
-        @this.Html.TextAreaFor(m => m.SelfText, new { maxlength = 900 })
-        @this.Html.ValidationMessageFor(m => m.SelfText)
-    </div>
-    if (this.Model.CaptchaRequired)
-    {
-    <div class="editor-label">
-        @this.Html.LabelFor(m => m.Captcha)
-    </div>
-    <img src="@this.Url.Content("http://reddit.com/captcha/" + Session["CaptchaID"] + ".png")" />
-    <div class="captcha-field">
-        @this.Html.TextBoxFor(m => m.Captcha, new { maxlength = 8 })
-    </div>
-        this.Html.ValidationMessageFor(m => m.Captcha);
-    }
-
-    <input type="submit" value="Create PiF" />
-}

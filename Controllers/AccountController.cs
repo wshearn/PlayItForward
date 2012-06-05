@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -16,24 +15,7 @@ namespace PiF.Controllers
 {
     public class AccountController : Controller
     {
-        public ActionResult LogOff()
-        {
-            Session.Clear();
-            FormsAuthentication.SignOut();
-            var httpCookie = Request.Cookies.Get("RedditCookie");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            httpCookie = Request.Cookies.Get("Username");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            httpCookie = Request.Cookies.Get("ModHash");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-
-            Session.Abandon();
-            return RedirectToAction("Index", "Home");
-        }
-
+        #region LogOn
         public ActionResult Login()
         {
             return View();
@@ -54,43 +36,20 @@ namespace PiF.Controllers
                 }
                 else
                 {
-                    string userIP = Utilites.GetHash(HttpContext.Request.UserHostAddress);
-                    var db = new PiFDataContext();
-
-                    IQueryable<User> query = db.Users.Where(u => u.Username == model.UserName);
-
-                    User user;
-                    if (!query.Any())
-                    {
-                        var ip = new UserIP { CreatedDate = DateTime.Now.Date, HashedIP = userIP };
-
-                        user = new User { Username = model.UserName, RecordCreatedDate = DateTime.Now.Date };
-
-                        user.UserIPs.Add(ip);
-                        db.Users.InsertOnSubmit(user);
-                    }
-                    else
-                    {
-                        user = query.Single();
-                        if (user.UserIPs.All(ips => ips.HashedIP != userIP))
-                        {
-                            user = new User { Username = model.UserName, RecordCreatedDate = DateTime.Now.Date };
-
-                            var ip = new UserIP { CreatedDate = DateTime.Now.Date, HashedIP = userIP };
-                            user.UserIPs.Add(ip);
-                        }
-                    }
-
                     // Set Session vars in case user doesn't use cookies.
+                    Session["Username"] = model.UserName; //Session is required reguardless of cookie state as Auth cookie won't be sent until next request
+                    if (AccountHelper.CurrentUser == null) //Referencing the helper will add the user and/or update the IP if necessary
+                        throw new Exception("Account error!");
+
                     Session["ModHash"] = response["json"]["data"]["modhash"];
 
                     var redditCookie = new HttpCookie("reddit_session")
-                        {
-                            Value = Server.UrlEncode(response["json"]["data"]["cookie"]),
-                            Expires = DateTime.Now.AddYears(1)
-                        };
+                    {
+                        Value = Server.UrlEncode(response["json"]["data"]["cookie"]),
+                        Expires = DateTime.Now.AddYears(1)
+                    };
                     Session["RedditCookie"] = redditCookie;
-                    Session["Username"] = model.UserName;
+                    
 
                     if (model.RememberMe)
                     {
@@ -101,8 +60,6 @@ namespace PiF.Controllers
                         Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
                         Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
                     }
-
-                    db.SubmitChanges();
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return RedirectToAction("Index", "Home");
@@ -141,5 +98,26 @@ namespace PiF.Controllers
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
+        #endregion
+
+        #region LogOff
+        public ActionResult LogOff()
+        {
+            Session.Clear();
+            FormsAuthentication.SignOut();
+            var httpCookie = Request.Cookies.Get("RedditCookie");
+            if (httpCookie != null)
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            httpCookie = Request.Cookies.Get("Username");
+            if (httpCookie != null)
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            httpCookie = Request.Cookies.Get("ModHash");
+            if (httpCookie != null)
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PiF.Models
 {
     /// <summary>Properties containing data when completing a PiF</summary>
-    public class SelectPiFModel
+    public class EditPiFModel
     {
         public string ID { get; set; }
 

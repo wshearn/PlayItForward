@@ -10,14 +10,14 @@ namespace PiF.Controllers
     {
         public ActionResult About()
         {
-            return this.View();
+            return View();
         }
 
         public ActionResult Index()
         {
             this.ViewData["Message"] = "Welcome to the Play It Forward App!";
 
-            return this.View();
+            return View();
         }
     }
 }

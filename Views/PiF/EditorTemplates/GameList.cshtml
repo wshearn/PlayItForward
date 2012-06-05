@@ -2,7 +2,7 @@
 @using Telerik.Web.Mvc.UI
 @using PiF.Models
 @model Game
-@*@Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList((IEnumerable)this.ViewData["games"], "ID", "Name"))*@
+@*@Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(GameHelper.GetGameList(), "ID", "Name"))*@
 @(Html.Telerik().AutoComplete().Name("Name")
             .Encode(false)
             .DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteAjaxLoading", "PiF"))
