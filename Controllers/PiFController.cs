@@ -2,7 +2,6 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,7 +9,6 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using System.Web.Security;
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -20,10 +18,17 @@ namespace PiF.Controllers
     {
         #region Ajax
         [HttpPost]
-        public ActionResult _AutoCompleteAjaxLoading(string text)
+        public ActionResult _AutoCompleteGameNameAjaxLoading(string text)
         {
             var data = GameHelper.GetGameList().Where(p => p.Name.StartsWith(text));
             return new JsonResult { Data = data.Select(n => n.Name).ToList() };
+        }
+
+        public ActionResult _AutoCompleteUserNameAjaxLoading(string text)
+        {
+            
+            var data = AccountHelper.GetAllUsers().Where(p => p.Username.StartsWith(text));
+            return new JsonResult { Data = data.Select(n => n.Username).ToList() };
         }
         #endregion
 
@@ -83,11 +88,11 @@ namespace PiF.Controllers
             if (this.ModelState.IsValid)
             {
                 // DataContext takes a connection string.
-                var db = new PiFDataContext();
+                PiFDbDataContext db = new PiFDbDataContext();
 
                 // TODO: Handle errors such as rate limiting
                 Random r = new Random();
-                var thread = new Thread
+                Thread thread = new Thread
                     {
                         CreatedDate = DateTime.UtcNow,
                         Title = model.ThreadTitle,
@@ -97,7 +102,7 @@ namespace PiF.Controllers
                 foreach (PiFGame pifgame in SessionNewGamesRepository.All())
                 {
                     for (int i = 1; i <= pifgame.Count; i++)
-                        thread.ThreadGames.Add(new ThreadGame { Thread = thread, Game = pifgame.Game });
+                        thread.ThreadGames.Add(new ThreadGame { Thread = thread, GameID = pifgame.ID });
                 }
 
                 // Get a typed table to run queries and insert the data into the table.
@@ -134,20 +139,26 @@ namespace PiF.Controllers
         #region Edit
         public ActionResult Edit(int id)
         {
-            if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == id);
+
+            if (thread == null)
                 return RedirectToAction("List");
 
-            if (AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames.Any(tg => tg.WinnerID == null))
+            if (thread.ThreadGames.Any(tg => tg.WinnerID == null))
             {
                 SessionEditGamesRepository.Clear();
                 foreach (ThreadGame tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
                 {
-                    if (SessionEditGamesRepository.One(p => p.ID == tg.Game.id) != null)
-                        SessionEditGamesRepository.One(p => p.ID == tg.Game.id).Count += 1;
-                    else
-                        SessionEditGamesRepository.Insert(new PiFGame { Count = 1, Game = tg.Game, Name = tg.Game.Name });
+                    int count = 1;
+                    PiFGame egame = SessionEditGamesRepository.One(p => p.ID == tg.Game.id);
+                    if (egame != null)
+                    {
+                        count += egame.Count;
+                        SessionEditGamesRepository.Delete(egame.ID);
+                    }
+                    SessionEditGamesRepository.Insert(new PiFGame(count, tg.Game));
                 }
-                return View(new EditPiFModel());
+                return View(new EditPiFModel(thread));
             }
             else
                 return RedirectToAction("View", "PiF", new { id = id });
@@ -156,6 +167,24 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult Edit(EditPiFModel model)
         {
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == model.ID);
+
+            if (thread == null)
+                return RedirectToAction("List");
+
+            var db = new PiFDbDataContext();
+            thread = db.Threads.Single(t => t.id == model.ID);
+            db.ThreadGames.DeleteAllOnSubmit(thread.ThreadGames);
+            foreach (PiFGame pifgame in SessionEditGamesRepository.All())
+            {
+                for (int i = 1; i <= pifgame.Count; i++)
+                {
+                    ThreadGame tg = new ThreadGame { Thread = thread, GameID = pifgame.ID };
+                    db.ThreadGames.InsertOnSubmit(tg);
+                }
+            }
+            db.SubmitChanges();
+
             return View(model);
         }
         #endregion
@@ -166,19 +195,60 @@ namespace PiF.Controllers
             if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
                 return RedirectToAction("List");
 
+            CompletePiFModel cpm = new CompletePiFModel();
+
+            ViewData["ThreadUsers"] = cpm.ThreadUserList("");
+
+            PiFDbDataContext db = new PiFDbDataContext();
             SessionCompleteGamesRepository.Clear();
             foreach (ThreadGame tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
-                SessionCompleteGamesRepository.Insert(tg);
+            {
+                User user = db.Users.SingleOrDefault(u => u.id == tg.WinnerID);
+                SessionCompleteGamesRepository.Insert(new PiFGameComplete(tg, user != null ? user.Username : String.Empty));
+            }
 
-            this.ViewData["Message"] = "Complete PiF";
+            ViewData["Message"] = "Complete PiF";
 
             // TODO get the list of entries in the PiF from either reddit or the database.
-            return View(new CompletePiFModel());
+            return View(cpm);
         }
 
         [HttpPost]
         public ActionResult Complete(CompletePiFModel model)
         {
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == model.ID);
+
+            if (thread == null)
+                return RedirectToAction("List");
+
+            if (ModelState.IsValid)
+            {
+                var db = new PiFDbDataContext();
+                thread = db.Threads.Single(t => t.id == model.ID);
+                db.ThreadGames.DeleteAllOnSubmit(thread.ThreadGames);
+                foreach (PiFGameComplete pifgame in SessionCompleteGamesRepository.All())
+                {
+                    for (int i = 1; i <= pifgame.Count; i++)
+                    {
+                        User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
+                        if (user == null)
+                        {
+                            ModelState.AddModelError("Winner", "All entrys must have a winner selected");
+                            break;
+                        }
+                        else
+                        {
+                            ThreadGame tg = new ThreadGame { Thread = thread, GameID = pifgame.ID, WinnerID = user.id };
+                            db.ThreadGames.InsertOnSubmit(tg);
+                        }
+                    }
+                    if (!ModelState.IsValid)
+                        break;
+                }
+                if (ModelState.IsValid)
+                    db.SubmitChanges();
+            }
+
             return View(model);
         }
         #endregion

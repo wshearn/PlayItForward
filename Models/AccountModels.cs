@@ -37,7 +37,7 @@ namespace PiF.Models
                     return null;
 
                 string username = HttpContext.Current.User.Identity.Name != String.Empty ? HttpContext.Current.User.Identity.Name : HttpContext.Current.Session["Username"].ToString();
-                var db = new PiFDataContext();
+                var db = new PiFDbDataContext();
                 string userIP = Utilites.GetHash(HttpContext.Current.Request.UserHostAddress);
                 User user = db.Users.SingleOrDefault(u => u.Username == username);
                 if (user == null) //new user - this is mostly here for debugging so we can reset the database when needed
@@ -64,9 +64,17 @@ namespace PiF.Models
         }
 
         [OutputCache(Duration = 60)]
-        public static IEnumerable<User> GetAllUsers()
+        public static IList<User> GetAllUsers()
         {
-            return new PiFDataContext().Users.ToList();
+            return new PiFDbDataContext().Users.ToList();
+        }
+
+        [OutputCache(Duration = 60)]
+        public static IList<User> GetAllUsersWithBlank()
+        {
+            List<User> users = new PiFDbDataContext().Users.ToList();
+            users.Insert(0, new User());
+            return users;
         }
     }
 }

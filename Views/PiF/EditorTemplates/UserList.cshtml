@@ -1,4 +1,4 @@
 ﻿@using PiF.Models;
 @using System.Collections
 @using Telerik.Web.Mvc.UI
-@this.Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(AccountHelper.GetAllUsers(), "ID", "Username"))
+@Html.Telerik().DropDownList().Name("WinnerUserName").BindTo(new SelectList((IEnumerable<SelectListItem>)ViewData["ThreadUsers"], "Value", "Text")))

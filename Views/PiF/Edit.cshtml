@@ -5,7 +5,7 @@
 @section HeadContent {
     <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
-    @*@Html.Telerik().ScriptRegistrar().jQuery(false);*@
+    @Html.Telerik().ScriptRegistrar().jQuery(false);
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
@@ -33,17 +33,17 @@
             }
         }
 
-        //        function Grid_onEdit(e) {
-        //            if (e.mode == "insert") {
-        //                $(e.form).find('#ID').data('tDropDownList').select(function(dataItem) {
-        //                    return dataItem.Text == e.dataItem['Name'];
-        //                });
-        //            }
+        //function Grid_onEdit(e) {
+        //    if (e.mode == "insert") {
+        //        $(e.form).find('#ID').data('tDropDownList').select(function (dataItem) {
+        //            return dataItem.Text == e.dataItem['Name'];
+        //        });
+        //    }
 
-        //            if (e.mode == "edit") {
-        //                $('#ID').data('tDropDownList').disable();
-        //            }
-        //        }
+        //    if (e.mode == "edit") {
+        //        $('#ID').data('tDropDownList').disable();
+        //    }
+        //}
     </script>
 }
 @{
@@ -52,34 +52,40 @@
 
 <h2>@ViewBag.Title</h2>
 
-@(this.Html.Telerik().Grid<PiFGame>()
+@(Html.Telerik().Grid<PiFGame>()
 .Name("EditGameGrid")
 .DataKeys(keys => keys.Add(p => p.ID))
 .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
 .DataBinding(dataBinding =>
+{
+    dataBinding.Ajax()
+    .Select("SelectAjaxEditing", "EditGameGrid")
+    .Insert("InsertAjaxEditing", "EditGameGrid")
+    .Update("UpdateAjaxEditing", "EditGameGrid")
+    .Delete("DeleteAjaxEditing", "EditGameGrid");
+})
+.Columns(columns =>
+{
+    columns.Bound(p => p.Name).Width(400);
+    columns.Bound(p => p.Count).Width(80);
+    columns.Bound(p => p.PointWorth).Width(80);
+    columns.Bound(p => p.SteamID).Width(80);
+    columns.Command(commands =>
     {
-        dataBinding.Ajax()
-            .Select("SelectAjaxEditing", "EditGameGrid")
-            .Insert("InsertAjaxEditing", "EditGameGrid")
-            .Update("UpdateAjaxEditing", "EditGameGrid")
-            .Delete("DeleteAjaxEditing", "EditGameGrid");
-    })
-    .Columns(columns =>
-    {
-        columns.Bound(p => p.Name).Width(400);
-        columns.Bound(p => p.Count).Width(80);
-        columns.Bound(p => p.PointWorth).Width(80);
-        columns.Bound(p => p.Game.SteamID).ReadOnly(true).Title("Steam ID").Width(80);
-        columns.Command(commands =>
-            {
-                commands.Edit().ButtonType(GridButtonType.Text);
-                commands.Delete().ButtonType(GridButtonType.Text);
-            }).Width(180).Title("Commands");
+        commands.Edit().ButtonType(GridButtonType.Text);
+        commands.Delete().ButtonType(GridButtonType.Text);
+    }).Width(180).Title("Commands");
 
-    })
-    .Editable(editing => editing.Mode(GridEditMode.InLine))
-    .Pageable()
-    .Scrollable()
-    .Sortable()
-    .BindTo(SessionEditGamesRepository.All())
-    .ClientEvents(events => events.OnError("Grid_onError")))
+})
+.Editable(editing => editing.Mode(GridEditMode.InLine))
+.Pageable()
+.Scrollable()
+.Sortable()
+.BindTo(SessionEditGamesRepository.All())
+.ClientEvents(events => events.OnError("Grid_onError"))
+)
+@using (Html.BeginForm())
+{
+    <br />
+    <input type="submit" value="Save Changes" />
+}

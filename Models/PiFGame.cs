@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PiF.Models
 {
@@ -14,13 +15,22 @@ namespace PiF.Models
 
         public PiFGame() { }
 
+        public PiFGame(int count, Game game)
+        {
+            ID = game.id;
+            Count = count;
+            Name = game.Name;
+            SteamID = game.SteamID;
+            PointWorth = game.PointWorth * count;
+        }
+
         /// <summary>Gets the game id.</summary>
-        [Required]
+        [ReadOnly(true)]
         [DataType("Integer")]
         [DisplayName("ID")]
         [ScaffoldColumn(false)]
         [DefaultValue(0)]
-        public int ID { get { return Game == null ? 0 : Game.id; } }
+        public int ID { get; set; }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
@@ -29,22 +39,23 @@ namespace PiF.Models
         [DefaultValue(1)]
         public int Count { get { return count; } set { count = Math.Max(0, value); } }
 
-        /// <summary>Gets the Game class that represents the Name and SteamAppID</summary>
-        [Required]
-        public Game Game { get { return game; } set { game = value; } }
-
         /// <summary>Gets or sets the game name.</summary>
         [Required]
         [DataType("String")]
         [UIHint("GameList")]
         public string Name { get; set; }
 
+        /// <summary>Gets or sets the game Steam ID.</summary>
+        [ReadOnly(true)]
+        [DisplayName("Steam ID")]
+        [DefaultValue(0)]
+        public int? SteamID { get; set; }
+
         /// <summary>Gets or sets the number of copies being given.</summary>
-        [Required]
         [DataType("Integer")]
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
-        public int PointWorth { get { return Game == null ? 0 : Game.PointWorth * Count; } }
+        public int PointWorth { get; set; }
     }
 }

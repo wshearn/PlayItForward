@@ -5,7 +5,7 @@
 @*@Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(GameHelper.GetGameList(), "ID", "Name"))*@
 @(Html.Telerik().AutoComplete().Name("Name")
             .Encode(false)
-            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteAjaxLoading", "PiF"))
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteGameNameAjaxLoading", "PiF"))
             .AutoFill(true)
             .HtmlAttributes(new { style = "width:350px" })
             .HighlightFirstMatch(true)

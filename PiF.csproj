@@ -79,16 +79,17 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CompletePiFModel.cs" />
+    <Compile Include="Models\PiFDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PiFDb.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PiFGameComplete.cs" />
     <Compile Include="Models\SessionEditGamesRepository.cs" />
     <Compile Include="Models\GameHelper.cs" />
     <Compile Include="Models\EditPiFModel.cs" />
     <Compile Include="Models\NewPiFModel.cs" />
     <Compile Include="Controllers\PiFController.cs" />
-    <Compile Include="Models\PiF.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PiF.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\PiFGame.cs" />
     <Compile Include="Models\SessionNewGamesRepository.cs" />
     <Compile Include="Models\SessionCompleteGamesRepository.cs" />
@@ -222,7 +223,16 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Models\PiFDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>PiFDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\PiFDb.dbml.layout">
+      <DependentUpon>PiFDb.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -230,11 +240,6 @@
     <Content Include="Views\PiF\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\PiF.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>PiF.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\PiF\EditorTemplates\GameList.cshtml" />
     <Content Include="Views\PiF\Complete.cshtml" />
     <Content Include="Views\PiF\EditorTemplates\UserList.cshtml" />
@@ -246,11 +251,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\PiF.dbml.layout">
-      <DependentUpon>PiF.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

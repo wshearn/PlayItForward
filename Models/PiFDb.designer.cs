@@ -23,7 +23,7 @@ namespace PiF.Models
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Database")]
-	public partial class PiFDataContext : System.Data.Linq.DataContext
+	public partial class PiFDbDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -62,31 +62,31 @@ namespace PiF.Models
     partial void DeleteUserSteamID(UserSteamID instance);
     #endregion
 		
-		public PiFDataContext() : 
+		public PiFDbDataContext() : 
 				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public PiFDataContext(string connection) : 
+		public PiFDbDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public PiFDataContext(System.Data.IDbConnection connection) : 
+		public PiFDbDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public PiFDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public PiFDbDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public PiFDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public PiFDbDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -1427,9 +1427,9 @@ namespace PiF.Models
 		
 		private System.Nullable<int> _WinnerID;
 		
-		private EntityRef<Game> _Game;
-		
 		private EntityRef<Thread> _Thread;
+		
+		private EntityRef<Game> _Game;
 		
 		private EntityRef<User> _User;
 		
@@ -1449,8 +1449,8 @@ namespace PiF.Models
 		
 		public ThreadGame()
 		{
-			this._Game = default(EntityRef<Game>);
 			this._Thread = default(EntityRef<Thread>);
+			this._Game = default(EntityRef<Game>);
 			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
@@ -1547,40 +1547,6 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_ThreadGame", Storage="_Game", ThisKey="GameID", OtherKey="id", IsForeignKey=true)]
-		public Game Game
-		{
-			get
-			{
-				return this._Game.Entity;
-			}
-			set
-			{
-				Game previousValue = this._Game.Entity;
-				if (((previousValue != value) 
-							|| (this._Game.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Game.Entity = null;
-						previousValue.ThreadGames.Remove(this);
-					}
-					this._Game.Entity = value;
-					if ((value != null))
-					{
-						value.ThreadGames.Add(this);
-						this._GameID = value.id;
-					}
-					else
-					{
-						this._GameID = default(int);
-					}
-					this.SendPropertyChanged("Game");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thread_ThreadGame", Storage="_Thread", ThisKey="ThreadID", OtherKey="id", IsForeignKey=true)]
 		public Thread Thread
 		{
@@ -1611,6 +1577,40 @@ namespace PiF.Models
 						this._ThreadID = default(int);
 					}
 					this.SendPropertyChanged("Thread");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_ThreadGame", Storage="_Game", ThisKey="GameID", OtherKey="id", IsForeignKey=true)]
+		public Game Game
+		{
+			get
+			{
+				return this._Game.Entity;
+			}
+			set
+			{
+				Game previousValue = this._Game.Entity;
+				if (((previousValue != value) 
+							|| (this._Game.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Game.Entity = null;
+						previousValue.ThreadGames.Remove(this);
+					}
+					this._Game.Entity = value;
+					if ((value != null))
+					{
+						value.ThreadGames.Add(this);
+						this._GameID = value.id;
+					}
+					else
+					{
+						this._GameID = default(int);
+					}
+					this.SendPropertyChanged("Game");
 				}
 			}
 		}

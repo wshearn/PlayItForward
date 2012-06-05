@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database" Class="PiFDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database" Class="PiFDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Comments" Member="Comments">
     <Type Name="Comment">
@@ -65,8 +65,8 @@
       <Column Name="ThreadID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="GameID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="WinnerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Game_ThreadGame" Member="Game" ThisKey="GameID" OtherKey="id" Type="Game" IsForeignKey="true" />
       <Association Name="Thread_ThreadGame" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread" IsForeignKey="true" />
+      <Association Name="Game_ThreadGame" Member="Game" ThisKey="GameID" OtherKey="id" Type="Game" IsForeignKey="true" />
       <Association Name="User_ThreadGame" Member="User" ThisKey="WinnerID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>

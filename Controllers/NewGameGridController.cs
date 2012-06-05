@@ -47,19 +47,15 @@ namespace PiF.Controllers
             var pifgame = new PiFGame();
 
             // Perform model binding (fill the game properties and validate it).
-            if (TryUpdateModel(pifgame))
+            if (TryUpdateModel(pifgame) && ModelState.IsValid)
             {
-                Game dbGame = new PiFDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
+                Game dbGame = new PiFDbDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
                 if (dbGame == null)
                     ModelState.AddModelError("Name", "Invalid game name.");
-                else if (SessionNewGamesRepository.One(p => p.Game.id == dbGame.id) != null)
+                else if (SessionNewGamesRepository.One(p => p.ID == dbGame.id) != null)
                     ModelState.AddModelError("Name", "Duplicate game, please edit existing row.");
-
-                if (ModelState.IsValid)
-                {
-                    pifgame.Game = dbGame;
-                    SessionNewGamesRepository.Insert(pifgame);
-                }
+                else
+                    SessionNewGamesRepository.Insert(new PiFGame(pifgame.Count, dbGame));
             }
 
             // Rebind the grid
@@ -76,22 +72,20 @@ namespace PiF.Controllers
         [GridAction]
         public ActionResult UpdateAjaxEditing(int id)
         {
-            PiFGame pifgame = SessionNewGamesRepository.One(p => p.Game.id == id);
+            PiFGame pifgame = SessionNewGamesRepository.One(p => p.ID == id);
 
-            if (this.TryUpdateModel(pifgame))
+            if (TryUpdateModel(pifgame) && ModelState.IsValid)
             {
-                Game dbGame = new PiFDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
+                Game dbGame = GameHelper.GetGameList().FirstOrDefault(g => g.Name == pifgame.Name);
                 if (dbGame == null)
                     ModelState.AddModelError("Name", "Invalid game name.");
-                else if (SessionNewGamesRepository.One(p => p.Game.id == dbGame.id && dbGame.id != id) != null)
+                else if (SessionNewGamesRepository.One(p => p.ID == dbGame.id && dbGame.id != id) != null)
                     ModelState.AddModelError("Name", "Duplicate game, please edit existing row.");
-
-                if (pifgame.Count == 0)
-                    SessionNewGamesRepository.Delete(id);
                 else
                 {
-                    if (ModelState.IsValid)
-                        pifgame.Game = dbGame;
+                    SessionNewGamesRepository.Delete(id);
+                    if (pifgame.Count > 0)
+                        SessionNewGamesRepository.Insert(new PiFGame(pifgame.Count, dbGame));
                 }
             }
             return View(new GridModel(SessionNewGamesRepository.All()));

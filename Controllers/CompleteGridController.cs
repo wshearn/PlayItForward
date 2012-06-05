@@ -43,23 +43,7 @@ namespace PiF.Controllers
         [GridAction]
         public ActionResult InsertAjaxEditing()
         {
-            // Create a new instance of the PiFGame class.
-            // var game = new PiF();
-
-            //// Perform model binding (fill the game properties and validate it).
-            // if (TryUpdateModel(game))
-            // {
-            // //// I can't figure out how to put the ID in ID field, keeps going into the game field. So for now, I convert the string to an int, then assign the correct game name to it.
-            // //game.ID = Convert.ToInt32(game.Name);
-            // // The model is valid - insert the game.
-            // var dbGame = new PiFDataContext().Threads.First(g => g.id == game.ID);
-
-            // game.PointWorth = dbGame.pif_points;
-            // game.SteamAppID = dbGame.steam_app_id;
-            // game.Game = dbGame.name;
-            // SessionGamesRepository.Insert(game);
-            // }
-
+            //FIXME: add code to verify user exists on reddit if they are not in our DB
             // Rebind the grid
             return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
@@ -74,9 +58,8 @@ namespace PiF.Controllers
         [GridAction]
         public ActionResult UpdateAjaxEditing(int id)
         {
-            var game = SessionCompleteGamesRepository.One(p => p.id == id);
+            PiFGameComplete game = SessionCompleteGamesRepository.One(p => p.ID == id);
             TryUpdateModel(game);
-            Table<Thread> pif = new PiFDataContext().Threads;
             return View(new GridModel(SessionCompleteGamesRepository.All()));
         }
 

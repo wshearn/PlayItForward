@@ -1,5 +1,5 @@
 ﻿@{
-    var db = new PiF.Models.PiFDataContext().Games;
+    var db = new PiF.Models.PiFDbDataContext().Games;
     var term = Request["term"] + "%";
     var result = db.Where(oh => oh.Name.Contains(term));
     var data = result.Select(p => new{label = p.Name});

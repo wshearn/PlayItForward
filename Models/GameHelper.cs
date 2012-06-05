@@ -12,9 +12,9 @@ namespace PiF.Models
     public static class GameHelper
     {
         [OutputCache(Duration = 60 * 5)] // cache the list for 5 minutes
-        public static IEnumerable<Game> GetGameList()
+        public static IList<Game> GetGameList()
         {
-            return new PiFDataContext().Games.ToList();
+            return new PiFDbDataContext().Games.ToList();
         }
     }
 }

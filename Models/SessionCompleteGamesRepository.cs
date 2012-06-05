@@ -10,11 +10,11 @@ namespace PiF.Models
 {
     public static class SessionCompleteGamesRepository
     {
-        public static IList<ThreadGame> All()
+        public static IList<PiFGameComplete> All()
         {
-                var result = HttpContext.Current.Session["CompletePiFGames"] as IList<ThreadGame>;
+            var result = HttpContext.Current.Session["CompletePiFGames"] as IList<PiFGameComplete>;
                 if (result == null)
-                    HttpContext.Current.Session["CompletePiFGames"] = result = new List<ThreadGame>();
+                    HttpContext.Current.Session["CompletePiFGames"] = result = new List<PiFGameComplete>();
                 return result;
         }
 
@@ -22,19 +22,19 @@ namespace PiF.Models
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
-            ThreadGame target = One(p => p.Game.id == index);
+            PiFGameComplete target = One(p => p.ID == index);
             if (target != null)
                 All().Remove(target);
         }
 
         /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
-        public static void Insert(ThreadGame game)
+        public static void Insert(PiFGameComplete game)
         {
             All().Insert(0, game);
         }
 
-        public static ThreadGame One(Func<ThreadGame, bool> predicate)
+        public static PiFGameComplete One(Func<PiFGameComplete, bool> predicate)
         {
             return All().Where(predicate).FirstOrDefault();
         }
