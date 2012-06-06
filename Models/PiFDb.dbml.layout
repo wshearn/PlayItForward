@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 23.375" name="PiFDb">
+  <DataContextMoniker Name="/PiFDbDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e6630966-66c6-47d3-baa8-cf9eb07e4867" absoluteBounds="6.25, 12.25, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/PiFDbDataContext/Comment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a2654478-a72e-422b-8490-a30423e102c3" absoluteBounds="6.265, 12.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5969a7f8-d1d8-4272-82ba-165a8276c2d6" absoluteBounds="3.5, 9.875, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/PiFDbDataContext/UserWarned" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ba7440d-b546-449e-b335-8b0852fb2989" absoluteBounds="3.515, 10.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e70e3157-2846-4c64-8c82-5ad4fe0f62af" absoluteBounds="3.5, 21, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/PiFDbDataContext/Game" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fd5c4465-ee96-410d-bddd-364bae29583b" absoluteBounds="3.515, 21.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cd6c7ea5-686c-4ee1-9701-d7063af8dec8" absoluteBounds="3.5, 12.625, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/PiFDbDataContext/ModAlert" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6d829e35-dd2e-40d3-b3ea-e1345743dcff" absoluteBounds="3.515, 13.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="986ad549-1814-4ffb-8a05-ffee11e5a383" absoluteBounds="3.5, 15.375, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/PiFDbDataContext/Thread" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f8c02364-fc39-463b-b9b6-61a32a582600" absoluteBounds="3.515, 15.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0715acc2-7205-4c1d-ad87-7ea341119725" absoluteBounds="6.25, 15.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PiFDbDataContext/ThreadGame" />
+      <nestedChildShapes>
+        <elementListCompartment Id="abf21ce2-ea12-476d-be32-a01cae1f8bbe" absoluteBounds="6.265, 15.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="80bbb87e-26b8-4f48-85b3-981bf325c996" absoluteBounds="0.75, 8.875, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/PiFDbDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3912d962-dc36-458f-b2c4-e0b06ff13100" absoluteBounds="0.765, 9.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e6e6e901-e19b-42e5-b7a1-b68fc42f3aab" absoluteBounds="3.5, 5.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PiFDbDataContext/UserIP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c5371819-92b4-40ea-b1a4-a6a2be28f4b9" absoluteBounds="3.515, 5.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c9e53f91-bbb6-4d01-8509-e7e61c2b9989" absoluteBounds="3.5, 18.125, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/PiFDbDataContext/UserScoreModifier" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a555e8b2-22d6-4370-850f-76ebcc8dee85" absoluteBounds="3.515, 18.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e12ea008-b1ad-44e3-a0f8-e3151017bf6b" absoluteBounds="3.5, 3, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/PiFDbDataContext/UserSteamID" />
+      <nestedChildShapes>
+        <elementListCompartment Id="37614217-2c98-49d7-8fb5-3fd34f08d69d" absoluteBounds="3.515, 3.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 15.375); (5.875 : 15); (5.875 : 13.1354484049479); (6.25 : 13.1354484049479)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/Thread/Thread_Comment" />
+      <nodes>
+        <classShapeMoniker Id="986ad549-1814-4ffb-8a05-ffee11e5a383" />
+        <classShapeMoniker Id="e6630966-66c6-47d3-baa8-cf9eb07e4867" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 16.1330501888021); (6.25 : 16.1330501888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/Thread/Thread_ThreadGame" />
+      <nodes>
+        <classShapeMoniker Id="986ad549-1814-4ffb-8a05-ffee11e5a383" />
+        <classShapeMoniker Id="0715acc2-7205-4c1d-ad87-7ea341119725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 22.0777498372396); (7.25 : 22.0777498372396); (7.25 : 16.8285953776042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/Game/Game_ThreadGame" />
+      <nodes>
+        <classShapeMoniker Id="e70e3157-2846-4c64-8c82-5ad4fe0f62af" />
+        <classShapeMoniker Id="0715acc2-7205-4c1d-ad87-7ea341119725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 11.6074039713542); (1.75 : 12.40625); (1.93229291666667 : 12.40625 : JumpStart); (2.09895958333333 : 12.40625 : JumpEnd); (2.19791916666667 : 12.40625 : JumpStart); (2.36458583333333 : 12.40625 : JumpEnd); (2.46354541666667 : 12.40625 : JumpStart); (2.63021208333333 : 12.40625 : JumpEnd); (6.25 : 12.40625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_Comment" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="e6630966-66c6-47d3-baa8-cf9eb07e4867" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 10.7412019856771); (3.5 : 10.7412019856771)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserWarned" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="5969a7f8-d1d8-4272-82ba-165a8276c2d6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 10.2456009928385); (3.5 : 10.2456009928385)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserWarned1" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="5969a7f8-d1d8-4272-82ba-165a8276c2d6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.2812525 : 11.6074039713542); (2.2812525 : 13.6065991210937); (2.46354541666667 : 13.6065991210937 : JumpStart); (2.63021208333333 : 13.6065991210937 : JumpEnd); (3.5 : 13.6065991210937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_ModAlert" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="cd6c7ea5-686c-4ee1-9701-d7063af8dec8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.2187475 : 11.6074039713542); (1.2187475 : 16.3565991210938); (1.40104041666667 : 16.3565991210938 : JumpStart); (1.56770708333333 : 16.3565991210938 : JumpEnd); (1.93229291666667 : 16.3565991210938 : JumpStart); (2.09895958333333 : 16.3565991210938 : JumpEnd); (3.5 : 16.3565991210938)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_Thread" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="986ad549-1814-4ffb-8a05-ffee11e5a383" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.54687875 : 11.6074039713542); (2.54687875 : 15.28125); (5.51041666666667 : 15.28125 : JumpStart); (5.67708333333333 : 15.28125 : JumpEnd); (6.25 : 15.28125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_ThreadGame" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="0715acc2-7205-4c1d-ad87-7ea341119725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 8.875); (1.75 : 5.91429768880208); (2.19791916666667 : 5.91429768880208 : JumpStart); (2.36458583333333 : 5.91429768880208 : JumpEnd); (3.5 : 5.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserIP" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="e6e6e901-e19b-42e5-b7a1-b68fc42f3aab" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.01562625 : 11.6074039713542); (2.01562625 : 19.1065991210938); (3.5 : 19.1065991210938)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserScoreModifier" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="c9e53f91-bbb6-4d01-8509-e7e61c2b9989" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.48437375 : 11.6074039713542); (1.48437375 : 18.5845470605469); (1.93229291666667 : 18.5845470605469 : JumpStart); (2.09895958333333 : 18.5845470605469 : JumpEnd); (3.5 : 18.5845470605469)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserScoreModifier1" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="c9e53f91-bbb6-4d01-8509-e7e61c2b9989" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.2812525 : 8.875); (2.2812525 : 3.69314697265625); (3.5 : 3.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PiFDbDataContext/User/User_UserSteamID" />
+      <nodes>
+        <classShapeMoniker Id="80bbb87e-26b8-4f48-85b3-981bf325c996" />
+        <classShapeMoniker Id="e12ea008-b1ad-44e3-a0f8-e3151017bf6b" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

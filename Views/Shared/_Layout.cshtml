@@ -7,7 +7,6 @@
         <title>@this.ViewBag.Title</title>
         <link href="@this.Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
         @this.RenderSection("HeadContent", required: false)
-        @this.RenderSection("head", required: false)
     </head>
     <body>
         <div class="page">
@@ -23,7 +22,7 @@
                         <li>@this.Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@this.Html.ActionLink(this.User.Identity.Name, "Me", "Account")</li>
                         <li>@this.Html.ActionLink("New PiF", "New", "PiF")</li>
-                        <li>@this.Html.ActionLink("Complete PiF", "Complete", "PiF")</li>
+                        <li>@this.Html.ActionLink("My PiFs", "List", "PiF")</li>
                         <li>@this.Html.ActionLink("About", "About", "Home")</li>
                     </ul>
                 </nav>
