@@ -1,48 +1,59 @@
-﻿@using PiF.Models
-@using Telerik.Web.Mvc.UI
-@model SelectPiFModel
-@section HeadContent {
-    <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
-    <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
-    @this.Html.Telerik().ScriptRegistrar().jQuery(false);
-    <link href="@this.Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@this.Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@this.Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
-    <script type="text/javascript">
-        function Grid_onError(e) {
-            //`this` is the DOM element of the grid
-            var grid = $(this).data("tGrid");
-
-            //the current XMLHttpRequest object
-            var xhr = e.XMLHttpRequest;
-            //the text status of the error - "timeout", "error" etc.
-            var status = e.textStatus;
-
-            if (status == "error") {
-                //xhr.status is the HTTP code returned by the server
-                if (xhr.status == "404") {
-                    alert("requested url not found");
-                }
-
-                if (e.XMLHttpRequest.status == "500") {
-                    alert("The server was unable to process your request.\n" + e.XMLHttpRequest.responseText);
-                    e.preventDefault();
-                }
-            }
-        }
-    </script>
-}
+﻿@using System
+@using System.Linq;
+@model System.Collections.Generic.IEnumerable<PiF.Models.Thread>
 @{
-    ViewBag.Title = this.Context.User.Identity;
+    ViewBag.Title = this.User.Identity.Name + "'s PiFs";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@(Html.Telerik().Grid<SelectPiFModel>().Name("Grid").DataKeys(keys => keys.Add(p => p.ID)).ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
-.DataBinding(dataBinding => dataBinding.Ajax().Select("Select", "Grid"))
-.Columns(columns =>
-      {
-          columns.Bound(p => p.ThreadTitle);
-          columns.Bound(p => p.CreatedDate);
-          columns.Command(commands => commands.Select().ButtonType(GridButtonType.Text)).Width(180).Title("Commands");
-      }).Scrollable().Sortable().ClientEvents(events => events.OnError("Grid_onError")))
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>Link
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @item.CreatedDate.ToString("d")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                <a href="@String.Format("http://redd.it/{0}", item.ThingID)">@String.Format("http://redd.it/{0}", item.ThingID)</a>
+            </td>
+            <td>
+                @{ bool canEdit = item.ThreadGames.Any(tg => tg.WinnerID == null); }
+                
+                @if (canEdit)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                    <text> | @Html.ActionLink("Complete", "Complete", new { id = item.id })</text>
+                }
+                else
+                {
+                    @Html.ActionLink("View", "View", new { id = item.id })
+                }
+            </td>
+        </tr>
+    }
+</table>

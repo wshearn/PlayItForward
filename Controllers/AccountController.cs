@@ -13,9 +13,10 @@ using PiF.Models;
 
 namespace PiF.Controllers
 {
+    using System.Linq;
+
     public class AccountController : Controller
     {
-        #region LogOn
         public ActionResult Login()
         {
             return View();
@@ -98,9 +99,7 @@ namespace PiF.Controllers
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
-        #endregion
 
-        #region LogOff
         public ActionResult LogOff()
         {
             Session.Clear();
@@ -118,6 +117,10 @@ namespace PiF.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
-        #endregion
+
+        public ActionResult Me()
+        {
+            return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
+        }
     }
 }
