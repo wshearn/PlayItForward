@@ -45,6 +45,7 @@ namespace PiF.Models
             }
             catch (Exception ex) { }
 
+            users.Add(new SelectListItem { Value = String.Empty, Text = String.Empty });
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
         #endregion
@@ -77,7 +78,7 @@ namespace PiF.Models
         [OutputCache(Duration = 60 * 5)]
         private dynamic GetPostComments(string thingID)
         {
-            string uri = String.Format("http://www.reddit.com/r/PlayItForward/comments/{0}/.json", thingID);
+            string uri = String.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
             // Do the actual connection
             WebResponse response = connect.GetResponse();
