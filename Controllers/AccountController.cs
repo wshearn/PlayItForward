@@ -141,5 +141,12 @@ namespace PiF.Controllers
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
+
+
+        public ActionResult Me()
+        {
+            var db = new PiFDataContext().Threads.Where(x => x.User.Username == this.User.Identity.Name);
+            return View();
+        }
     }
 }

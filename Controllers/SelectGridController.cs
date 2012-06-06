@@ -16,25 +16,26 @@ namespace PiF.Controllers
             return View();
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //[GridAction]
+        //public ActionResult Delete(int id)
+        //{
+        //    var db = new PiFDataContext();
+        //    IQueryable<Thread> query = db.Threads.Where(u => u.id == id);
+        //    Thread thread = query.First();
+
+        //    // Delete the record
+        //    db.Threads.DeleteOnSubmit(thread);
+
+        //    // Rebind the grid
+        //    return View(new GridModel(SessionPiFRepository.All));
+        //}
+
         [GridAction]
-        public ActionResult Delete(int id)
-        {
-            var db = new PiFDataContext();
-            IQueryable<Thread> query = db.Threads.Where(u => u.id == id);
-            Thread thread = query.First();
-
-            // Delete the record
-            db.Threads.DeleteOnSubmit(thread);
-
-            // Rebind the grid
-            return View(new GridModel(SessionPiFRepository.All));
-        }
-
-        [GridAction]
-        public ActionResult Select()
+        public ActionResult Select(int id)
         {
             return View(new GridModel(SessionGamesRepository.All));
         }
+
     }
 }

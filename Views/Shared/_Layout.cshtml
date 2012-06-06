@@ -1,4 +1,4 @@
-﻿@using Telerik.Web.Mvc.UI
+﻿@using System.Web.Mvc.Html
 
 <!DOCTYPE html>
 <html>
@@ -21,6 +21,7 @@
                 <nav>
                     <ul id="menu">
                         <li>@this.Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@this.Html.ActionLink(this.User.Identity.Name, "Me", "Account")</li>
                         <li>@this.Html.ActionLink("New PiF", "New", "PiF")</li>
                         <li>@this.Html.ActionLink("Complete PiF", "Complete", "PiF")</li>
                         <li>@this.Html.ActionLink("About", "About", "Home")</li>

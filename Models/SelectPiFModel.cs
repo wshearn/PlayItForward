@@ -15,5 +15,11 @@ namespace PiF.Models
         [DisplayName("Thread title")]
         [Required]
         public string ThreadTitle { get; set; }
+
+
+        /// <summary>Gets or sets the date the PiF was made.</summary>
+        [DisplayName("Created")]
+        [Required]
+        public string CreatedDate { get; set; }
     }
 }

@@ -73,7 +73,6 @@ namespace PiF.Controllers
                 Session["Username"] = Request.Cookies.Get("Username").Value;
 
             ViewData["Message"] = "Create a new PiF";
-            ViewData["games"] = new PiFDataContext().Games.ToList();
             return this.View(new NewPiFModel());
         }
 
