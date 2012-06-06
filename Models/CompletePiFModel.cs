@@ -45,6 +45,7 @@ namespace PiF.Models
             }
             catch (Exception ex) { }
 
+            users.Add(new SelectListItem { Value = String.Empty, Text = String.Empty });
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
         #endregion
