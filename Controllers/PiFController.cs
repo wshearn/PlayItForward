@@ -239,8 +239,11 @@ namespace PiF.Controllers
                         User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
                         if (user == null)
                         {
+                            //We must create a new user database context, as we can't submit games until all are complete
+                            PiFDbDataContext userDb = new PiFDbDataContext();
                             user = new User { Username = pifgame.WinnerUserName, RecordCreatedDate = DateTime.UtcNow };
-                            db.Users.InsertOnSubmit(user);
+                            userDb.Users.InsertOnSubmit(user);
+                            userDb.SubmitChanges();
                         }
                         ThreadGame tg = new ThreadGame { ThreadID = thread.id, GameID = pifgame.ID, WinnerID = user.id };
                         db.ThreadGames.InsertOnSubmit(tg);
