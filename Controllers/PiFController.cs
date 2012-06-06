@@ -2,6 +2,7 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -227,6 +228,7 @@ namespace PiF.Controllers
                 var db = new PiFDbDataContext();
                 thread = db.Threads.Single(t => t.id == model.ID);
                 db.ThreadGames.DeleteAllOnSubmit(thread.ThreadGames);
+                List<User> newUsers = new List<User>();
                 foreach (PiFGameComplete pifgame in SessionCompleteGamesRepository.All())
                 {
                     for (int i = 1; i <= pifgame.Count; i++)
@@ -237,15 +239,15 @@ namespace PiF.Controllers
                             break;
                         }
                         User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
+                        if (user == null && newUsers.Exists(u => u.Username == pifgame.WinnerUserName))
+                            user = newUsers.Single(u => u.Username == pifgame.WinnerUserName);
                         if (user == null)
                         {
-                            //We must create a new user database context, as we can't submit games until all are complete
-                            PiFDbDataContext userDb = new PiFDbDataContext();
                             user = new User { Username = pifgame.WinnerUserName, RecordCreatedDate = DateTime.UtcNow };
-                            userDb.Users.InsertOnSubmit(user);
-                            userDb.SubmitChanges();
+                            db.Users.InsertOnSubmit(user);
+                            newUsers.Add(user);
                         }
-                        ThreadGame tg = new ThreadGame { ThreadID = thread.id, GameID = pifgame.ID, WinnerID = user.id };
+                        ThreadGame tg = new ThreadGame { ThreadID = thread.id, GameID = pifgame.ID, User = user };
                         db.ThreadGames.InsertOnSubmit(tg);
                     }
                     if (!ModelState.IsValid)
