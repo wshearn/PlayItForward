@@ -249,9 +249,11 @@ namespace PiF.Controllers
                         break;
                 }
                 if (ModelState.IsValid)
+                {
                     db.SubmitChanges();
-                Session["ThreadUsers"] = null;
-                return RedirectToAction("View", "PiF", new { id = thread.id });
+                    Session["ThreadUsers"] = null;
+                    return RedirectToAction("View", "PiF", new { id = thread.id });
+                }
             }
 
             return View(model);
