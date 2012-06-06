@@ -1,0 +1,58 @@
+﻿@using System.Linq;
+@model IEnumerable<PiF.Models.Thread>
+@{
+    ViewBag.Title = "My PiF List";
+}
+
+<h2>My PiF List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "New")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>Link
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @item.CreatedDate.ToString("d")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                <a href="@String.Format("http://redd.it/{0}", item.ThingID)">@String.Format("http://redd.it/{0}", item.ThingID)</a>
+            </td>
+            <td>
+                @{ bool canEdit = item.ThreadGames.Any(tg => tg.WinnerID == null); }
+                
+                @if (canEdit)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                    <text> | @Html.ActionLink("Complete", "Complete", new { id = item.id })</text>
+                }
+                else
+                {
+                    @Html.ActionLink("View", "View", new { id = item.id })
+                }
+            </td>
+        </tr>
+    }
+</table>

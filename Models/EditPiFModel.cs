@@ -7,9 +7,19 @@ using System.ComponentModel.DataAnnotations;
 namespace PiF.Models
 {
     /// <summary>Properties containing data when completing a PiF</summary>
-    public class SelectPiFModel
+    public class EditPiFModel
     {
-        public string ID { get; set; }
+        public EditPiFModel() { }
+
+        public EditPiFModel(Thread thread)
+        {
+            ID = thread.id;
+            ThreadTitle = thread.Title;
+        }
+
+        /// <summary>Gets or sets the thread ID</summary>
+        [Required]
+        public int ID { get; set; }
 
         /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread title")]

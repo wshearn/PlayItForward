@@ -8,38 +8,41 @@ using System.Web;
 
 namespace PiF.Models
 {
-    public static class SessionGamesRepository
+    public static class SessionNewGamesRepository
     {
-        public static List<PiFGame> All
+        public static IList<PiFGame> All()
         {
-            get
-            {
-                var result = HttpContext.Current.Session["PiFGames"] as List<PiFGame>;
+                var result = HttpContext.Current.Session["NewPiFGames"] as IList<PiFGame>;
                 if (result == null)
-                    HttpContext.Current.Session["PiFGames"] = result = new List<PiFGame>();
+                    HttpContext.Current.Session["NewPiFGames"] = result = new List<PiFGame>();
                 return result;
-            }
         }
 
         /// <summary>Deletes the game from the table.</summary>
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
-            PiFGame target = One(p => p.Game.id == index);
+            PiFGame target = One(p => p.ID == index);
             if (target != null)
-                All.Remove(target);
+                All().Remove(target);
         }
 
         /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
         public static void Insert(PiFGame game)
         {
-            All.Insert(0, game);
+            All().Insert(0, game);
         }
 
         public static PiFGame One(Func<PiFGame, bool> predicate)
         {
-            return All.Where(predicate).FirstOrDefault();
+            return All().Where(predicate).FirstOrDefault();
+        }
+
+        public static void Clear()
+        {
+            HttpContext.Current.Session["NewPiFGames"] = new List<PiFGame>();
+            return;
         }
     }
 }

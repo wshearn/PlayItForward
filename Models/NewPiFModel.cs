@@ -17,7 +17,6 @@ namespace PiF.Models
 
         /// <summary>Gets or sets the captcha code</summary>
         [DisplayName("Captcha")]
-        [Required]
         public string Captcha { get; set; }
 
         /// <summary>Gets or sets a value indicating whether a captcah code is needed.</summary>

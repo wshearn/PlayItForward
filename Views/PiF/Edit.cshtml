@@ -1,7 +1,7 @@
 ﻿@using System.Collections
 @using PiF.Models
 @using Telerik.Web.Mvc.UI
-@model CompletePiFModel
+@model EditPiFModel
 @section HeadContent {
     <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
@@ -47,46 +47,45 @@
     </script>
 }
 @{
-    ViewBag.Title = "Complete PiF";
+    ViewBag.Title = "Edit PiF";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@Html.ValidationSummary(false)
-
-@(Html.Telerik().Grid<PiFGameComplete>()
-.Name("CompleteGrid")
+@(Html.Telerik().Grid<PiFGame>()
+.Name("EditGameGrid")
 .DataKeys(keys => keys.Add(p => p.ID))
-//.ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
+.ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
 .DataBinding(dataBinding =>
 {
     dataBinding.Ajax()
-    .Select("SelectAjaxEditing", "CompleteGrid")
-    .Update("UpdateAjaxEditing", "CompleteGrid")
-    .Insert("InsertAjaxEditing", "CompleteGrid")
-    .Delete("DeleteAjaxEditing", "CompleteGrid");
+    .Select("SelectAjaxEditing", "EditGameGrid")
+    .Insert("InsertAjaxEditing", "EditGameGrid")
+    .Update("UpdateAjaxEditing", "EditGameGrid")
+    .Delete("DeleteAjaxEditing", "EditGameGrid");
 })
 .Columns(columns =>
 {
-    columns.Bound(p => p.SteamID).Width(80);
-    columns.Bound(p => p.Name).ReadOnly(true).Width(200);
-    columns.Bound(p => p.WinnerUserName).Width(80);
+    columns.Bound(p => p.Name).Width(400);
+    columns.Bound(p => p.Count).Width(80);
     columns.Bound(p => p.PointWorth).Width(80);
+    columns.Bound(p => p.SteamID).Width(80);
     columns.Command(commands =>
     {
         commands.Edit().ButtonType(GridButtonType.Text);
-        //commands.Delete().ButtonType(GridButtonType.Text);
+        commands.Delete().ButtonType(GridButtonType.Text);
     }).Width(180).Title("Commands");
+
 })
 .Editable(editing => editing.Mode(GridEditMode.InLine))
 .Pageable()
 .Scrollable()
 .Sortable()
-.BindTo(SessionCompleteGamesRepository.All())
+.BindTo(SessionEditGamesRepository.All())
 .ClientEvents(events => events.OnError("Grid_onError"))
 )
 @using (Html.BeginForm())
 {
     <br />
-    <input type="submit" value="Complete PiF" />
+    <input type="submit" value="Save Changes" />
 }
