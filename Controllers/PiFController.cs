@@ -26,7 +26,7 @@ namespace PiF.Controllers
 
         public ActionResult _AutoCompleteUserNameAjaxLoading(string text)
         {
-            
+
             var data = AccountHelper.GetAllUsers().Where(p => p.Username.StartsWith(text));
             return new JsonResult { Data = data.Select(n => n.Username).ToList() };
         }
@@ -242,11 +242,8 @@ namespace PiF.Controllers
                             user = new User { Username = pifgame.WinnerUserName, RecordCreatedDate = DateTime.UtcNow };
                             db.Users.InsertOnSubmit(user);
                         }
-                        else
-                        {
-                            ThreadGame tg = new ThreadGame { Thread = thread, GameID = pifgame.ID, WinnerID = user.id };
-                            db.ThreadGames.InsertOnSubmit(tg);
-                        }
+                        ThreadGame tg = new ThreadGame { ThreadID = thread.id, GameID = pifgame.ID, WinnerID = user.id };
+                        db.ThreadGames.InsertOnSubmit(tg);
                     }
                     if (!ModelState.IsValid)
                         break;
