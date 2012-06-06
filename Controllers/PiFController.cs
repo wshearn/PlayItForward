@@ -196,8 +196,9 @@ namespace PiF.Controllers
                 return RedirectToAction("List");
 
             CompletePiFModel cpm = new CompletePiFModel();
+            cpm.ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThingID;
 
-            ViewData["ThreadUsers"] = cpm.ThreadUserList("");
+            ViewData["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
             PiFDbDataContext db = new PiFDbDataContext();
             SessionCompleteGamesRepository.Clear();

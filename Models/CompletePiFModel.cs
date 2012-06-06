@@ -15,18 +15,24 @@ namespace PiF.Models
     /// <summary>Properties containing data when completing a PiF</summary>
     public class CompletePiFModel
     {
+        #region Properties
         /// <summary>Gets or sets the PiF ID.</summary>
         public int ID { get; set; }
+
+        /// <summary>Gets or sets the ThingID.</summary>
+        public string ThingID { get; set; }
 
         /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread Title")]
         public string ThreadTitle { get; set; }
+        #endregion
 
+        #region Public Functions
         [OutputCache(Duration = 60 * 5)]
         public IList<SelectListItem> ThreadUserList(string thingID)
         {
             List<SelectListItem> users = new List<SelectListItem>();
-            dynamic thread = GetPostComments("ub9ah");
+            dynamic thread = GetPostComments(thingID);
 
             try
             {
@@ -43,7 +49,9 @@ namespace PiF.Models
 
             return users;
         }
+        #endregion
 
+        #region Private Functions
         private Dictionary<string, string> GetAllUsers(dynamic data)
         {
             Dictionary<string, string> userDictionary = new Dictionary<string, string>();
@@ -82,5 +90,6 @@ namespace PiF.Models
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
+        #endregion
     }
 }
