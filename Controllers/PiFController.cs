@@ -198,7 +198,7 @@ namespace PiF.Controllers
             CompletePiFModel cpm = new CompletePiFModel();
             cpm.ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThingID;
 
-            ViewData["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
+            Session["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
             PiFDbDataContext db = new PiFDbDataContext();
             SessionCompleteGamesRepository.Clear();
@@ -231,11 +231,16 @@ namespace PiF.Controllers
                 {
                     for (int i = 1; i <= pifgame.Count; i++)
                     {
-                        User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
-                        if (user == null)
+                        if (pifgame.WinnerUserName == String.Empty)
                         {
                             ModelState.AddModelError("Winner", "All entrys must have a winner selected");
                             break;
+                        }
+                        User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
+                        if (user == null)
+                        {
+                            user = new User { Username = pifgame.WinnerUserName, RecordCreatedDate = DateTime.UtcNow };
+                            db.Users.InsertOnSubmit(user);
                         }
                         else
                         {
@@ -248,6 +253,8 @@ namespace PiF.Controllers
                 }
                 if (ModelState.IsValid)
                     db.SubmitChanges();
+                Session["ThreadUsers"] = null;
+                return RedirectToAction("View", "PiF", new { id = thread.id });
             }
 
             return View(model);

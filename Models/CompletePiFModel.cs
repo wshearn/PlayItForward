@@ -45,9 +45,7 @@ namespace PiF.Models
             }
             catch (Exception ex) { }
 
-            users.OrderBy(u => u.Text);
-
-            return users;
+            return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
         #endregion
 
