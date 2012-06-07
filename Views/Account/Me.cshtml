@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "New")
+    @Html.ActionLink("Create New", "New", "PiF")
 </p>
 <table>
     <tr>
@@ -46,12 +46,12 @@
                 
                 @if (canEdit)
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
-                    <text> | @Html.ActionLink("Complete", "Complete", new { id = item.id })</text>
+                    @Html.ActionLink("Edit", "Edit", "PiF", new { id = item.id }, null)
+                    <text> | @Html.ActionLink("Complete", "Complete", "PiF", new { id = item.id }, null)</text>
                 }
                 else
                 {
-                    @Html.ActionLink("View", "View", new { id = item.id })
+                    @Html.ActionLink("View", "View", "PiF", new { id = item.id }, null)
                 }
             </td>
         </tr>
