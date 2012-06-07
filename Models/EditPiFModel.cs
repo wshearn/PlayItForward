@@ -1,11 +1,11 @@
 ﻿// <copyright file="SelectPiFModel.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace PiF.Models
 {
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
     /// <summary>Properties containing data when completing a PiF</summary>
     public class EditPiFModel
     {
@@ -15,8 +15,8 @@ namespace PiF.Models
 
         public EditPiFModel(Thread thread)
         {
-            this.ID = thread.id;
-            this.ThreadTitle = thread.Title;
+            ID = thread.id;
+            ThreadTitle = thread.Title;
         }
 
         /// <summary>Gets or sets the date the PiF was made.</summary>

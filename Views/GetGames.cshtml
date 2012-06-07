@@ -4,8 +4,8 @@
 @using PiF.Models
 @{
     Table<Game> db = new PiFDbDataContext().Games;
-    string term = this.Request["term"] + "%";
+    string term = Request["term"] + "%";
     IQueryable<Game> result = db.Where(oh => oh.Name.Contains(term));
     var data = result.Select(p => new { label = p.Name });
-    Json.Write(data, this.Response.Output);
+    Json.Write(data, Response.Output);
 }

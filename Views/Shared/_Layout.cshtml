@@ -3,9 +3,9 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>@this.ViewBag.Title</title>
-        <link href="@this.Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-        @this.RenderSection("HeadContent", required: false)
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+        @RenderSection("HeadContent", required: false)
     </head>
     <body>
         <div class="page">
@@ -14,22 +14,22 @@
                     <h1>PiF App</h1>
                 </div>
                 <div id="logindisplay">
-                    @this.Html.Partial("_LoginPartial")
+                    @Html.Partial("_LoginPartial")
                 </div>
                 <nav>
                     <ul id="menu">
-                        <li>@this.Html.ActionLink("Home", "Index", "Home")</li>
-                        @if (!string.IsNullOrEmpty(this.User.Identity.Name))
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        @if (!string.IsNullOrEmpty(User.Identity.Name))
                         {
-                            <li>@this.Html.ActionLink(this.User.Identity.Name, "Me", "Account")</li>
+                            <li>@Html.ActionLink(User.Identity.Name, "Me", "Account")</li>
                         }
-                        <li>@this.Html.ActionLink("New PiF", "New", "PiF")</li>
-                        <li>@this.Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("New PiF", "New", "PiF")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
                     </ul>
                 </nav>
             </header>
             <section id="main">
-                @this.RenderBody()
+                @RenderBody()
             </section>
             <footer>
             </footer>

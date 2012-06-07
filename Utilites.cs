@@ -10,7 +10,7 @@ using System.Web;
 
 namespace PiF
 {
-    public class Utilites
+    public static class Utilites
     {
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
         {
@@ -18,7 +18,9 @@ namespace PiF
 
             /*Copy keys and values*/
             foreach (var val in cookie.Value.Split('&').Select(value => value.Split('=')))
+            {
                 httpCookie.Values.Add(val[0], val[1]); /* or httpCookie[val[0]] = val[1];  */
+            }
 
             httpCookie.Domain = cookie.Domain;
             httpCookie.Expires = cookie.Expires;
@@ -39,7 +41,9 @@ namespace PiF
             {
                 sha2.ComputeHash(Encoding.Unicode.GetBytes(str));
                 foreach (byte hashByte in sha2.Hash)
+                {
                     buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
+                }
             }
 
             return buff.ToString();
@@ -49,11 +53,11 @@ namespace PiF
         {
             var cookie = new Cookie
                 {
-                    Domain = httpCookie.Domain, 
-                    Expires = httpCookie.Expires, 
-                    HttpOnly = httpCookie.HttpOnly, 
-                    Path = httpCookie.Path, 
-                    Secure = httpCookie.Secure, 
+                    Domain = httpCookie.Domain,
+                    Expires = httpCookie.Expires,
+                    HttpOnly = httpCookie.HttpOnly,
+                    Path = httpCookie.Path,
+                    Secure = httpCookie.Secure,
                     Value = httpCookie.Value
                 };
 

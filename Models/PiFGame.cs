@@ -1,17 +1,17 @@
 // <copyright file="PiFGame.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace PiF.Models
 {
-    using System;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
     public class PiFGame
     {
-        private int count = 1;
+        int count = 1;
 
-        private Game game = new Game();
+        Game game = new Game();
 
         public PiFGame()
         {
@@ -19,11 +19,11 @@ namespace PiF.Models
 
         public PiFGame(int count, Game game)
         {
-            this.ID = game.id;
-            this.Count = count;
-            this.Name = game.Name;
-            this.SteamID = game.SteamID;
-            this.PointWorth = game.PointWorth * count;
+            ID = game.id;
+            Count = count;
+            Name = game.Name;
+            SteamID = game.SteamID;
+            PointWorth = game.PointWorth * count;
         }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
@@ -33,8 +33,8 @@ namespace PiF.Models
         [DefaultValue(1)]
         public int Count
         {
-            get { return this.count; }
-            set { this.count = Math.Max(0, value); }
+            get { return count; }
+            set { count = Math.Max(0, value); }
         }
 
         /// <summary>Gets the game id.</summary>

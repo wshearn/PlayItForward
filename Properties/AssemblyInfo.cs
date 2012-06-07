@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PiF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Seven Software")]
+[assembly: AssemblyCompany("Play It Forward")]
 [assembly: AssemblyProduct("PiF")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2011")]
+[assembly: AssemblyCopyright("Copyright © Robert Baker 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

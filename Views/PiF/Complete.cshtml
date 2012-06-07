@@ -4,10 +4,10 @@
 @section HeadContent {
     <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
-    @this.Html.Telerik().ScriptRegistrar().jQuery(false);
-    <link href="@this.Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@this.Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@this.Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
+    @Html.Telerik().ScriptRegistrar().jQuery(false);
+    <link href="@Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
         function Grid_onError(e) {
@@ -46,14 +46,14 @@
     </script>
 }
 @{
-    this.ViewBag.Title = "Complete PiF";
+    ViewBag.Title = "Complete PiF";
 }
 
-<h2>@this.ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 
-@this.Html.ValidationSummary(false)
+@Html.ValidationSummary(false)
 
-@(this.Html.Telerik().Grid<PiFGameComplete>().Name("CompleteGrid").DataKeys(keys => keys.Add(p => p.ID))
+@(Html.Telerik().Grid<PiFGameComplete>().Name("CompleteGrid").DataKeys(keys => keys.Add(p => p.ID))
       //.ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
       .DataBinding(dataBinding => dataBinding.Ajax().Select("SelectAjaxEditing", "CompleteGrid").Update("UpdateAjaxEditing", "CompleteGrid").Insert("InsertAjaxEditing", "CompleteGrid").Delete("DeleteAjaxEditing", "CompleteGrid")).Columns(columns =>
           {
@@ -63,7 +63,7 @@
               columns.Bound(p => p.PointWorth).Width(80);
               columns.Command(commands => commands.Edit().ButtonType(GridButtonType.Text)).Width(180).Title("Commands");
           }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionCompleteGamesRepository.All()).ClientEvents(events => events.OnError("Grid_onError")))
-@using (this.Html.BeginForm())
+@using (Html.BeginForm())
 {
     <br />
     <input type="submit" value="Complete PiF" />

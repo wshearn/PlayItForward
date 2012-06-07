@@ -1,7 +1,7 @@
-﻿@model PiF.Models.Thread
+﻿@model Models.Thread
 
 @{
-    this.ViewBag.Title = "View";
+    ViewBag.TiPiF.tle = "View";
 }
 
 <h2>View</h2>
@@ -10,41 +10,41 @@
     <legend>Thread</legend>
 
     <div class="display-label">
-        @this.Html.DisplayNameFor(model => model.UserID)
+        @Html.DisplayNameFor(model => model.UserID)
     </div>
     <div class="display-field">
-        @this.Html.DisplayFor(model => model.UserID)
+        @Html.DisplayFor(model => model.UserID)
     </div>
 
     <div class="display-label">
-        @this.Html.DisplayNameFor(model => model.Title)
+        @Html.DisplayNameFor(model => model.Title)
     </div>
     <div class="display-field">
-        @this.Html.DisplayFor(model => model.Title)
+        @Html.DisplayFor(model => model.Title)
     </div>
 
     <div class="display-label">
-        @this.Html.DisplayNameFor(model => model.CreatedDate)
+        @Html.DisplayNameFor(model => model.CreatedDate)
     </div>
     <div class="display-field">
-        @this.Html.DisplayFor(model => model.CreatedDate)
+        @Html.DisplayFor(model => model.CreatedDate)
     </div>
 
     <div class="display-label">
-        @this.Html.DisplayNameFor(model => model.EndDate)
+        @Html.DisplayNameFor(model => model.EndDate)
     </div>
     <div class="display-field">
-        @this.Html.DisplayFor(model => model.EndDate)
+        @Html.DisplayFor(model => model.EndDate)
     </div>
 
     <div class="display-label">
-        @this.Html.DisplayNameFor(model => model.ThingID)
+        @Html.DisplayNameFor(model => model.ThingID)
     </div>
     <div class="display-field">
-        @this.Html.DisplayFor(model => model.ThingID)
+        @Html.DisplayFor(model => model.ThingID)
     </div>
 </fieldset>
 <p>
-    @this.Html.ActionLink("Edit", "Edit", new { this.Model.id }) |
-    @this.Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

@@ -1,4 +1,4 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model PiF.Models.Game
 @*@Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(GameHelper.GetGameList(), "ID", "Name"))*@
-@this.Html.Telerik().AutoComplete().Name("Name").Encode(false).DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteGameNameAjaxLoading", "PiF")).AutoFill(true).HtmlAttributes(new { style = "width:350px" }).HighlightFirstMatch(true).Filterable(filtering => filtering.FilterMode(AutoCompleteFilterMode.StartsWith))
+@Html.Telerik().AutoComplete().Name("Name").Encode(false).DataBinding(dataBinding => dataBinding.Ajax().Select("_AutoCompleteGameNameAjaxLoading", "PiF")).AutoFill(true).HtmlAttributes(new { style = "width:350px" }).HighlightFirstMatch(true).Filterable(filtering => filtering.FilterMode(AutoCompleteFilterMode.StartsWith))

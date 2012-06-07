@@ -2,7 +2,7 @@
 @using System.Linq
 @model System.Collections.Generic.IEnumerable<PiF.Models.Thread>
 @{
-    ViewBag.Title = this.User.Identity.Name + "'s PiFs";
+    ViewBag.Title = User.Identity.Name + "'s PiFs";
 }
 
 <h2>@ViewBag.Title</h2>

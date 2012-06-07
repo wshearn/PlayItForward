@@ -1,3 +1,3 @@
 ﻿@using System.Collections.Generic
 @using Telerik.Web.Mvc.UI
-@this.Html.Telerik().DropDownList().Name("WinnerUserName").BindTo(new SelectList(this.Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))
+@Html.Telerik().DropDownList().Name("WinnerUserName").BindTo(new SelectList(Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))
