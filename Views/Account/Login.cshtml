@@ -1,6 +1,6 @@
 ﻿@model PiF.Models.LoginModel
 @{
-    ViewBag.Title = "Login";
+    this.ViewBag.Title = "Login";
 }
 
 <h2>Sign in</h2>
@@ -8,30 +8,30 @@
     Please enter your reddit user name and password.
 </p>
 
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"> </script>
+<script src="@this.Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"> </script>
 
-@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+@this.Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
-@using (Html.BeginForm())
+@using (this.Html.BeginForm())
 {
     <div class="login">
         <div class="editor-label">
-            @Html.LabelFor(m => m.UserName)
+            @this.Html.LabelFor(m => m.UserName)
         </div>
         <div class="editor-field">
-            @Html.TextBoxFor(m => m.UserName)
-            @Html.ValidationMessageFor(m => m.UserName)
+            @this.Html.TextBoxFor(m => m.UserName)
+            @this.Html.ValidationMessageFor(m => m.UserName)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(m => m.Password)
+            @this.Html.LabelFor(m => m.Password)
         </div>
         <div class="editor-field">
-            @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
+            @this.Html.PasswordFor(m => m.Password)
+            @this.Html.ValidationMessageFor(m => m.Password)
         </div>
         <input type="submit" value="Sign in" class="button-blue" />
-        @Html.CheckBoxFor(m => m.RememberMe)
-        @Html.LabelFor(m => m.RememberMe)
+        @this.Html.CheckBoxFor(m => m.RememberMe)
+        @this.Html.LabelFor(m => m.RememberMe)
     </div>
 }

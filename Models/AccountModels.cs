@@ -1,16 +1,16 @@
 ﻿// <copyright file="AccountModels.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
 namespace PiF.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
     public class LoginModel
     {
         [Required]
@@ -33,10 +33,15 @@ namespace PiF.Models
         {
             get
             {
-                if (!HttpContext.Current.User.Identity.IsAuthenticated && HttpContext.Current.Session["Username"] == null)
+                if (!HttpContext.Current.User.Identity.IsAuthenticated
+                    && HttpContext.Current.Session["Username"] == null)
+                {
                     return null;
+                }
 
-                string username = HttpContext.Current.User.Identity.Name != String.Empty ? HttpContext.Current.User.Identity.Name : HttpContext.Current.Session["Username"].ToString();
+                string username = HttpContext.Current.User.Identity.Name != String.Empty
+                                      ? HttpContext.Current.User.Identity.Name
+                                      : HttpContext.Current.Session["Username"].ToString();
                 var db = new PiFDbDataContext();
                 string userIP = Utilites.GetHash(HttpContext.Current.Request.UserHostAddress);
                 User user = db.Users.SingleOrDefault(u => u.Username == username);
@@ -64,7 +69,7 @@ namespace PiF.Models
         }
 
         [OutputCache(Duration = 60)]
-        public static IList<User> GetAllUsers()
+        public static IEnumerable<User> GetAllUsers()
         {
             return new PiFDbDataContext().Users.ToList();
         }

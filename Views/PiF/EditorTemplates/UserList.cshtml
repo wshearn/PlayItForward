@@ -1,4 +1,3 @@
-﻿@using PiF.Models;
-@using System.Collections
+﻿@using System.Collections.Generic
 @using Telerik.Web.Mvc.UI
-@Html.Telerik().DropDownList().Name("WinnerUserName").BindTo(new SelectList(Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))
+@this.Html.Telerik().DropDownList().Name("WinnerUserName").BindTo(new SelectList(this.Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))

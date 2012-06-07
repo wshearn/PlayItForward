@@ -1,5 +1,4 @@
-﻿@using System.Web.Mvc.Html
-
+﻿
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,10 +19,10 @@
                 <nav>
                     <ul id="menu">
                         <li>@this.Html.ActionLink("Home", "Index", "Home")</li>
-                       @if (!string.IsNullOrEmpty(this.User.Identity.Name))
-                       {
-                           <li>@this.Html.ActionLink(this.User.Identity.Name, "Me", "Account")</li>
-                       }
+                        @if (!string.IsNullOrEmpty(this.User.Identity.Name))
+                        {
+                            <li>@this.Html.ActionLink(this.User.Identity.Name, "Me", "Account")</li>
+                        }
                         <li>@this.Html.ActionLink("New PiF", "New", "PiF")</li>
                         <li>@this.Html.ActionLink("About", "About", "Home")</li>
                     </ul>

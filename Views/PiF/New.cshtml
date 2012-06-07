@@ -1,11 +1,10 @@
-﻿@using System.Collections
-@using PiF.Models
+﻿@using PiF.Models
 @using Telerik.Web.Mvc.UI
-@model NewPiFModel
+@model PiF.Models.NewPiFModel
 @section HeadContent {
     <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
-    @Html.Telerik().ScriptRegistrar().jQuery(false);
+    @this.Html.Telerik().ScriptRegistrar().jQuery(false);
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
     <link href="@this.Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
@@ -33,7 +32,7 @@
             }
         }
 
-        //function Grid_onEdit(e) {
+    //function Grid_onEdit(e) {
         //    if (e.mode == "insert") {
         //        $(e.form).find('#ID').data('tDropDownList').select(function (dataItem) {
         //            return dataItem.Text == e.dataItem['Name'];
@@ -47,75 +46,55 @@
     </script>
 }
 @{
-    ViewBag.Title = "Create a new PiF";
+    this.ViewBag.Title = "Create a new PiF";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@this.ViewBag.Title</h2>
 
-@Html.ValidationSummary(true)
+@this.Html.ValidationSummary(true)
 <div class="editor-label">
-    @Html.Label("Grid", "Add the games you want to PiF")
+    @this.Html.Label("Grid", "Add the games you want to PiF")
 </div>
 
-@(Html.Telerik().Grid<PiFGame>()
-.Name("NewGameGrid")
-.DataKeys(keys => keys.Add(p => p.ID))
-.ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
-.DataBinding(dataBinding =>
-{
-    dataBinding.Ajax()
-    .Select("SelectAjaxEditing", "NewGameGrid")
-    .Insert("InsertAjaxEditing", "NewGameGrid")
-    .Update("UpdateAjaxEditing", "NewGameGrid")
-    .Delete("DeleteAjaxEditing", "NewGameGrid");
-})
-.Columns(columns =>
-{
-    columns.Bound(p => p.Name).Width(400);
-    columns.Bound(p => p.Count).Width(80);
-    columns.Bound(p => p.PointWorth).Width(80);
-    columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
-    columns.Command(commands =>
-    {
-        commands.Edit().ButtonType(GridButtonType.Text);
-        commands.Delete().ButtonType(GridButtonType.Text);
-    }).Width(180).Title("Commands");
-
-})
-.Editable(editing => editing.Mode(GridEditMode.InLine))
-.Pageable()
-.Scrollable()
-.Sortable()
-.BindTo(SessionNewGamesRepository.All())
-.ClientEvents(events => events.OnError("Grid_onError"))
-)
+@(this.Html.Telerik().Grid<PiFGame>().Name("NewGameGrid").DataKeys(keys => keys.Add(p => p.ID)).ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text)).DataBinding(dataBinding => dataBinding.Ajax().Select("SelectAjaxEditing", "NewGameGrid").Insert("InsertAjaxEditing", "NewGameGrid").Update("UpdateAjaxEditing", "NewGameGrid").Delete("DeleteAjaxEditing", "NewGameGrid")).Columns(columns =>
+      {
+          columns.Bound(p => p.Name).Width(400);
+          columns.Bound(p => p.Count).Width(80);
+          columns.Bound(p => p.PointWorth).Width(80);
+          columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
+          columns.Command(commands =>
+              {
+                  commands.Edit().ButtonType(GridButtonType.Text);
+                  commands.Delete().ButtonType(GridButtonType.Text);
+              }).Width(180).Title("Commands");
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionNewGamesRepository.All()).ClientEvents(events => events.OnError("Grid_onError")))
 <br />
-@using (Html.BeginForm("New", "PiF"))
+@using (this.Html.BeginForm("New", "PiF"))
 {
     <div class="editor-label">
-        @Html.LabelFor(m => m.ThreadTitle)
+        @this.Html.LabelFor(m => m.ThreadTitle)
     </div>
     <div class="editor-field">
-        @Html.TextBoxFor(m => m.ThreadTitle, new { maxlength = 300 })
-        @Html.ValidationMessageFor(m => m.ThreadTitle)
+        @this.Html.TextBoxFor(m => m.ThreadTitle, new { maxlength = 300 })
+        @this.Html.ValidationMessageFor(m => m.ThreadTitle)
     </div>
     <div class="editor-label">
-        @Html.LabelFor(m => m.SelfText)
+        @this.Html.LabelFor(m => m.SelfText)
     </div>
     <div class="editor-field">
-        @Html.TextAreaFor(m => m.SelfText, new { maxlength = 900 })
-        @Html.ValidationMessageFor(m => m.SelfText)
+        @this.Html.TextAreaFor(m => m.SelfText, new { maxlength = 900 })
+        @this.Html.ValidationMessageFor(m => m.SelfText)
     </div>
     if (this.Model.CaptchaRequired)
     {
-    <div class="editor-label">
-        @Html.LabelFor(m => m.Captcha)
-    </div>
-    <img src="@Url.Content("http://reddit.com/captcha/" + Session["CaptchaID"] + ".png")" />
-    <div class="captcha-field">
-        @Html.TextBoxFor(m => m.Captcha, new { maxlength = 8 })
-    </div>
-        Html.ValidationMessageFor(m => m.Captcha);
+        <div class="editor-label">
+            @this.Html.LabelFor(m => m.Captcha)
+        </div>
+        <img src="@this.Url.Content("http://reddit.com/captcha/" + this.Session["CaptchaID"] + ".png")" />
+        <div class="captcha-field">
+            @this.Html.TextBoxFor(m => m.Captcha, new { maxlength = 8 })
+        </div>
+        this.Html.ValidationMessageFor(m => m.Captcha);
     }
 
     <input type="submit" value="Create PiF" />

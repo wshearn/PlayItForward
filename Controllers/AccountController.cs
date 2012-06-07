@@ -1,25 +1,49 @@
 ﻿// <copyright file="AccountController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
-using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using System.Web.Security;
-using PiF.Models;
-
 namespace PiF.Controllers
 {
+    using System;
+    using System.IO;
     using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+    using System.Web.Security;
+
+    using PiF.Models;
 
     public class AccountController : Controller
     {
+        public ActionResult LogOff()
+        {
+            this.Session.Clear();
+            FormsAuthentication.SignOut();
+            HttpCookie httpCookie = this.Request.Cookies.Get("RedditCookie");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            httpCookie = this.Request.Cookies.Get("Username");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            httpCookie = this.Request.Cookies.Get("ModHash");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+
+            this.Session.Abandon();
+            return this.RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Login()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
@@ -33,42 +57,52 @@ namespace PiF.Controllers
                 {
                     string error = response["json"]["errors"][0][0];
                     if (error == "INVALID_PASSWORD" || error == "WRONG_PASSWORD" || error == "RATELIMIT")
+                    {
                         this.ModelState.AddModelError(string.Empty, response["json"]["errors"][0][1]);
+                    }
                 }
                 else
                 {
                     // Set Session vars in case user doesn't use cookies.
-                    Session["Username"] = model.UserName; //Session is required reguardless of cookie state as Auth cookie won't be sent until next request
+                    this.Session["Username"] = model.UserName;
+                        //Session is required reguardless of cookie state as Auth cookie won't be sent until next request
                     if (AccountHelper.CurrentUser == null) //Referencing the helper will add the user and/or update the IP if necessary
+                    {
                         throw new Exception("Account error!");
+                    }
 
-                    Session["ModHash"] = response["json"]["data"]["modhash"];
+                    this.Session["ModHash"] = response["json"]["data"]["modhash"];
 
                     var redditCookie = new HttpCookie("reddit_session")
-                    {
-                        Value = Server.UrlEncode(response["json"]["data"]["cookie"]),
-                        Expires = DateTime.Now.AddYears(1)
-                    };
-                    Session["RedditCookie"] = redditCookie;
-                    
+                        {
+                            Value = this.Server.UrlEncode(response["json"]["data"]["cookie"]),
+                            Expires = DateTime.Now.AddYears(1)
+                        };
+                    this.Session["RedditCookie"] = redditCookie;
 
                     if (model.RememberMe)
                     {
-                        Response.Cookies["Username"].Value = model.UserName;
-                        Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
-                        Response.Cookies["RedditCookie"].Value = Server.UrlEncode(response["json"]["data"]["cookie"]);
-                        Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
-                        Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
-                        Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
+                        this.Response.Cookies["Username"].Value = model.UserName;
+                        this.Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
+                        this.Response.Cookies["RedditCookie"].Value =
+                            this.Server.UrlEncode(response["json"]["data"]["cookie"]);
+                        this.Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
+                        this.Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
+                        this.Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
                     }
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Home");
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult Me()
+        {
+            return this.View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
 
         /// <summary>Logs the user in</summary>
@@ -94,33 +128,9 @@ namespace PiF.Controllers
             WebResponse response = login.GetResponse();
 
             string resp;
-            using (var reader = new StreamReader(response.GetResponseStream()))
-                resp = reader.ReadToEnd();
+            using (var reader = new StreamReader(response.GetResponseStream())) resp = reader.ReadToEnd();
 
             return new JavaScriptSerializer().Deserialize<dynamic>(resp);
-        }
-
-        public ActionResult LogOff()
-        {
-            Session.Clear();
-            FormsAuthentication.SignOut();
-            var httpCookie = Request.Cookies.Get("RedditCookie");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            httpCookie = Request.Cookies.Get("Username");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            httpCookie = Request.Cookies.Get("ModHash");
-            if (httpCookie != null)
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-
-            Session.Abandon();
-            return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult Me()
-        {
-            return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
     }
 }

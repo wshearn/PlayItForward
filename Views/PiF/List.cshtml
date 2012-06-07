@@ -1,5 +1,5 @@
 ﻿@using System
-@using System.Linq;
+@using System.Linq
 @model System.Collections.Generic.IEnumerable<PiF.Models.Thread>
 @{
     ViewBag.Title = "My PiF List";
@@ -46,12 +46,12 @@
                 
                 @if (canEdit)
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
-                    <text> | @Html.ActionLink("Complete", "Complete", new { id = item.id })</text>
+                    @Html.ActionLink("Edit", "Edit", new { item.id })
+                    <text> | @Html.ActionLink("Complete", "Complete", new { item.id })</text>
                 }
                 else
                 {
-                    @Html.ActionLink("View", "View", new { id = item.id })
+                    @Html.ActionLink("View", "View", new { item.id })
                 }
             </td>
         </tr>
