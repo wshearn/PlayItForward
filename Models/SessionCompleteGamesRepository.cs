@@ -23,7 +23,6 @@ namespace PiF.Models
         public static void Clear()
         {
             HttpContext.Current.Session["CompletePiFGames"] = new List<ThreadGame>();
-            return;
         }
 
         /// <summary>Deletes the game from the table.</summary>

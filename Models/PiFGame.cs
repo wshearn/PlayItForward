@@ -11,8 +11,6 @@ namespace PiF.Models
     {
         int count = 1;
 
-        Game game = new Game();
-
         public PiFGame()
         {
         }
@@ -29,7 +27,7 @@ namespace PiF.Models
         /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
         [DataType("Integer")]
-        [DisplayName("Quanity")]
+        [DisplayName("Quantity")]
         [DefaultValue(1)]
         public int Count
         {

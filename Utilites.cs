@@ -32,7 +32,7 @@ namespace PiF
         }
 
         /// <summary>Gets the SHA-2 Hash of a file.</summary>
-        /// <param name="str">The string to calulate hash.</param>
+        /// <param name="str">The string to calculate hash.</param>
         /// <returns>The SHA-2 Hash.</returns>
         public static string GetHash(string str)
         {

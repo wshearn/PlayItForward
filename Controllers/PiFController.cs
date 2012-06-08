@@ -40,7 +40,6 @@ namespace PiF.Controllers
 
             ViewData["Message"] = "Complete PiF";
 
-            // TODO get the list of entries in the PiF from either reddit or the database.
             return View(cpm);
         }
 
@@ -66,7 +65,7 @@ namespace PiF.Controllers
                     {
                         if (pifgame.WinnerUserName == String.Empty)
                         {
-                            ModelState.AddModelError("Winner", "All entrys must have a winner selected");
+                            ModelState.AddModelError("Winner", "All entries must have a winner selected");
                             break;
                         }
                         User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);

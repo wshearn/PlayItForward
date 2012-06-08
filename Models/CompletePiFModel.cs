@@ -54,7 +54,7 @@ namespace PiF.Models
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
 
-        Dictionary<string, string> GetAllUsers(dynamic data)
+        private static Dictionary<string, string> GetAllUsers(dynamic data)
         {
             var userDictionary = new Dictionary<string, string>();
             if (!userDictionary.ContainsKey(data["author"]))
@@ -83,20 +83,24 @@ namespace PiF.Models
         }
 
         [OutputCache(Duration = 60 * 5)]
-        dynamic GetPostComments(string thingID)
+        private static dynamic GetPostComments(string thingID)
         {
             string uri = String.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
             // Do the actual connection
-            WebResponse response = connect.GetResponse();
-
-            string resp;
-            using (var reader = new StreamReader(response.GetResponseStream()))
+            if (connect != null)
             {
-                resp = reader.ReadToEnd();
-            }
+                WebResponse response = connect.GetResponse();
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+                string resp;
+                using (var reader = new StreamReader(response.GetResponseStream()))
+                {
+                    resp = reader.ReadToEnd();
+                }
+
+                return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+            }
+            throw new Exception("Unable to retrieve post comments.");
         }
     }
 }

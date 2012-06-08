@@ -73,13 +73,5 @@ namespace PiF.Models
         {
             return new PiFDbDataContext().Users.ToList();
         }
-
-        [OutputCache(Duration = 60)]
-        public static IList<User> GetAllUsersWithBlank()
-        {
-            List<User> users = new PiFDbDataContext().Users.ToList();
-            users.Insert(0, new User());
-            return users;
-        }
     }
 }

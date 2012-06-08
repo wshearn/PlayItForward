@@ -65,7 +65,7 @@ namespace PiF.Controllers
                 {
                     // Set Session vars in case user doesn't use cookies.
                     Session["Username"] = model.UserName;
-                    //Session is required reguardless of cookie state as Auth cookie won't be sent until next request
+                    //Session is required regardless of cookie state as Auth cookie won't be sent until next request
                     if (AccountHelper.CurrentUser == null) //Referencing the helper will add the user and/or update the IP if necessary
                     {
                         throw new Exception("Account error!");
@@ -91,6 +91,10 @@ namespace PiF.Controllers
                     }
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+
+                    if (returnUrl != String.Empty)
+                        return Redirect(returnUrl);
+
                     return RedirectToAction("Index", "Home");
                 }
             }
