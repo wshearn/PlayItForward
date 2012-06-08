@@ -42,6 +42,7 @@ namespace PiF.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.Title = "Sign in";
             return View();
         }
 
@@ -100,6 +101,7 @@ namespace PiF.Controllers
 
         public ActionResult Me()
         {
+            ViewBag.Title = User.Identity.Name + "'s PiFs";
             return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
 

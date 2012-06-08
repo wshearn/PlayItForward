@@ -10,13 +10,19 @@ namespace PiF.Controllers
     {
         public ActionResult About()
         {
+            ViewBag.Title = "About Play It Forward";
             return View();
         }
 
         public ActionResult Index()
         {
-            ViewData["Message"] = "Welcome to the Play It Forward App!";
+            ViewBag.Title = "Recent Giveaways";
+            return View();
+        }
 
+        public ActionResult Rules()
+        {
+            ViewBag.Title = "Rules & Guidelines";
             return View();
         }
     }

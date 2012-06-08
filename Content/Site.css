@@ -7,6 +7,18 @@
     text-align: center;
 }
 
+
+span.points {
+    background: whiteSmoke url("/Content/points.png") center center no-repeat;
+    color: black;
+    font-size: 12px !important;
+    display: inline-block;
+    padding: 0 2px;
+    border: 1px solid #232;
+    border-radius: 2px;
+}
+
+
 header {
     background: #4b6c9e;
     margin: 0;

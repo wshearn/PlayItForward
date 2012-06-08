@@ -1,12 +1,8 @@
-﻿@using System
-@using System.Linq
-@model System.Collections.Generic.IEnumerable<PiF.Models.Thread>
-@{
-    ViewBag.Title = User.Identity.Name + "'s PiFs";
-}
+﻿@using System.Linq
+@model IEnumerable<PiF.Models.Thread>
 
 <h2>@ViewBag.Title</h2>
-
+<p>Games Given: @PiF.Models.AccountHelper.CurrentUser.GivenCount<br/>Games Received: @PiF.Models.AccountHelper.CurrentUser.ReceivedCount</p>
 <p>
     @Html.ActionLink("Create New", "New", "PiF")
 </p>

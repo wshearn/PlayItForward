@@ -149,6 +149,7 @@
     <Content Include="Content\2012.1.214\Windows7\slider-v.gif" />
     <Content Include="Content\2012.1.214\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.1.214\Windows7\sprite.png" />
+    <Content Include="Content\points.png" />
     <Content Include="Content\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
@@ -232,6 +233,7 @@
     <None Include="Models\PiFDb.dbml.layout">
       <DependentUpon>PiFDb.dbml</DependentUpon>
     </None>
+    <Content Include="Views\Home\Rules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
