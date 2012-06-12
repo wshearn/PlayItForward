@@ -1,6 +1,5 @@
 ﻿// <copyright file="PiFController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +24,9 @@ namespace PiF.Controllers
             }
 
             var cpm = new CompletePiFModel
-                { ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThingID };
+                {
+                   ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThingID 
+                };
 
             Session["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
@@ -35,7 +36,7 @@ namespace PiF.Controllers
             {
                 User user = db.Users.SingleOrDefault(u => u.id == tg.WinnerID);
                 SessionCompleteGamesRepository.Insert(
-                    new PiFGameComplete(tg, user != null ? user.Username : String.Empty));
+                    new PiFGameComplete(tg, user != null ? user.Username : string.Empty));
             }
 
             ViewData["Message"] = "Complete PiF";
@@ -64,30 +65,35 @@ namespace PiF.Controllers
                 {
                     for (int i = 1; i <= pifgame.Count; i++)
                     {
-                        if (pifgame.WinnerUserName == String.Empty)
+                        if (pifgame.WinnerUserName == string.Empty)
                         {
                             ModelState.AddModelError("Winner", "All entrys must have a winner selected");
                             break;
                         }
+
                         User user = db.Users.SingleOrDefault(u => u.Username == pifgame.WinnerUserName);
                         if (user == null && newUsers.Exists(u => u.Username == pifgame.WinnerUserName))
                         {
                             user = newUsers.Single(u => u.Username == pifgame.WinnerUserName);
                         }
+
                         if (user == null)
                         {
                             user = new User { Username = pifgame.WinnerUserName, RecordCreatedDate = DateTime.UtcNow };
                             db.Users.InsertOnSubmit(user);
                             newUsers.Add(user);
                         }
+
                         var tg = new ThreadGame { ThreadID = thread.id, GameID = pifgame.ID, User = user };
                         db.ThreadGames.InsertOnSubmit(tg);
                     }
+
                     if (!ModelState.IsValid)
                     {
                         break;
                     }
                 }
+
                 if (ModelState.IsValid)
                 {
                     db.SubmitChanges();
@@ -120,10 +126,13 @@ namespace PiF.Controllers
                         count += egame.Count;
                         SessionEditGamesRepository.Delete(egame.ID);
                     }
+
                     SessionEditGamesRepository.Insert(new PiFGame(count, tg.Game));
                 }
+
                 return View(new EditPiFModel(thread));
             }
+
             return RedirectToAction("View", "PiF", new { id });
         }
 
@@ -148,6 +157,7 @@ namespace PiF.Controllers
                     db.ThreadGames.InsertOnSubmit(tg);
                 }
             }
+
             db.SubmitChanges();
 
             return View(model);
@@ -175,19 +185,20 @@ namespace PiF.Controllers
                 return View(model);
             }
 
-            string thingID = String.Empty;
+            string thingID = string.Empty;
             bool debug;
 #if DEBUG
+
             // We don't want to send an actual Self.PlayItForward thread to reddit if we are debugging, we will generate a random string instead
             debug = true;
 #endif
             if (debug == false)
             {
                 dynamic response = PostPiF(
-                    model.ThreadTitle,
-                    model.SelfText,
-                    Session["ModHash"].ToString(),
-                    model.Captcha,
+                    model.ThreadTitle, 
+                    model.SelfText, 
+                    Session["ModHash"].ToString(), 
+                    model.Captcha, 
                     Session["CaptchaID"].ToString());
 
                 if (response["json"]["errors"].Length > 0)
@@ -198,8 +209,10 @@ namespace PiF.Controllers
                         Session["CaptchaID"] = response["json"]["captcha"];
                         model.CaptchaRequired = true;
                     }
+
                     return View(model);
                 }
+
                 thingID = response["json"]["data"]["id"];
             }
 
@@ -212,18 +225,18 @@ namespace PiF.Controllers
                 var r = new Random();
                 var thread = new Thread
                     {
-                        CreatedDate = DateTime.UtcNow,
-                        Title = model.ThreadTitle,
+                        CreatedDate = DateTime.UtcNow, 
+                        Title = model.ThreadTitle, 
                         ThingID =
                             debug == false
                                 ? thingID
-                                : String.Format(
-                                    "{0}{1}{2}{3}{4}",
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123)),
+                                : string.Format(
+                                    "{0}{1}{2}{3}{4}", 
+                                    (char)r.Next(97, 123), 
+                                    (char)r.Next(97, 123), 
+                                    (char)r.Next(97, 123), 
+                                    (char)r.Next(97, 123), 
+                                    (char)r.Next(97, 123)), 
                         UserID = AccountHelper.CurrentUser.id
                     };
                 foreach (var pifgame in SessionNewGamesRepository.All())
@@ -254,6 +267,7 @@ namespace PiF.Controllers
             {
                 return RedirectToAction("List");
             }
+
             return View(AccountHelper.CurrentUser.Threads.Single(t => t.id == id));
         }
 
@@ -274,9 +288,9 @@ namespace PiF.Controllers
         {
             string data =
                 string.Format(
-                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward",
-                    modhash,
-                    text,
+                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward", 
+                    modhash, 
+                    text, 
                     title);
 
             if (!string.IsNullOrWhiteSpace(iden) && !string.IsNullOrWhiteSpace(captcha))

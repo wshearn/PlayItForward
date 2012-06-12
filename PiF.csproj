@@ -77,8 +77,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AccountHelper.cs" />
     <Compile Include="Models\CompletePiFModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PiFDb.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,6 +1,5 @@
 ﻿// <copyright file="Utilites.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -53,11 +52,11 @@ namespace PiF
         {
             var cookie = new Cookie
                 {
-                    Domain = httpCookie.Domain,
-                    Expires = httpCookie.Expires,
-                    HttpOnly = httpCookie.HttpOnly,
-                    Path = httpCookie.Path,
-                    Secure = httpCookie.Secure,
+                    Domain = httpCookie.Domain, 
+                    Expires = httpCookie.Expires, 
+                    HttpOnly = httpCookie.HttpOnly, 
+                    Path = httpCookie.Path, 
+                    Secure = httpCookie.Secure, 
                     Value = httpCookie.Value
                 };
 

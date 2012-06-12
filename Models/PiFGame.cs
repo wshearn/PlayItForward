@@ -1,6 +1,5 @@
 // <copyright file="PiFGame.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -37,7 +36,7 @@ namespace PiF.Models
             set { count = Math.Max(0, value); }
         }
 
-        /// <summary>Gets the game id.</summary>
+        /// <summary>Gets or sets the game id.</summary>
         [ReadOnly(true)]
         [DataType("Integer")]
         [DisplayName("ID")]

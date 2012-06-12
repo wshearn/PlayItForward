@@ -1,6 +1,5 @@
 ﻿// <copyright file="CompletePiFModel.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +49,7 @@ namespace PiF.Models
                 throw;
             }
 
-            users.Add(new SelectListItem { Value = String.Empty, Text = String.Empty });
+            users.Add(new SelectListItem { Value = string.Empty, Text = string.Empty });
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
 
@@ -79,14 +78,16 @@ namespace PiF.Models
                     }
                 }
             }
+
             return userDictionary;
         }
 
         [OutputCache(Duration = 60 * 5)]
         dynamic GetPostComments(string thingID)
         {
-            string uri = String.Format("http://www.reddit.com/{0}/.json", thingID);
+            string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
+
             // Do the actual connection
             WebResponse response = connect.GetResponse();
 

@@ -1,11 +1,9 @@
-﻿@using System.Data.Linq
-@using System.Linq
-@using System.Web.Helpers
-@using PiF.Models
+﻿@using PiF.Models
 @{
-    Table<Game> db = new PiFDbDataContext().Games;
+    var db = new PiFDbDataContext().Games;
     string term = Request["term"] + "%";
-    IQueryable<Game> result = db.Where(oh => oh.Name.Contains(term));
+    var result = db.Where(oh => oh.Name.Contains(term));
     var data = result.Select(p => new { label = p.Name });
     Json.Write(data, Response.Output);
+
 }
