@@ -92,7 +92,7 @@ namespace PiF.Controllers
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
-                    if (returnUrl != String.Empty)
+                    if (!String.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
 
                     return RedirectToAction("Index", "Home");
