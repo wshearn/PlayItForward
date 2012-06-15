@@ -218,10 +218,8 @@ namespace PiF.Controllers
 
             if (ModelState.IsValid)
             {
-                // DataContext takes a connection string.
                 var db = new PiFDbDataContext();
 
-                // TODO: Handle errors such as rate limiting
                 var r = new Random();
                 var thread = new Thread
                     {

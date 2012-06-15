@@ -65,16 +65,15 @@ namespace PiF.Models
             {
                 foreach (var d in data["replies"]["data"]["children"])
                 {
-                    if (d["data"] != null)
+                    if (d["data"] == null)
                     {
-                        Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
-                        foreach (var kvp in subUsers)
-                        {
-                            if (!userDictionary.ContainsKey(kvp.Value))
-                            {
-                                userDictionary.Add(kvp.Key, kvp.Value);
-                            }
-                        }
+                        continue;
+                    }
+
+                    Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
+                    foreach (var kvp in subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value)))
+                    {
+                        userDictionary.Add(kvp.Key, kvp.Value);
                     }
                 }
             }
@@ -87,6 +86,8 @@ namespace PiF.Models
         {
             string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
+
+            connect.UserAgent = "r/playitforward site by /u/sevenalive";
 
             // Do the actual connection
             WebResponse response = connect.GetResponse();
