@@ -1,6 +1,5 @@
 ﻿// <copyright file="AccountController.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System;
 using System.IO;
 using System.Linq;
@@ -25,11 +24,13 @@ namespace PiF.Controllers
             {
                 httpCookie.Expires = DateTime.Now.AddDays(-1d);
             }
+
             httpCookie = Request.Cookies.Get("Username");
             if (httpCookie != null)
             {
                 httpCookie.Expires = DateTime.Now.AddDays(-1d);
             }
+
             httpCookie = Request.Cookies.Get("ModHash");
             if (httpCookie != null)
             {
@@ -65,9 +66,11 @@ namespace PiF.Controllers
                 {
                     // Set Session vars in case user doesn't use cookies.
                     Session["Username"] = model.UserName;
-                    //Session is required regardless of cookie state as Auth cookie won't be sent until next request
-                    if (AccountHelper.CurrentUser == null) //Referencing the helper will add the user and/or update the IP if necessary
+
+                    // Session is required regardless of cookie state as Auth cookie won't be sent until next request
+                    if (AccountHelper.CurrentUser == null)
                     {
+                        // Referencing the helper will add the user and/or update the IP if necessary
                         throw new Exception("Account error!");
                     }
 
@@ -92,7 +95,7 @@ namespace PiF.Controllers
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
-                    if (!String.IsNullOrEmpty(returnUrl))
+                    if (!string.IsNullOrEmpty(returnUrl))
                         return Redirect(returnUrl);
 
                     return RedirectToAction("Index", "Home");

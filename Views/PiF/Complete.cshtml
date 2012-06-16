@@ -47,6 +47,7 @@
 }
 @{
     ViewBag.Title = "Complete PiF";
+
 }
 
 <h2>@ViewBag.Title</h2>
@@ -54,7 +55,8 @@
 @Html.ValidationSummary(false)
 
 @(Html.Telerik().Grid<PiFGameComplete>().Name("CompleteGrid").DataKeys(keys => keys.Add(p => p.ID))
-      //.ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
+      
+      // .ToolBar(commands => commands.Insert().ButtonType(GridButtonType.Text))
       .DataBinding(dataBinding => dataBinding.Ajax().Select("SelectAjaxEditing", "CompleteGrid").Update("UpdateAjaxEditing", "CompleteGrid").Insert("InsertAjaxEditing", "CompleteGrid").Delete("DeleteAjaxEditing", "CompleteGrid")).Columns(columns =>
           {
               columns.Bound(p => p.SteamID).Width(80);

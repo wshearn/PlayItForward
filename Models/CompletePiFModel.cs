@@ -1,6 +1,5 @@
 ﻿// <copyright file="CompletePiFModel.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +49,7 @@ namespace PiF.Models
                 throw;
             }
 
-            users.Add(new SelectListItem { Value = String.Empty, Text = String.Empty });
+            users.Add(new SelectListItem { Value = string.Empty, Text = string.Empty });
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
 
@@ -66,27 +65,30 @@ namespace PiF.Models
             {
                 foreach (var d in data["replies"]["data"]["children"])
                 {
-                    if (d["data"] != null)
+                    if (d["data"] == null)
                     {
-                        Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
-                        foreach (var kvp in subUsers)
-                        {
-                            if (!userDictionary.ContainsKey(kvp.Value))
-                            {
-                                userDictionary.Add(kvp.Key, kvp.Value);
-                            }
-                        }
+                        continue;
+                    }
+
+                    Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
+                    foreach (var kvp in subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value)))
+                    {
+                        userDictionary.Add(kvp.Key, kvp.Value);
                     }
                 }
             }
+
             return userDictionary;
         }
 
         [OutputCache(Duration = 60 * 5)]
         private static dynamic GetPostComments(string thingID)
         {
-            string uri = String.Format("http://www.reddit.com/{0}/.json", thingID);
+            string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
+
+            connect.UserAgent = "r/playitforward site by /u/sevenalive";
+
             // Do the actual connection
             if (connect != null)
             {
