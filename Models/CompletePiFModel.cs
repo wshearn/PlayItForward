@@ -28,7 +28,7 @@ namespace PiF.Models
         public IList<SelectListItem> ThreadUserList(string thingID)
         {
             var users = new List<SelectListItem>();
-            dynamic thread = GetPostComments(thingID);
+            dynamic thread = GetThreadInfo(thingID);
 
             try
             {
@@ -82,7 +82,7 @@ namespace PiF.Models
         }
 
         [OutputCache(Duration = 60 * 5)]
-        dynamic GetPostComments(string thingID)
+        dynamic GetThreadInfo(string thingID)
         {
             string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;

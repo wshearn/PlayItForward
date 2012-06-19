@@ -24,7 +24,7 @@ namespace PiF.Models
                                       ? HttpContext.Current.User.Identity.Name
                                       : HttpContext.Current.Session["Username"].ToString();
                 var db = new PiFDbDataContext();
-                string userIP = Utilites.GetHash(HttpContext.Current.Request.UserHostAddress);
+                string userIP = Utilities.GetHash(HttpContext.Current.Request.UserHostAddress);
                 User user = db.Users.SingleOrDefault(u => u.Username == username);
                 if (user == null)
                 {

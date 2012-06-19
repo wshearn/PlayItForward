@@ -2,12 +2,12 @@
 @using Telerik.Web.Mvc.UI
 @model CompletePiFModel
 @section HeadContent {
-    <script type="text/javascript" src="~/Scripts/jquery-1.7.2.min.js"> </script>
-    <script type="text/javascript" src="~/Scripts/jquery-ui.min.js"> </script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"> </script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.20/jquery-ui.min.js"> </script>
     @Html.Telerik().ScriptRegistrar().jQuery(false);
     <link href="@Url.Content("~/Content/2012.1.214/telerik.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/2012.1.214/telerik.vista.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.20.custom.css")" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.20/themes/ui-lightness/jquery-ui.css"></script>
 
     <script type="text/javascript">
         function Grid_onError(e) {
