@@ -1,11 +1,7 @@
-﻿@using System
-@using System.Linq
-@model System.Collections.Generic.IEnumerable<PiF.Models.Thread>
-@{
-    ViewBag.Title = "My PiF List";
-}
+﻿@using System.Linq
+@model IEnumerable<PiF.Models.Thread>
 
-<h2>My PiF List</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "New")

@@ -165,12 +165,13 @@ namespace PiF.Controllers
 
         public ActionResult List()
         {
+            ViewBag.Title = "My PiFs";
             return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
 
         public ActionResult New()
         {
-            ViewData["Message"] = "Create a new PiF";
+            ViewBag.Title = "Create a new PiF";
             SessionNewGamesRepository.Clear();
             return View(new NewPiFModel());
         }

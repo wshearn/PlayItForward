@@ -1,11 +1,14 @@
 ﻿// <copyright file="Utilites.cs" project="PiF">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PiF
 {
@@ -61,6 +64,16 @@ namespace PiF
                 };
 
             return cookie;
+        }
+
+        public static MvcHtmlString TimeAgo(this HtmlHelper helper, DateTime dateTime)
+        {
+            var tag = new TagBuilder("abbr");
+            tag.AddCssClass("timeago");
+            tag.Attributes.Add("title", dateTime.ToString("s") + "Z");
+            tag.SetInnerText(dateTime.ToString());
+
+            return MvcHtmlString.Create(tag.ToString());
         }
     }
 }
