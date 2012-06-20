@@ -2,6 +2,7 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -164,12 +165,13 @@ namespace PiF.Controllers
 
         public ActionResult List()
         {
+            ViewBag.Title = "My PiFs";
             return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
 
         public ActionResult New()
         {
-            ViewData["Message"] = "Create a new PiF";
+            ViewBag.Title = "Create a new PiF";
             SessionNewGamesRepository.Clear();
             return View(new NewPiFModel());
         }
@@ -222,6 +224,7 @@ namespace PiF.Controllers
                 var r = new Random();
                 var thread = new Thread
                     {
+                        EndDate = SqlDateTime.MinValue.Value,
                         CreatedDate = DateTime.UtcNow, 
                         Title = model.ThreadTitle, 
                         ThingID =
@@ -307,7 +310,7 @@ namespace PiF.Controllers
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
             connect.Headers["COOKIE"] = (Session["RedditCookie"] as HttpCookie).Value;
             connect.CookieContainer = new CookieContainer();
-            Cookie cookie = Utilites.HttpCookieToCookie(Session["RedditCookie"] as HttpCookie);
+            Cookie cookie = Utilities.HttpCookieToCookie(Session["RedditCookie"] as HttpCookie);
             cookie.Domain = ".reddit.com";
             cookie.Name = "reddit_session";
             connect.CookieContainer.Add(cookie);

@@ -28,7 +28,7 @@ namespace PiF.Models
         public IList<SelectListItem> ThreadUserList(string thingID)
         {
             var users = new List<SelectListItem>();
-            dynamic thread = GetPostComments(thingID);
+            dynamic thread = GetThreadInfo(thingID);
 
             try
             {
@@ -53,7 +53,7 @@ namespace PiF.Models
             return users.OrderBy(u => u.Text.ToLower()).ToList();
         }
 
-        private static Dictionary<string, string> GetAllUsers(dynamic data)
+        Dictionary<string, string> GetAllUsers(dynamic data)
         {
             var userDictionary = new Dictionary<string, string>();
             if (!userDictionary.ContainsKey(data["author"]))
@@ -82,7 +82,7 @@ namespace PiF.Models
         }
 
         [OutputCache(Duration = 60 * 5)]
-        private static dynamic GetPostComments(string thingID)
+        dynamic GetThreadInfo(string thingID)
         {
             string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
@@ -90,19 +90,15 @@ namespace PiF.Models
             connect.UserAgent = "r/playitforward site by /u/sevenalive";
 
             // Do the actual connection
-            if (connect != null)
+            WebResponse response = connect.GetResponse();
+
+            string resp;
+            using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                WebResponse response = connect.GetResponse();
-
-                string resp;
-                using (var reader = new StreamReader(response.GetResponseStream()))
-                {
-                    resp = reader.ReadToEnd();
-                }
-
-                return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+                resp = reader.ReadToEnd();
             }
-            throw new Exception("Unable to retrieve post comments.");
+
+            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
     }
 }

@@ -7,6 +7,65 @@
     text-align: center;
 }
 
+.pif {
+padding: 17px 0;
+border-bottom: 1px dotted #C3C3C3;
+border-top: 1px solid white;
+}
+
+.pif .left .title, .pif .left .title a {
+color: #4F565A;
+}
+.pif.left .pif {
+font-size: 18px;
+font-weight: bold;
+text-shadow: 1px 1px white;
+}
+.pif .left .description {
+color: #636E75;
+font-size: 11px;
+}
+.pif .left .description .createdBy {
+float: right;
+}
+.pif .left {
+float: left;
+width: 714px;
+}
+.clearBoth {
+clear: both;
+}
+
+.pif .right {
+float: right;
+padding: 5px;
+}
+
+.pif .center {
+float: left;
+margin-top: 8px;
+height: 64px;
+width: 70px;
+margin-left: 10px;
+margin-right: 10px;
+}
+
+.pif .left .description .timeCreated {
+float: left;
+}
+
+.pif .left .description {
+background-color: #F9F9FB;
+background-repeat: repeat-x;
+background-position: center top;
+color: #636E75;
+border: 1px solid lightGrey;
+padding: 5px 10px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+margin: 5px 0;
+font-size: 11px;
+}
 
 span.points {
     background: whiteSmoke url("/Content/points.png") center center no-repeat;

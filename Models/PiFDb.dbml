@@ -1,54 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<Database Name="Database" Class="PiFDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings"
-              ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True"
-              SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings"
-              SettingsPropertyName="DatabaseConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database" Class="PiFDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Comments" Member="Comments">
     <Type Name="Comment">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ThreadID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Url" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="DeletedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Thread_Comment" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread"
-                   IsForeignKey="true" />
+      <Association Name="Thread_Comment" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread" IsForeignKey="true" />
       <Association Name="User_Comment" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UserWarned" Member="UserWarneds">
     <Type Name="UserWarned">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="WarnedByModID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Reason" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="User_UserWarned" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />
-      <Association Name="User_UserWarned1" Member="User1" ThisKey="WarnedByModID" OtherKey="id" Type="User"
-                   IsForeignKey="true" />
+      <Association Name="User_UserWarned1" Member="User1" ThisKey="WarnedByModID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Game" Member="Games">
     <Type Name="Game">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="SteamID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="SteamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PointWorth" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="IsSteamSubscription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="IsDLC" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="RequiredID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RequiredID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Game_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="GameID" Type="ThreadGame" />
     </Type>
   </Table>
   <Table Name="dbo.ModAlerts" Member="ModAlerts">
     <Type Name="ModAlert">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Message" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="HandledDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
@@ -59,12 +48,11 @@
   </Table>
   <Table Name="dbo.Thread" Member="Threads">
     <Type Name="Thread">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="false" />
       <Column Name="ThingID" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
       <Association Name="Thread_Comment" Member="Comments" ThisKey="id" OtherKey="ThreadID" Type="Comment" />
       <Association Name="Thread_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="ThreadID" Type="ThreadGame" />
@@ -73,22 +61,19 @@
   </Table>
   <Table Name="dbo.ThreadGame" Member="ThreadGames">
     <Type Name="ThreadGame">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ThreadID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="GameID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="WinnerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Thread_ThreadGame" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread"
-                   IsForeignKey="true" />
+      <Column Name="Ineligible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Game_ThreadGame" Member="Game" ThisKey="GameID" OtherKey="id" Type="Game" IsForeignKey="true" />
-      <Association Name="User_ThreadGame" Member="User" ThisKey="WinnerID" OtherKey="id" Type="User"
-                   IsForeignKey="true" />
+      <Association Name="Thread_ThreadGame" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread" IsForeignKey="true" />
+      <Association Name="User_ThreadGame" Member="User" ThisKey="WinnerID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.[User]" Member="Users">
     <Type Name="User">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Username" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="RecordCreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="AccountGroupID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -100,23 +85,19 @@
       <Column Name="ModHash" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Association Name="User_Comment" Member="Comments" ThisKey="id" OtherKey="UserID" Type="Comment" />
       <Association Name="User_UserWarned" Member="UserWarneds" ThisKey="id" OtherKey="UserID" Type="UserWarned" />
-      <Association Name="User_UserWarned1" Member="UserWarneds1" ThisKey="id" OtherKey="WarnedByModID"
-                   Type="UserWarned" />
+      <Association Name="User_UserWarned1" Member="UserWarneds1" ThisKey="id" OtherKey="WarnedByModID" Type="UserWarned" />
       <Association Name="User_ModAlert" Member="ModAlerts" ThisKey="id" OtherKey="ModID" Type="ModAlert" />
       <Association Name="User_Thread" Member="Threads" ThisKey="id" OtherKey="UserID" Type="Thread" />
       <Association Name="User_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="WinnerID" Type="ThreadGame" />
       <Association Name="User_UserIP" Member="UserIPs" ThisKey="id" OtherKey="UserID" Type="UserIP" />
-      <Association Name="User_UserScoreModifier" Member="UserScoreModifiers" ThisKey="id" OtherKey="UserID"
-                   Type="UserScoreModifier" />
-      <Association Name="User_UserScoreModifier1" Member="UserScoreModifiers1" ThisKey="id" OtherKey="AddedByModID"
-                   Type="UserScoreModifier" />
+      <Association Name="User_UserScoreModifier" Member="UserScoreModifiers" ThisKey="id" OtherKey="UserID" Type="UserScoreModifier" />
+      <Association Name="User_UserScoreModifier1" Member="UserScoreModifiers1" ThisKey="id" OtherKey="AddedByModID" Type="UserScoreModifier" />
       <Association Name="User_UserSteamID" Member="UserSteamIDs" ThisKey="id" OtherKey="UserID" Type="UserSteamID" />
     </Type>
   </Table>
   <Table Name="dbo.UserIP" Member="UserIPs">
     <Type Name="UserIP">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="HashedIP" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
@@ -125,23 +106,19 @@
   </Table>
   <Table Name="dbo.UserScoreModifier" Member="UserScoreModifiers">
     <Type Name="UserScoreModifier">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="AddedByModID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ScoreModifier" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Reason" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="User_UserScoreModifier" Member="User" ThisKey="UserID" OtherKey="id" Type="User"
-                   IsForeignKey="true" />
-      <Association Name="User_UserScoreModifier1" Member="User1" ThisKey="AddedByModID" OtherKey="id" Type="User"
-                   IsForeignKey="true" />
+      <Association Name="User_UserScoreModifier" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="User_UserScoreModifier1" Member="User1" ThisKey="AddedByModID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UserSteamID" Member="UserSteamIDs">
     <Type Name="UserSteamID">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true"
-              CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SteamID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Association Name="User_UserSteamID" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />

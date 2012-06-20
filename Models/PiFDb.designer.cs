@@ -687,7 +687,7 @@ namespace PiF.Models
 		
 		private string _Name;
 		
-		private System.Nullable<int> _SteamID;
+		private int _SteamID;
 		
 		private byte _PointWorth;
 		
@@ -695,7 +695,7 @@ namespace PiF.Models
 		
 		private bool _IsDLC;
 		
-		private System.Nullable<int> _RequiredID;
+		private int _RequiredID;
 		
 		private EntitySet<ThreadGame> _ThreadGames;
 		
@@ -707,7 +707,7 @@ namespace PiF.Models
     partial void OnidChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnSteamIDChanging(System.Nullable<int> value);
+    partial void OnSteamIDChanging(int value);
     partial void OnSteamIDChanged();
     partial void OnPointWorthChanging(byte value);
     partial void OnPointWorthChanged();
@@ -715,7 +715,7 @@ namespace PiF.Models
     partial void OnIsSteamSubscriptionChanged();
     partial void OnIsDLCChanging(bool value);
     partial void OnIsDLCChanged();
-    partial void OnRequiredIDChanging(System.Nullable<int> value);
+    partial void OnRequiredIDChanging(int value);
     partial void OnRequiredIDChanged();
     #endregion
 		
@@ -745,7 +745,7 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -765,8 +765,8 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamID", DbType="Int")]
-		public System.Nullable<int> SteamID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamID", DbType="Int NOT NULL")]
+		public int SteamID
 		{
 			get
 			{
@@ -845,8 +845,8 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequiredID", DbType="Int")]
-		public System.Nullable<int> RequiredID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequiredID", DbType="Int NOT NULL")]
+		public int RequiredID
 		{
 			get
 			{
@@ -1148,7 +1148,7 @@ namespace PiF.Models
 		
 		private System.DateTime _CreatedDate;
 		
-		private System.Nullable<System.DateTime> _EndDate;
+		private System.DateTime _EndDate;
 		
 		private string _ThingID;
 		
@@ -1170,7 +1170,7 @@ namespace PiF.Models
     partial void OnTitleChanged();
     partial void OnCreatedDateChanging(System.DateTime value);
     partial void OnCreatedDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanging(System.DateTime value);
     partial void OnEndDateChanged();
     partial void OnThingIDChanging(string value);
     partial void OnThingIDChanged();
@@ -1228,7 +1228,7 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
 		public string Title
 		{
 			get
@@ -1269,7 +1269,7 @@ namespace PiF.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EndDate
+		public System.DateTime EndDate
 		{
 			get
 			{
@@ -1427,9 +1427,11 @@ namespace PiF.Models
 		
 		private System.Nullable<int> _WinnerID;
 		
-		private EntityRef<Thread> _Thread;
+		private bool _Ineligible;
 		
 		private EntityRef<Game> _Game;
+		
+		private EntityRef<Thread> _Thread;
 		
 		private EntityRef<User> _User;
 		
@@ -1445,12 +1447,14 @@ namespace PiF.Models
     partial void OnGameIDChanged();
     partial void OnWinnerIDChanging(System.Nullable<int> value);
     partial void OnWinnerIDChanged();
+    partial void OnIneligibleChanging(bool value);
+    partial void OnIneligibleChanged();
     #endregion
 		
 		public ThreadGame()
 		{
-			this._Thread = default(EntityRef<Thread>);
 			this._Game = default(EntityRef<Game>);
+			this._Thread = default(EntityRef<Thread>);
 			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
@@ -1547,36 +1551,22 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thread_ThreadGame", Storage="_Thread", ThisKey="ThreadID", OtherKey="id", IsForeignKey=true)]
-		public Thread Thread
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ineligible", DbType="Bit NOT NULL")]
+		public bool Ineligible
 		{
 			get
 			{
-				return this._Thread.Entity;
+				return this._Ineligible;
 			}
 			set
 			{
-				Thread previousValue = this._Thread.Entity;
-				if (((previousValue != value) 
-							|| (this._Thread.HasLoadedOrAssignedValue == false)))
+				if ((this._Ineligible != value))
 				{
+					this.OnIneligibleChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Thread.Entity = null;
-						previousValue.ThreadGames.Remove(this);
-					}
-					this._Thread.Entity = value;
-					if ((value != null))
-					{
-						value.ThreadGames.Add(this);
-						this._ThreadID = value.id;
-					}
-					else
-					{
-						this._ThreadID = default(int);
-					}
-					this.SendPropertyChanged("Thread");
+					this._Ineligible = value;
+					this.SendPropertyChanged("Ineligible");
+					this.OnIneligibleChanged();
 				}
 			}
 		}
@@ -1611,6 +1601,40 @@ namespace PiF.Models
 						this._GameID = default(int);
 					}
 					this.SendPropertyChanged("Game");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thread_ThreadGame", Storage="_Thread", ThisKey="ThreadID", OtherKey="id", IsForeignKey=true)]
+		public Thread Thread
+		{
+			get
+			{
+				return this._Thread.Entity;
+			}
+			set
+			{
+				Thread previousValue = this._Thread.Entity;
+				if (((previousValue != value) 
+							|| (this._Thread.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Thread.Entity = null;
+						previousValue.ThreadGames.Remove(this);
+					}
+					this._Thread.Entity = value;
+					if ((value != null))
+					{
+						value.ThreadGames.Add(this);
+						this._ThreadID = value.id;
+					}
+					else
+					{
+						this._ThreadID = default(int);
+					}
+					this.SendPropertyChanged("Thread");
 				}
 			}
 		}
