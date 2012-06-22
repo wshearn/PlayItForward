@@ -13,13 +13,15 @@
                 preloadImage: '/Content/slider/loading.gif',
                 play: 5000,
                 pause: 2500,
-                hoverPause: true,
+                pagination: false,
+                generatePagination: false,
+                hoverPause: true
             });
         });
 
         $(document).ready(function () {
             $('div.expandable p').expander({
-                slicePoint: 300,  // default is 100
+                slicePoint: 250  // default is 100
             });
         });
 
@@ -38,20 +40,24 @@
                 <div class="expandable">
                     <p>@item.SelfText</p>
                 </div>
-                <div class="createdBy" style="float: left;">Created by <a href="@string.Format("http://reddit.com/u/{0}", item.Thread.User.Username)">@item.Thread.User.Username</a> <span style="color: #b5b8be; margin-right: 5px;">on <strong>@Html.TimeAgo(@item.Thread.CreatedDate)</strong></span></div>
-                <div class="clearBoth"></div>
             </div>
+            <div class="createdBy" style="float: left;">@item.Thread.ThreadGames.Count games being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Thread.User.Username)">@item.Thread.User.Username</a> <span style="color: #b5b8be; margin-right: 5px;">on <strong>@Html.TimeAgo(@item.Thread.CreatedDate)</strong></span></div>
         </div>
             <div id="slides" class="left">
-                      <div class="slides_container">
-                          @foreach (var game in item.Thread.ThreadGames)
-                          {
-                              <div class="slide">
-                                  <a href="@string.Format("http://store.steampowered.com/{0}/{1}/", @game.Game.IsSteamSubscription ? "sub" : "app", @game.Game.SteamID)" title="@game.Game.Name">
-                                      <img src="@string.Format("http://cdn.steampowered.com/v/gfx/{0}/{1}/capsule_184x69.jpg", @game.Game.IsSteamSubscription ? "subs" : "apps", @game.Game.SteamID)" width="184" height="69" alt="@game.Game.Name"></a>
-                              </div>
-                          }
-                      </div>
+                <div class="slides_container">
+                    @foreach (var game in item.Thread.ThreadGames)
+                    {
+                        <div class="slide">
+                            <a href="@string.Format("http://store.steampowered.com/{0}/{1}/", @game.Game.IsSteamSubscription ? "sub" : "app", @game.Game.SteamID)" title="@game.Game.Name">
+                                <img src="@string.Format("http://cdn.steampowered.com/v/gfx/{0}/{1}/capsule_184x69.jpg", @game.Game.IsSteamSubscription ? "subs" : "apps", @game.Game.SteamID)" width="auto" height="215" alt="@game.Game.Name"></a>
+                        </div>
+                    }
+                </div>
+                @if (item.Thread.ThreadGames.Count > 1)
+                {
+                    <a href="#" class="prev"><i class="icon-chevron-left icon-large"></i></a>
+                    <a href="#" class="next"><i class="icon-chevron-right icon-large"></i></a>
+                }
                   </div>
         <div class="clearBoth"></div>
     </div>

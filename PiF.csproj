@@ -156,6 +156,7 @@
     <Content Include="Content\slide.css" />
     <Content Include="Content\slider\loading.gif" />
     <Content Include="Content\slider\pagination.png" />
+    <Content Include="font\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\2012.1.214\telerik.all.min.js" />
     <Content Include="Scripts\2012.1.214\telerik.autocomplete.min.js" />
@@ -224,6 +225,9 @@
       <LastGenOutput>PiFDb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="font\fontawesome-webfont.eot" />
+    <Content Include="font\fontawesome-webfont.ttf" />
+    <Content Include="font\fontawesome-webfont.woff" />
     <None Include="Models\PiFDb.dbml.layout">
       <DependentUpon>PiFDb.dbml</DependentUpon>
     </None>

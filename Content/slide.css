@@ -1,137 +1,147 @@
-/*
-	Slideshow
-*/
-
 #slides {
-	z-index:100;
+    position: relative;
+    z-index: 100;
+    width: 184px;
+    height: 69px;
+    margin: 24px 10px;
 }
-
-/*
-	Slides container
-	Important:
-	Set the width of your slides container
-	Set to display none, prevents content flash
-*/
 
 .slides_container {
-	width:184px;
+    display:none;
+    width: 184px;
     height: 69px;
-	overflow:hidden;
-	position:relative;
-	display:none;
-    padding: 7px;
-    border: 1px solid #E4E4E4;
 }
 
-/*
-	Each slide
-	Important:
-	Set the width of your slides
-	If height not specified height will be set by the slide content
-	Set to display block
-*/
-
-.slides_container div.slide {
-	width:184px;
-	display:block;
+.slides_container img {
+    width: 184px;
+    height: 69px;
+    display: block;
 }
 
-
-/*
-	Next/prev buttons
-*/
-
-#slides .next,#slides .prev {
-	position:absolute;
-	top:107px;
-	left:-39px;
-	width:24px;
-	height:43px;
-	display:block;
-	z-index:101;
+#slides .prev {
+  margin: 5px;
+  float:left;
 }
-
 #slides .next {
-	left:184px;
+  margin: 5px;
+  float:left;
 }
-
-/*
-	Pagination
-*/
 
 .pagination {
-	margin:4px auto 0;
+    margin:6px 0 0;
+    float: right;
+    list-style: none;
 }
 
 .pagination li {
-	float:left;
-	margin:0 2px;
-	list-style:none;
+    float: left;
+    margin: 0 1px;
 }
 
 .pagination li a {
-	display:block;
-	width:12px;
-	height:0;
-	padding-top:12px;
-	background-image:url(/Content/slider/pagination.png);
-	background-position:0 0;
-	float:left;
-	overflow:hidden;
+    display: block;
+    width: 13px;
+    height: 0;
+    padding-top: 13px;
+    background-image: url(/Content/slider/pagination.png);
+    background-position: 0 0;
+    float: left;
+    overflow: hidden;
 }
 
-.pagination li.current a {
-	background-position:0 -12px;
-}
+.pagination li.current a, .pagination li.current a:hover { background-position: 0 -13px }
 
-/*
-	Caption
-*/
+.pagination li a:hover { background-position: 0 -26px }
 
-.caption {
-	z-index:500;
-	position:absolute;
-	bottom:-35px;
-	left:0;
-	height:30px;
-	padding:5px 5px 0 5px;
-	background:#000;
-	background:rgba(0,0,0,.5);
-	width:184px;
-	font-size:1.3em;
-	line-height:1.33;
-	color:#fff;
-	border-top:1px solid #000;
-	text-shadow:none;
-}
+#slides a:link, #slides a:visited { color: #333 }
 
-/*
-	Footer
-*/
+#slides a:hover, #slides a:active { color: #9e2020 }
 
 #footer {
-	text-align:center;
-	width:184px;
-	margin-top:9px;
-	padding:4.5px 0 18px;
-	border-top:1px solid #dfdfdf;
+    font-size: 12px;
+    width: 960px;
+    margin: 0 auto 30px;
+    position: relative;
+    clear: both;
 }
 
-#footer p {
-	margin:4.5px 0;
-	font-size:1.0em;
+.icon-chevron-left:before { content: "\f053" }
+
+.icon-chevron-right:before { content: "\f054" }
+#slides a:link, #slides a:visited, #slides a:hover { text-decoration: none!important;}
+
+
+/* The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0: http://creativecommons.org/licenses/by/3.0/ */
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../font/fontawesome-webfont.eot');
+    src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../font/fontawesome-webfont.woff') format('woff'), url('../font/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-/*
-	Anchors
-*/
+/* sprites.less reset */
 
-a:link,a:visited {
-	color:#599100;
-	text-decoration:none;
+[class^="icon-"], [class*=" icon-"] {
+    display: inline;
+    width: auto;
+    height: auto;
+    line-height: inherit;
+    vertical-align: baseline;
+    background-image: none;
+    background-position: 0% 0%;
+    background-repeat: repeat;
 }
 
-a:hover,a:active {
-	color:#599100;
-	text-decoration:underline;
+li[class^="icon-"], li[class*=" icon-"] { display: block }
+
+/*  Font Awesome styles
+    ------------------------------------------------------- */
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
 }
+
+a [class^="icon-"], a [class*=" icon-"] {
+    display: inline-block;
+    text-decoration: inherit;
+}
+
+/* makes the font 33% larger relative to the icon container */
+
+.icon-large:before {
+    vertical-align: top;
+    font-size: 1.3333333333333333em;
+}
+
+.btn [class^="icon-"], .btn [class*=" icon-"] { /* keeps button heights with and without icons the same */
+    line-height: .9em;
+}
+
+li [class^="icon-"], li [class*=" icon-"] {
+    display: inline-block;
+    width: 1.25em;
+    text-align: center;
+}
+
+li .icon-large[class^="icon-"], li .icon-large[class*=" icon-"] {
+    /* 1.5 increased font size for icon-large * 1.25 width */
+    width: 1.875em;
+}
+
+li[class^="icon-"], li[class*=" icon-"] {
+    margin-left: 0;
+    list-style-type: none;
+}
+
+li[class^="icon-"]:before, li[class*=" icon-"]:before {
+    text-indent: -2em;
+    text-align: center;
+}
+
+li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before { text-indent: -1.3333333333333333em }
