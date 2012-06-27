@@ -1,56 +1,54 @@
 ﻿@model List<PiF.Models.PiFDetailsModel>
-<h2>@ViewBag.Title</h2>
 @section HeadContent {
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.timeago.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"></script>
-    <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"> </script>
+    <script type="text/javascript" src="~/Scripts/jquery.timeago.js"> </script>
+    <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"> </script>
+    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"> </script>
+    @*    <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
     <script type="text/javascript">
-        $(function () {
-            $('#slides').slides({
-                preload: true,
-                //preloadImage: '/Content/slider/loading.gif',
-                play: 3000,
-                pause: 1000,
-                //pagination: false,
-                //generatePagination: false,
-                hoverPause: true
-            });
-        });
+        //$(function () {
+        //    $('#slides').slides({
+        //        preload: true,
+        //        //preloadImage: '/Content/slider/loading.gif',
+        //        play: 3000,
+        //        pause: 1000,
+        //        //pagination: false,
+        //        //generatePagination: false,
+        //        hoverPause: true
+        //    });
+        //});
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('div.expandable p').expander({
                 slicePoint: 280  // default is 100
             });
             jQuery("time.timeago").timeago();
-        });
-
-
             //jQuery.timeago.settings.allowFuture = true;
+        });
     </script>
-    
+
     <script type="text/javascript">
-        (function ($) {
-            $.fn.styleddropdown = function () {
-                return this.each(function () {
+        (function($) {
+            $.fn.styleddropdown = function() {
+                return this.each(function() {
                     var obj = $(this);
-                    obj.find('.field').click(function () { //onclick event, 'list' fadein
+                    obj.find('.field').click(function() { //onclick event, 'list' fadein
                         obj.find('.list').fadeIn(400);
 
-                        $(document).keyup(function (event) { //keypress event, fadeout on 'escape'
+                        $(document).keyup(function(event) { //keypress event, fadeout on 'escape'
                             if (event.keyCode == 27) {
                                 obj.find('.list').fadeOut(400);
                             }
                         });
 
-                        obj.find('.list').hover(function () { },
-                            function () {
+                        obj.find('.list').hover(function() {
+                        },
+                            function() {
                                 $(this).fadeOut(400);
                             });
                     });
 
-                    obj.find('.list li').click(function () { //onclick event, change field value with selected 'list' item and fadeout 'list'
+                    obj.find('.list li').click(function() { //onclick event, change field value with selected 'list' item and fadeout 'list'
                         obj.find('.field')
                             .val($(this).html())
                             .css({
@@ -62,12 +60,102 @@
                 });
             };
         })(jQuery);
-        
-        $(function () {
+
+        $(function() {
             $('.size').styleddropdown();
         });
-</script>
+    </script>
+
+    @helper BuildLinks(int start, int end, string innerContent)
+    {
+        for (int i = start; i <= end; i++)
+        {
+            <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "home", new { page = i })">@(innerContent ?? i.ToString())</a>
+        }
+    }
+    
+    @helper ItemsDisplayed()
+    {
+        int start = (ViewBag.CurrentPage - 1) * ViewBag.PageSize;
+        int end = start + ViewBag.PageSize;
+
+        if (start == 0)
+        {
+            start = 1;
+        }
+
+        if (end > ViewBag.ThreadCount)
+        {
+            end = ViewBag.ThreadCount;
+        }
+
+        <text>
+            <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
+        </text>
+    }
+    @helper PageLinks()
+    {
+        const int MaxPages = 15;
+
+        if (ViewBag.TotalPages <= MaxPages)
+        {
+            @BuildLinks(1, (int)ViewBag.TotalPages, null)
+            return;
+        }
+
+        int pagesAfter = ViewBag.TotalPages - ViewBag.CurrentPage; // Number of pages after current
+        int pagesBefore = ViewBag.CurrentPage - 1; // Number of pages before current
+
+        if (pagesAfter <= 4)
+        {
+            @BuildLinks(1, 1, null) // Show 1st page
+
+            int pageSubset = ViewBag.TotalPages - MaxPages - 1 > 1 ? ViewBag.TotalPages - MaxPages - 1 : 2;
+            @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+
+            @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
+
+            return;
+        }
+
+        if (pagesBefore <= 4)
+        {
+            @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
+
+            int pageSubset = MaxPages + 2 < ViewBag.TotalPages ? MaxPages + 2 : ViewBag.TotalPages - 1;
+            @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+
+            @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+
+            return;
+        }
+
+        if (pagesAfter <= 4)
+        {
+            return;
+        }
+
+        @BuildLinks(1, 1, null) // Show 1st pages
+
+        int pageSubset1 = ViewBag.CurrentPage - 7 > 1 ? ViewBag.CurrentPage - 7 : 2;
+        int pageSubset2 = ViewBag.CurrentPage + 7 < ViewBag.TotalPages ? ViewBag.CurrentPage + 7 : ViewBag.TotalPages - 1;
+
+        @BuildLinks(pageSubset1, pageSubset1, pageSubset1 == ViewBag.CurrentPage - 4 ? null : "...") // Show 1st page subset (...)
+
+        @BuildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
+
+        // Show 2nd page subset (...)
+        // only show ... if page is contigous to the previous one.
+        @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
+        @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+    }
 }
+<h2>@ViewBag.Title</h2>
+<div class="pagination">
+    <div class="results">Displaying @ItemsDisplayed()</div>
+    <div class="numbers">@PageLinks()</div>
+    <div class="clearBoth"></div>
+</div>
 @foreach (var item in Model)
 {
     <div class="pif">
@@ -84,29 +172,33 @@
             <div class="createdBy">
                 @if (item.Games.Count() == 1)
                 {
-                   @item.Games.Single().Name
+                    @item.Games.Single().Name
                 }
                 else
-                {
-                    <text>@item.GameCount games</text>
+                {<text>@item.GameCount games</text>
                 }
                 being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Username)">@item.Username</a>
             </div>
         </div>
         <div class="left">
             <ul class="games">
-                      @foreach (var game in item.Games)
-                      {
-                          <li>
-                              <a href="@game.StoreUrl" title="@game.Name">@game.Name</a> <span style="color:#b5b8be; font-weight:600">@string.Format("({0}P)", game.PointWorth)</span>
-                              @if (game.Count > 1)
-                              {
-                                  <span style="color:#b5b8be; font-weight:600">(@game.Count copies)</span>
-                              }
-                          </li>
-                      }
-                  </ul>
+                @foreach (var game in item.Games)
+                {
+                    <li>
+                        <a href="@game.StoreUrl" title="@game.Name">@game.Name</a> <span style="color: #b5b8be; font-weight: 600">@string.Format("({0}P)", game.PointWorth)</span>
+                        @if (game.Count > 1)
+                        {
+                            <span style="color: #b5b8be; font-weight: 600">(@game.Count copies)</span>
+                        }
+                    </li>
+                }
+            </ul>
         </div>
         <div class="clearBoth"></div>
     </div>
 }
+<div class="pagination">
+    <div class="results">Displaying @ItemsDisplayed()</div>
+    <div class="numbers">@PageLinks()</div>
+    <div class="clearBoth"></div>
+</div>

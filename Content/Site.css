@@ -13,8 +13,30 @@
     float: left;
 }
 
+.pagination .numbers {
+    float: right;
+}
+
+.pagination .results {
+    float: left;
+}
+
+.pagination {
+    padding: 5px 10px;
+    border: 1px solid #E4E4E4;
+    background-color: #F9F9FB;
+    color: #4F565A;
+    font-size: .9em;
+    margin:  10px 0;
+}
+
+.pagination a { padding: 0 2px;}
+
+a.current:link, a.current:visited {
+    color: #DD4B39;
+}
 .pif {
-    padding: 5px 0;
+    padding: 10px 0;
     border-bottom: 1px dotted #C3C3C3;
     border-top: 1px solid white;
 }
