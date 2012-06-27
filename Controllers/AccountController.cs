@@ -17,7 +17,6 @@ namespace PiF.Controllers
     {
         public ActionResult LogOff()
         {
-            Session.Clear();
             FormsAuthentication.SignOut();
             HttpCookie httpCookie = Request.Cookies.Get("RedditCookie");
             if (httpCookie != null)
@@ -37,7 +36,7 @@ namespace PiF.Controllers
                 httpCookie.Expires = DateTime.Now.AddDays(-1d);
             }
 
-            Session.Abandon();
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
@@ -106,6 +105,7 @@ namespace PiF.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Me()
         {
             ViewBag.Title = User.Identity.Name + "'s PiFs";

@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Models\AccountHelper.cs" />
     <Compile Include="Models\CompletePiFModel.cs" />
+    <Compile Include="Models\Game.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PiFDb.designer.cs">
       <AutoGen>True</AutoGen>
@@ -96,7 +97,9 @@
     <Compile Include="Models\PiFGame.cs" />
     <Compile Include="Models\SessionNewGamesRepository.cs" />
     <Compile Include="Models\SessionCompleteGamesRepository.cs" />
+    <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadGamesEqualityComparer.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +107,7 @@
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\slider\2.png" />
     <Content Include="Content\2012.1.214\Default\editor.png" />
     <Content Include="Content\2012.1.214\Default\imagebrowser.png" />
     <Content Include="Content\2012.1.214\Default\loading.gif" />

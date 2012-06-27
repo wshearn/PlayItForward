@@ -9,6 +9,16 @@ namespace PiF.Models
     {
         public HtmlString SelfText { get; set; }
 
-        public Thread Thread { get; set; }
+        public string ThreadTitle { get; set; }
+
+        public string ThreadID { get; set; }
+
+        public int GameCount { get; set; }
+
+        public IEnumerable<Game> Games { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public string Username { get; set; }
     }
 }

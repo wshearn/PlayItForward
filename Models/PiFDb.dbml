@@ -23,18 +23,6 @@
       <Association Name="User_UserWarned1" Member="User1" ThisKey="WarnedByModID" OtherKey="id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Game" Member="Games">
-    <Type Name="Game">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="SteamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PointWorth" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="IsSteamSubscription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsDLC" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="RequiredID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Game_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="GameID" Type="ThreadGame" />
-    </Type>
-  </Table>
   <Table Name="dbo.ModAlerts" Member="ModAlerts">
     <Type Name="ModAlert">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -66,9 +54,9 @@
       <Column Name="GameID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="WinnerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Ineligible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Game_ThreadGame" Member="Game" ThisKey="GameID" OtherKey="id" Type="Game" IsForeignKey="true" />
       <Association Name="Thread_ThreadGame" Member="Thread" ThisKey="ThreadID" OtherKey="id" Type="Thread" IsForeignKey="true" />
       <Association Name="User_ThreadGame" Member="User" ThisKey="WinnerID" OtherKey="id" Type="User" IsForeignKey="true" />
+      <Association Name="Game_ThreadGame" Member="Game" ThisKey="GameID" OtherKey="id" Type="Game" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.[User]" Member="Users">
@@ -122,6 +110,19 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SteamID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Association Name="User_UserSteamID" Member="User" ThisKey="UserID" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Game" Member="Games">
+    <Type Name="Game">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="SteamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PointWorth" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsSteamSubscription" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsDLC" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="RequiredID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StoreUrl" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Game_ThreadGame" Member="ThreadGames" ThisKey="id" OtherKey="GameID" Type="ThreadGame" />
     </Type>
   </Table>
 </Database>

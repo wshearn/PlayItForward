@@ -70,9 +70,9 @@ namespace PiF
 
         public static HtmlString TimeAgo(this HtmlHelper helper, DateTime dateTime)
         {
-            var tag = new TagBuilder("abbr");
+            var tag = new TagBuilder("time");
             tag.AddCssClass("timeago");
-            tag.Attributes.Add("title", dateTime.ToString("s") + "Z");
+            tag.Attributes.Add("datetime", dateTime.ToString("s") + "Z");
             tag.SetInnerText(dateTime.ToString());
             return new HtmlString(tag.ToString());
         }

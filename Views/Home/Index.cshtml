@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PiF.Models.PiFDetailsModel>
+﻿@model List<PiF.Models.PiFDetailsModel>
 <h2>@ViewBag.Title</h2>
 @section HeadContent {
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
@@ -10,55 +10,103 @@
         $(function () {
             $('#slides').slides({
                 preload: true,
-                preloadImage: '/Content/slider/loading.gif',
-                play: 5000,
-                pause: 2500,
-                pagination: false,
-                generatePagination: false,
+                //preloadImage: '/Content/slider/loading.gif',
+                play: 3000,
+                pause: 1000,
+                //pagination: false,
+                //generatePagination: false,
                 hoverPause: true
             });
         });
 
         $(document).ready(function () {
             $('div.expandable p').expander({
-                slicePoint: 250  // default is 100
+                slicePoint: 280  // default is 100
             });
-        });
-
-        jQuery(document).ready(function () {
-            //jQuery.timeago.settings.allowFuture = true;
             jQuery("time.timeago").timeago();
         });
+
+
+            //jQuery.timeago.settings.allowFuture = true;
     </script>
+    
+    <script type="text/javascript">
+        (function ($) {
+            $.fn.styleddropdown = function () {
+                return this.each(function () {
+                    var obj = $(this);
+                    obj.find('.field').click(function () { //onclick event, 'list' fadein
+                        obj.find('.list').fadeIn(400);
+
+                        $(document).keyup(function (event) { //keypress event, fadeout on 'escape'
+                            if (event.keyCode == 27) {
+                                obj.find('.list').fadeOut(400);
+                            }
+                        });
+
+                        obj.find('.list').hover(function () { },
+                            function () {
+                                $(this).fadeOut(400);
+                            });
+                    });
+
+                    obj.find('.list li').click(function () { //onclick event, change field value with selected 'list' item and fadeout 'list'
+                        obj.find('.field')
+                            .val($(this).html())
+                            .css({
+                                'background': '#fff',
+                                'color': '#333'
+                            });
+                        obj.find('.list').fadeOut(400);
+                    });
+                });
+            };
+        })(jQuery);
+        
+        $(function () {
+            $('.size').styleddropdown();
+        });
+</script>
 }
 @foreach (var item in Model)
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="/PiF/@item.Thread.ThingID">@item.Thread.Title</a></div>
+            <div class="title"><a href="/PiF/@item.ThreadID">@item.ThreadTitle</a></div>
             <div class="description">
                 <div class="expandable">
                     <p>@item.SelfText</p>
                 </div>
             </div>
-            <div class="createdBy" style="float: left;">@item.Thread.ThreadGames.Count games being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Thread.User.Username)">@item.Thread.User.Username</a> <span style="color: #b5b8be; margin-right: 5px;">on <strong>@Html.TimeAgo(@item.Thread.CreatedDate)</strong></span></div>
-        </div>
-            <div id="slides" class="left">
-                <div class="slides_container">
-                    @foreach (var game in item.Thread.ThreadGames)
-                    {
-                        <div class="slide">
-                            <a href="@string.Format("http://store.steampowered.com/{0}/{1}/", @game.Game.IsSteamSubscription ? "sub" : "app", @game.Game.SteamID)" title="@game.Game.Name">
-                                <img src="@string.Format("http://cdn.steampowered.com/v/gfx/{0}/{1}/capsule_184x69.jpg", @game.Game.IsSteamSubscription ? "subs" : "apps", @game.Game.SteamID)" width="auto" height="215" alt="@game.Game.Name"></a>
-                        </div>
-                    }
-                </div>
-                @if (item.Thread.ThreadGames.Count > 1)
+            <div class="createdTime">
+                <strong>@Html.TimeAgo(@item.CreatedDate)</strong>
+            </div>
+            <div class="createdBy">
+                @if (item.Games.Count() == 1)
                 {
-                    <a href="#" class="prev"><i class="icon-chevron-left icon-large"></i></a>
-                    <a href="#" class="next"><i class="icon-chevron-right icon-large"></i></a>
+                   @item.Games.Single().Name
                 }
-                  </div>
+                else
+                {
+                    <text>@item.GameCount games</text>
+                }
+                being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Username)">@item.Username</a>
+            </div>
+        </div>
+        <div class="left">
+            <ul class="games">
+                      @foreach (var game in item.Games)
+                      {
+                          <li>
+                              <a href="@game.StoreUrl" title="@game.Name">@game.Name</a> <span style="color:#b5b8be; font-weight:600">@string.Format("({0}P)", game.PointWorth)</span>
+                              @if (game.Count > 1)
+                              {
+                                  <span style="color:#b5b8be; font-weight:600">(@game.Count copies)</span>
+                              }
+                          </li>
+                      }
+                  </ul>
+        </div>
         <div class="clearBoth"></div>
     </div>
 }
