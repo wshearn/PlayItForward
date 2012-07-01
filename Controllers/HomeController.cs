@@ -31,18 +31,6 @@ namespace PiF.Controllers
 
                     var games = new List<Game>();
 
-                    // Make this AJAX instead.
-                    // string text;
-                    // try
-                    // {
-                    // text = Utilities.GetThreadInfo(thread.ThingID)[0].data.children[0].data.selftext_html;
-                    // text = text.Replace("\n\n", "<br /><br />").Replace("\n", "<br />");
-                    // }
-                    // catch
-                    // {
-                    // // TODO Handle exceptions better.
-                    // text = "Reddit is currently down or too busy, cannot retrieve information at this time";
-                    // }
                     foreach (ThreadGame game in thread.ThreadGames)
                     {
                         if (games.Any(x => x.Name == game.Game.Name))
@@ -64,14 +52,12 @@ namespace PiF.Controllers
                     model.CreatedDate = thread.CreatedDate;
                     model.ThreadID = thread.ThingID;
 
-                    // model.SelfText = new HtmlString(text);
                     details.Add(model);
                 }
 
                 return details;
         }
 
-        [OutputCache(Duration = 60 * 10)]
         public ActionResult Index(int page = 1)
         {
             ViewBag.Title = "Recent Giveaways";

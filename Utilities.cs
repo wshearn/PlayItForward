@@ -57,11 +57,11 @@ namespace PiF
         {
             var cookie = new Cookie
                 {
-                    Domain = httpCookie.Domain, 
-                    Expires = httpCookie.Expires, 
-                    HttpOnly = httpCookie.HttpOnly, 
-                    Path = httpCookie.Path, 
-                    Secure = httpCookie.Secure, 
+                    Domain = httpCookie.Domain,
+                    Expires = httpCookie.Expires,
+                    HttpOnly = httpCookie.HttpOnly,
+                    Path = httpCookie.Path,
+                    Secure = httpCookie.Secure,
                     Value = httpCookie.Value
                 };
 

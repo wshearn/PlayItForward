@@ -14,7 +14,7 @@ namespace PiF.Models
 
         public EditPiFModel(Thread thread)
         {
-            ID = thread.id;
+            ThingID = thread.ThingID;
             ThreadTitle = thread.Title;
         }
 
@@ -23,9 +23,9 @@ namespace PiF.Models
         [Required]
         public string CreatedDate { get; set; }
 
-        /// <summary>Gets the thread ID</summary>
+        /// <summary>Gets the thread ThingID</summary>
         [Required]
-        public int ID { get; private set; }
+        public string ThingID { get; set; }
 
         /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread title")]

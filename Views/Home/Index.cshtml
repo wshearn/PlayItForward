@@ -4,19 +4,19 @@
     <script type="text/javascript" src="~/Scripts/jquery.timeago.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"> </script>
-    @*    <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
+        @*<link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
     <script type="text/javascript">
-        //$(function () {
-        //    $('#slides').slides({
-        //        preload: true,
-        //        //preloadImage: '/Content/slider/loading.gif',
-        //        play: 3000,
-        //        pause: 1000,
-        //        //pagination: false,
-        //        //generatePagination: false,
-        //        hoverPause: true
-        //    });
-        //});
+//        $(function () {
+//            $('#slides').slides({
+//                preload: true,
+//                //preloadImage: '/Content/slider/loading.gif',
+//                play: 3000,
+//                pause: 1000,
+//                //pagination: false,
+//                //generatePagination: false,
+//                hoverPause: true
+//            });
+//        });
 
         $(document).ready(function() {
             $('div.expandable p').expander({
@@ -156,14 +156,24 @@
     <div class="numbers">@PageLinks()</div>
     <div class="clearBoth"></div>
 </div>
+<script type="text/javascript">
+    function GetSelfText(thingId) {
+        $.getJSON('http://www.reddit.com/r/playitforward/comments/' + thingId + '/.json?jsonp=?', { id: thingId }, function (data) {
+            $('#selfText-' + thingId).html(data[0].data.children[0].data.selftext.replace(/\n/g, '<br />'));
+        });
+    }
+</script>
 @foreach (var item in Model)
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="@Url.Action("Thread", "PiF", new { page = i })">@item.ThreadTitle</a></div>
+            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThreadID })">@item.ThreadTitle</a></div>
             <div class="description">
                 <div class="expandable">
-                    <p>@item.SelfText</p>
+                    <p id="selfText-@item.ThreadID"></p>
+                    <script>
+                        $(document).ready(function() { GetSelfText('@item.ThreadID'); });
+                    </script>
                 </div>
             </div>
             <div class="createdTime">

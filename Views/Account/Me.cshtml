@@ -42,12 +42,12 @@
                 
                 @if (canEdit)
                 {
-                    @Html.ActionLink("Edit", "Edit", "PiF", new { item.id }, null)
-                    <text> | @Html.ActionLink("Complete", "Complete", "PiF", new { item.id }, null)</text>
+                    @Html.ActionLink("Edit", "Edit", "PiF", new { item.ThingID }, null)
+                    <text> | @Html.ActionLink("Complete", "Complete", "PiF", new { item.ThingID }, null)</text>
                 }
                 else
                 {
-                    @Html.ActionLink("View", "View", "PiF", new { item.id }, null)
+                    @Html.ActionLink("View", "View", "PiF", new { item.ThingID }, null)
                 }
             </td>
         </tr>

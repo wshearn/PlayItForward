@@ -1,4 +1,5 @@
-﻿@model PiF.Models.Thread
+﻿@using PiF.Models
+@model PiF.Models.Thread
 
 <h2>@ViewBag.Title</h2>
 
@@ -41,6 +42,10 @@
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { Model.id }) |
+    @{ bool canEdit = Model.ThreadGames.Any(tg => tg.WinnerID == null); }
+    @if (Model.UserID == AccountHelper.CurrentUser.id && canEdit)
+    {
+<text>@Html.ActionLink("Edit", "Edit", new { Model.ThingID }) | </text>
+    }
     @Html.ActionLink("Back to List", "Me", "Account")
 </p>
