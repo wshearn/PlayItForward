@@ -49,60 +49,70 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                dynamic response = Login(model.UserName, model.Password);
-
-                if (response["json"]["errors"].Length > 0)
-                {
-                    string error = response["json"]["errors"][0][0];
-                    if (error == "INVALID_PASSWORD" || error == "WRONG_PASSWORD" || error == "RATELIMIT")
-                    {
-                        ModelState.AddModelError(string.Empty, response["json"]["errors"][0][1]);
-                    }
-                }
-                else
-                {
-                    // Set Session vars in case user doesn't use cookies.
-                    Session["Username"] = model.UserName;
-
-                    // Session is required regardless of cookie state as Auth cookie won't be sent until next request
-                    if (AccountHelper.CurrentUser == null)
-                    {
-                        // Referencing the helper will add the user and/or update the IP if necessary
-                        throw new Exception("Account error!");
-                    }
-
-                    Session["ModHash"] = response["json"]["data"]["modhash"];
-
-                    var redditCookie = new HttpCookie("reddit_session")
-                        {
-                            Value = Server.UrlEncode(response["json"]["data"]["cookie"]),
-                            Expires = DateTime.Now.AddYears(1)
-                        };
-                    Session["RedditCookie"] = redditCookie;
-
-                    if (model.RememberMe)
-                    {
-                        Response.Cookies["Username"].Value = model.UserName;
-                        Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
-                        Response.Cookies["RedditCookie"].Value = Server.UrlEncode(response["json"]["data"]["cookie"]);
-                        Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
-                        Response.Cookies["ModHash"].Value = response["json"]["data"]["modhash"];
-                        Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
-                    }
-
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-
-                    if (!string.IsNullOrEmpty(returnUrl))
-                        return Redirect(returnUrl);
-
-                    return RedirectToAction("Index", "Home");
-                }
+                return View(model);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            dynamic response;
+            try
+            {
+                response = Login(model.UserName, model.Password);
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Reddit is down at the moment.");
+                return View(model);
+            }
+
+            if (response["errors"].Length > 0)
+            {
+                // string error = response["errors"][0][0];
+
+                // if (error == "INVALID_PASSWORD" || error == "WRONG_PASSWORD" || error == "RATELIMIT")
+                // {
+                ModelState.AddModelError(string.Empty, response["errors"][0][1]);
+                return View(model);
+
+                // }
+            }
+
+            // Set Session vars in case user doesn't use cookies.
+            Session["Username"] = model.UserName;
+
+            // Session is required regardless of cookie state as Auth cookie won't be sent until next request
+            if (AccountHelper.CurrentUser == null)
+            {
+                // Referencing the helper will add the user and/or update the IP if necessary
+                throw new Exception("Account error!");
+            }
+
+            Session["ModHash"] = response["data"]["modhash"];
+
+            var redditCookie = new HttpCookie("reddit_session")
+                {
+                    Value = Server.UrlEncode(response["data"]["cookie"]),
+                    Expires = DateTime.Now.AddYears(1)
+                };
+            Session["RedditCookie"] = redditCookie;
+
+            if (model.RememberMe)
+            {
+                Response.Cookies["Username"].Value = model.UserName;
+                Response.Cookies["Username"].Expires = DateTime.Now.AddYears(1);
+                Response.Cookies["RedditCookie"].Value = Server.UrlEncode(response["data"]["cookie"]);
+                Response.Cookies["RedditCookie"].Expires = DateTime.Now.AddYears(1);
+                Response.Cookies["ModHash"].Value = response["data"]["modhash"];
+                Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
+            }
+
+            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
@@ -126,6 +136,7 @@ namespace PiF.Controllers
             string postData = string.Format("api_type=json&user={0}&passwd={1}", username, password);
             byte[] dataBytes = Encoding.ASCII.GetBytes(postData);
             login.ContentLength = dataBytes.Length;
+            login.Timeout = 5000;
             Stream postStream = login.GetRequestStream();
 
             postStream.Write(dataBytes, 0, dataBytes.Length);
@@ -140,7 +151,7 @@ namespace PiF.Controllers
                 resp = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+            return new JavaScriptSerializer().Deserialize<dynamic>(resp)["json"];
         }
     }
 }

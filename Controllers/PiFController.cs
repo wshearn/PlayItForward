@@ -202,19 +202,19 @@ namespace PiF.Controllers
                     model.Captcha, 
                     Session["CaptchaID"].ToString());
 
-                if (response["json"]["errors"].Length > 0)
+                if (response["errors"].Length > 0)
                 {
-                    if (response["json"]["errors"][0][0] == "BAD_CAPTCHA")
+                    if (response["errors"][0][0] == "BAD_CAPTCHA")
                     {
                         ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
-                        Session["CaptchaID"] = response["json"]["captcha"];
+                        Session["CaptchaID"] = response["captcha"];
                         model.CaptchaRequired = true;
                     }
 
                     return View(model);
                 }
 
-                thingID = response["json"]["data"]["id"];
+                thingID = response["data"]["id"];
             }
 
             if (ModelState.IsValid)
@@ -317,7 +317,7 @@ namespace PiF.Controllers
             connect.Method = "POST";
             connect.UserAgent = "r/playitforward site by /u/sevenalive";
             connect.ContentType = "application/x-www-form-urlencoded";
-
+            connect.Timeout = 5000;
             byte[] dataBytes = Encoding.ASCII.GetBytes(data);
             connect.ContentLength = dataBytes.Length;
             Stream postStream = connect.GetRequestStream();
@@ -334,7 +334,7 @@ namespace PiF.Controllers
                 resp = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+            return new JavaScriptSerializer().Deserialize<dynamic>(resp)["json"];
         }
     }
 }

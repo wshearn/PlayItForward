@@ -2626,7 +2626,7 @@ namespace PiF.Models
 		
 		private bool _IsDLC;
 		
-		private int _RequiredID;
+		private int _BaseGameSteamID;
 		
 		private string _StoreUrl;
 		
@@ -2648,8 +2648,8 @@ namespace PiF.Models
     partial void OnIsSteamSubscriptionChanged();
     partial void OnIsDLCChanging(bool value);
     partial void OnIsDLCChanged();
-    partial void OnRequiredIDChanging(int value);
-    partial void OnRequiredIDChanged();
+    partial void OnBaseGameSteamIDChanging(int value);
+    partial void OnBaseGameSteamIDChanged();
     partial void OnStoreUrlChanging(string value);
     partial void OnStoreUrlChanged();
     #endregion
@@ -2780,22 +2780,22 @@ namespace PiF.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RequiredID", DbType="Int NOT NULL")]
-		public int RequiredID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseGameSteamID", DbType="Int NOT NULL")]
+		public int BaseGameSteamID
 		{
 			get
 			{
-				return this._RequiredID;
+				return this._BaseGameSteamID;
 			}
 			set
 			{
-				if ((this._RequiredID != value))
+				if ((this._BaseGameSteamID != value))
 				{
-					this.OnRequiredIDChanging(value);
+					this.OnBaseGameSteamIDChanging(value);
 					this.SendPropertyChanging();
-					this._RequiredID = value;
-					this.SendPropertyChanged("RequiredID");
-					this.OnRequiredIDChanged();
+					this._BaseGameSteamID = value;
+					this.SendPropertyChanged("BaseGameSteamID");
+					this.OnBaseGameSteamIDChanged();
 				}
 			}
 		}
