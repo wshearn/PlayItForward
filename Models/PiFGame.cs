@@ -23,6 +23,8 @@ namespace PiF.Models
             PointWorth = game.PointWorth * count;
         }
 
+        // The properties below cannot be set to protected set while used with a parameterless construct, which is used in Ajax, and not caught by static analysis
+
         /// <summary>Gets or sets the number of copies being given.</summary>
         [Required]
         [DataType("Integer")]
@@ -31,34 +33,44 @@ namespace PiF.Models
         public int Count
         {
             get { return count; }
-            protected set { count = Math.Max(0, value); }
+// ReSharper disable MemberCanBeProtected.Global
+            set { count = Math.Max(0, value); }
+// ReSharper restore MemberCanBeProtected.Global
         }
 
         /// <summary>Gets or sets the game id.</summary>
         [ReadOnly(true)]
         [DataType("Integer")]
         [DisplayName("ID")]
-        [ScaffoldColumn(false)]
+        //[ScaffoldColumn(false)]
         [DefaultValue(0)]
-        public int ID { get; protected set; }
+// ReSharper disable MemberCanBeProtected.Global
+        public int ID { get; set; }
+// ReSharper restore MemberCanBeProtected.Global
 
         /// <summary>Gets or sets the game name.</summary>
         [Required]
         [DataType("String")]
         [UIHint("GameList")]
-        public string Name { get; protected set; }
+// ReSharper disable MemberCanBeProtected.Global
+        public string Name { get; set; }
+// ReSharper restore MemberCanBeProtected.Global
 
         /// <summary>Gets or sets the number of copies being given.</summary>
         [DataType("Integer")]
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
-        public int PointWorth { get; protected set; }
+// ReSharper disable MemberCanBeProtected.Global
+        public int PointWorth { get; set; }
+// ReSharper restore MemberCanBeProtected.Global
 
         /// <summary>Gets or sets the game Steam ID.</summary>
         [ReadOnly(true)]
         [DisplayName("Steam ID")]
         [DefaultValue(0)]
-        public int? SteamID { get; protected set; }
+// ReSharper disable MemberCanBeProtected.Global
+        public int? SteamID { get; set; }
+// ReSharper restore MemberCanBeProtected.Global
     }
 }

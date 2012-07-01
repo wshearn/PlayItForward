@@ -16,10 +16,13 @@ namespace PiF
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
             routes.MapRoute(
-                "Default", 
-                "{controller}/{action}/{id}", 
+                "PiF",
+                "{controller}/{action}/{ThingID}",
+                new { controller = "PiF", action = "List", ThingID = UrlParameter.Optional });
+            routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 

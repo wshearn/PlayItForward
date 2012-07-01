@@ -13,9 +13,6 @@ namespace PiF.Models
     /// <summary>Properties containing data when completing a PiF</summary>
     public class CompletePiFModel
     {
-        /// <summary>Gets or sets the PiF ID.</summary>
-        public int ID { get; set; }
-
         /// <summary>Gets or sets the ThingID.</summary>
         public string ThingID { get; set; }
 

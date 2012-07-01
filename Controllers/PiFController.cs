@@ -17,23 +17,23 @@ namespace PiF.Controllers
     [Authorize]
     public class PiFController : Controller
     {
-        public ActionResult Complete(int id)
+        public ActionResult Complete(string thingID)
         {
-            if (AccountHelper.CurrentUser.Threads.All(t => t.id != id))
+            if (AccountHelper.CurrentUser.Threads.All(t => t.ThingID != thingID))
             {
                 return RedirectToAction("List");
             }
 
             var cpm = new CompletePiFModel
                 {
-                   ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThingID 
+                   ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID).ThingID 
                 };
 
             Session["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
             var db = new PiFDbDataContext();
             SessionCompleteGamesRepository.Clear();
-            foreach (var tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
+            foreach (var tg in AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID).ThreadGames)
             {
                 User user = db.Users.SingleOrDefault(u => u.id == tg.WinnerID);
                 SessionCompleteGamesRepository.Insert(
@@ -48,7 +48,7 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult Complete(CompletePiFModel model)
         {
-            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == model.ID);
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == model.ThingID);
 
             if (thread == null)
             {
@@ -58,7 +58,7 @@ namespace PiF.Controllers
             if (ModelState.IsValid)
             {
                 var db = new PiFDbDataContext();
-                thread = db.Threads.Single(t => t.id == model.ID);
+                thread = db.Threads.Single(t => t.ThingID == model.ThingID);
                 db.ThreadGames.DeleteAllOnSubmit(thread.ThreadGames);
                 var newUsers = new List<User>();
                 foreach (var pifgame in SessionCompleteGamesRepository.All())
@@ -98,16 +98,16 @@ namespace PiF.Controllers
                 {
                     db.SubmitChanges();
                     Session["ThreadUsers"] = null;
-                    return RedirectToAction("View", "PiF", new { thread.id });
+                    return RedirectToAction("View", "PiF", new { thread.ThingID });
                 }
             }
 
             return View(model);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string thingID)
         {
-            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == id);
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == thingID);
 
             if (thread == null)
             {
@@ -117,7 +117,7 @@ namespace PiF.Controllers
             if (thread.ThreadGames.Any(tg => tg.WinnerID == null))
             {
                 SessionEditGamesRepository.Clear();
-                foreach (var tg in AccountHelper.CurrentUser.Threads.Single(t => t.id == id).ThreadGames)
+                foreach (var tg in AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID).ThreadGames)
                 {
                     int count = 1;
                     PiFGame egame = SessionEditGamesRepository.One(p => p.ID == tg.Game.id);
@@ -133,13 +133,13 @@ namespace PiF.Controllers
                 return View(new EditPiFModel(thread));
             }
 
-            return RedirectToAction("View", "PiF", new { id });
+            return RedirectToAction("View", "PiF", new { thread.ThingID });
         }
 
         [HttpPost]
         public ActionResult Edit(EditPiFModel model)
         {
-            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.id == model.ID);
+            Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == model.ThingID);
 
             if (thread == null)
             {
@@ -147,7 +147,7 @@ namespace PiF.Controllers
             }
 
             var db = new PiFDbDataContext();
-            thread = db.Threads.Single(t => t.id == model.ID);
+            thread = db.Threads.Single(t => t.ThingID == model.ThingID);
             db.ThreadGames.DeleteAllOnSubmit(thread.ThreadGames);
             foreach (var pifgame in SessionEditGamesRepository.All())
             {
@@ -266,22 +266,16 @@ namespace PiF.Controllers
                 SessionNewGamesRepository.Clear();
 
                 // TODO: Handle errors.
-                // TODO: Redirect to the PiF Edit/Complete page. return RedirectToAction("Edit", "PiF", new { id = thingID });
-                return RedirectToAction("Edit", "PiF");
+                return RedirectToAction("Edit", "PiF", new { thread.ThingID });
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        public ActionResult View(int id)
+        public ActionResult View(string thingID)
         {
-            if (!AccountHelper.CurrentUser.Threads.Any(t => t.id == id))
-            {
-                return RedirectToAction("List");
-            }
-
-            return View(AccountHelper.CurrentUser.Threads.Single(t => t.id == id));
+            return View(new PiFDbDataContext().Threads.First(t => t.ThingID == thingID));
         }
 
         [HttpPost]
