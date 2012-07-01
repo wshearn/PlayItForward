@@ -2,7 +2,6 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,10 +18,6 @@ namespace PiF.Models
 
         /// <summary>Gets or sets the ThingID.</summary>
         public string ThingID { get; set; }
-
-        /// <summary>Gets or sets the thread title.</summary>
-        [DisplayName("Thread Title")]
-        public string ThreadTitle { get; set; }
 
         [OutputCache(Duration = 60 * 5)]
         public IList<SelectListItem> ThreadUserList(string thingID)
@@ -43,7 +38,7 @@ namespace PiF.Models
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Lets test and see if any exceptions do get thrown then handle the ones that do gracefully.
                 throw;

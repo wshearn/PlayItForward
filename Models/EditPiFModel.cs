@@ -23,9 +23,9 @@ namespace PiF.Models
         [Required]
         public string CreatedDate { get; set; }
 
-        /// <summary>Gets or sets the thread ID</summary>
+        /// <summary>Gets the thread ID</summary>
         [Required]
-        public int ID { get; set; }
+        public int ID { get; private set; }
 
         /// <summary>Gets or sets the thread title.</summary>
         [DisplayName("Thread title")]

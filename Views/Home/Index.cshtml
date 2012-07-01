@@ -160,7 +160,7 @@
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="/PiF/@item.ThreadID">@item.ThreadTitle</a></div>
+            <div class="title"><a href="@Url.Action("Thread", "PiF", new { page = i })">@item.ThreadTitle</a></div>
             <div class="description">
                 <div class="expandable">
                     <p>@item.SelfText</p>

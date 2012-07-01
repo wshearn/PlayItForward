@@ -60,9 +60,9 @@ namespace PiF.Controllers
             {
                 response = Login(model.UserName, model.Password);
             }
-            catch
+            catch (WebException)
             {
-                ModelState.AddModelError(string.Empty, "Reddit is down at the moment.");
+                ModelState.AddModelError(string.Empty, "Reddit is currently down.");
                 return View(model);
             }
 
@@ -110,7 +110,9 @@ namespace PiF.Controllers
             FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
             if (!string.IsNullOrEmpty(returnUrl))
+            {
                 return Redirect(returnUrl);
+            }
 
             return RedirectToAction("Index", "Home");
         }

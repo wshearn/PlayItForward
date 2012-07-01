@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PiF.Models;
 
@@ -23,7 +22,7 @@ namespace PiF.Controllers
             return View();
         }
 
-        public static List<PiFDetailsModel> GetThreads(IEnumerable<Thread> threads )
+        static List<PiFDetailsModel> GetThreads(IEnumerable<Thread> threads)
         {
             var details = new List<PiFDetailsModel>();
                 foreach (Thread thread in threads)
@@ -31,19 +30,19 @@ namespace PiF.Controllers
                     var model = new PiFDetailsModel();
 
                     var games = new List<Game>();
-                    // Make this AJAX instead.
-                    //string text;
-                    //try
-                    //{
-                    //    text = Utilities.GetThreadInfo(thread.ThingID)[0].data.children[0].data.selftext_html;
-                    //    text = text.Replace("\n\n", "<br /><br />").Replace("\n", "<br />");
-                    //}
-                    //catch
-                    //{
-                    //    // TODO Handle exceptions better.
-                    //    text = "Reddit is currently down or too busy, cannot retrieve information at this time";
-                    //}
 
+                    // Make this AJAX instead.
+                    // string text;
+                    // try
+                    // {
+                    // text = Utilities.GetThreadInfo(thread.ThingID)[0].data.children[0].data.selftext_html;
+                    // text = text.Replace("\n\n", "<br /><br />").Replace("\n", "<br />");
+                    // }
+                    // catch
+                    // {
+                    // // TODO Handle exceptions better.
+                    // text = "Reddit is currently down or too busy, cannot retrieve information at this time";
+                    // }
                     foreach (ThreadGame game in thread.ThreadGames)
                     {
                         if (games.Any(x => x.Name == game.Game.Name))
@@ -65,8 +64,7 @@ namespace PiF.Controllers
                     model.CreatedDate = thread.CreatedDate;
                     model.ThreadID = thread.ThingID;
 
-                  //  model.SelfText = new HtmlString(text);
-
+                    // model.SelfText = new HtmlString(text);
                     details.Add(model);
                 }
 
@@ -78,21 +76,19 @@ namespace PiF.Controllers
         {
             ViewBag.Title = "Recent Giveaways";
             const int pageSize = 15;
-            IQueryable<Thread> threads;
-            List<Thread> pifs;
             using (var context = new PiFDbDataContext())
             {
                 if (openThreads == null)
                 {
                     openThreads =
                         CompiledQuery.Compile<PiFDbDataContext, IQueryable<Thread>>(
-                            (ctx) => ctx.Threads.Where(c => c.EndDate.CompareTo(SqlDateTime.MinValue.Value) != 0));
+                            ctx => ctx.Threads.Where(c => c.EndDate.CompareTo(SqlDateTime.MinValue.Value) != 0));
                 }
                 
                 var threadCount = openThreads.Invoke(context).Count();
                 
                 double totalPages = (double)threadCount / pageSize;
-                pifs = openThreads.Invoke(context).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                List<Thread> pifs = openThreads.Invoke(context).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
                 ViewBag.TotalPages = (int)Math.Ceiling(totalPages);
                 ViewBag.ThreadCount = threadCount;

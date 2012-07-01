@@ -195,12 +195,21 @@ namespace PiF.Controllers
 #endif
             if (debug == false)
             {
-                dynamic response = PostPiF(
-                    model.ThreadTitle, 
-                    model.SelfText, 
-                    Session["ModHash"].ToString(), 
-                    model.Captcha, 
-                    Session["CaptchaID"].ToString());
+                dynamic response;
+                try
+                {
+                    response = PostPiF(
+                        model.ThreadTitle,
+                        model.SelfText,
+                        Session["ModHash"].ToString(),
+                        model.Captcha,
+                        Session["CaptchaID"].ToString());
+                }
+                catch (WebException)
+                {
+                    ModelState.AddModelError(string.Empty, "Reddit is currently down.");
+                    return View(model);
+                }
 
                 if (response["errors"].Length > 0)
                 {
@@ -209,6 +218,10 @@ namespace PiF.Controllers
                         ModelState.AddModelError(string.Empty, "Reddit is requesting you enter a captcha code");
                         Session["CaptchaID"] = response["captcha"];
                         model.CaptchaRequired = true;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, response["errors"][0][0]);
                     }
 
                     return View(model);
@@ -253,8 +266,8 @@ namespace PiF.Controllers
                 SessionNewGamesRepository.Clear();
 
                 // TODO: Handle errors.
-                // TODO: Redirect to the PiF Edit/Complete page.
-                return RedirectToAction("Index", "Home");
+                // TODO: Redirect to the PiF Edit/Complete page. return RedirectToAction("Edit", "PiF", new { id = thingID });
+                return RedirectToAction("Edit", "PiF");
             }
 
             // If we got this far, something failed, redisplay form

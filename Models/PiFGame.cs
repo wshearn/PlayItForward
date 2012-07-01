@@ -31,7 +31,7 @@ namespace PiF.Models
         public int Count
         {
             get { return count; }
-            set { count = Math.Max(0, value); }
+            protected set { count = Math.Max(0, value); }
         }
 
         /// <summary>Gets or sets the game id.</summary>
@@ -40,25 +40,25 @@ namespace PiF.Models
         [DisplayName("ID")]
         [ScaffoldColumn(false)]
         [DefaultValue(0)]
-        public int ID { get; set; }
+        public int ID { get; protected set; }
 
         /// <summary>Gets or sets the game name.</summary>
         [Required]
         [DataType("String")]
         [UIHint("GameList")]
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         /// <summary>Gets or sets the number of copies being given.</summary>
         [DataType("Integer")]
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
-        public int PointWorth { get; set; }
+        public int PointWorth { get; protected set; }
 
         /// <summary>Gets or sets the game Steam ID.</summary>
         [ReadOnly(true)]
         [DisplayName("Steam ID")]
         [DefaultValue(0)]
-        public int? SteamID { get; set; }
+        public int? SteamID { get; protected set; }
     }
 }

@@ -28,9 +28,9 @@ namespace PiF.Models
         [Required]
         public string SelfText { get; set; }
 
-        /// <summary>Gets or sets the thread title.</summary>
+        /// <summary>Gets the thread title.</summary>
         [DisplayName("Thread title")]
         [Required]
-        public string ThreadTitle { get; set; }
+        public string ThreadTitle { get; private set; }
     }
 }
