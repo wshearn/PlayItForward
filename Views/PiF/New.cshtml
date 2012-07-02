@@ -52,7 +52,7 @@
                   commands.Edit().ButtonType(GridButtonType.Text);
                   commands.Delete().ButtonType(GridButtonType.Text);
               }).Width(180).Title("Commands");
-      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionNewGamesRepository.All()).ClientEvents(events => events.OnError("Grid_onError")))
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable(x => x.PageSize(20)).Scrollable().Sortable().BindTo(SessionNewGamesRepository.All()).ClientEvents(events => events.OnError("Grid_onError")))
 <br />
 @using (Html.BeginForm("New", "PiF"))
 {

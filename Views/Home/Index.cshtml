@@ -1,81 +1,20 @@
 ﻿@model List<PiF.Models.PiFDetailsModel>
 @section HeadContent {
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"> </script>
-    <script type="text/javascript" src="~/Scripts/jquery.timeago.js"> </script>
-    <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"> </script>
-    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"> </script>
-        @*<link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
-    <script type="text/javascript">
-//        $(function () {
-//            $('#slides').slides({
-//                preload: true,
-//                //preloadImage: '/Content/slider/loading.gif',
-//                play: 3000,
-//                pause: 1000,
-//                //pagination: false,
-//                //generatePagination: false,
-//                hoverPause: true
-//            });
-//        });
-
-        $(document).ready(function() {
-            $('div.expandable p').expander({
-                slicePoint: 280  // default is 100
-            });
-            jQuery("time.timeago").timeago();
-            //jQuery.timeago.settings.allowFuture = true;
-        });
-    </script>
-
-    <script type="text/javascript">
-        (function($) {
-            $.fn.styleddropdown = function() {
-                return this.each(function() {
-                    var obj = $(this);
-                    obj.find('.field').click(function() { //onclick event, 'list' fadein
-                        obj.find('.list').fadeIn(400);
-
-                        $(document).keyup(function(event) { //keypress event, fadeout on 'escape'
-                            if (event.keyCode == 27) {
-                                obj.find('.list').fadeOut(400);
-                            }
-                        });
-
-                        obj.find('.list').hover(function() {
-                        },
-                            function() {
-                                $(this).fadeOut(400);
-                            });
-                    });
-
-                    obj.find('.list li').click(function() { //onclick event, change field value with selected 'list' item and fadeout 'list'
-                        obj.find('.field')
-                            .val($(this).html())
-                            .css({
-                                'background': '#fff',
-                                'color': '#333'
-                            });
-                        obj.find('.list').fadeOut(400);
-                    });
-                });
-            };
-        })(jQuery);
-
-        $(function() {
-            $('.size').styleddropdown();
-        });
-    </script>
-
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.timeago.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/index.min.js"></script>
+    @*    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"></script>
+    <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
     @helper BuildLinks(int start, int end, string innerContent)
-    {
+{
         for (int i = start; i <= end; i++)
         {
-            <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "home", new { page = i })">@(innerContent ?? i.ToString())</a>
+        <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "Home", new { page = i })">@(innerContent ?? i.ToString())</a>
         }
     }
-    
     @helper ItemsDisplayed()
-    {
+{
         int start = (ViewBag.CurrentPage - 1) * ViewBag.PageSize;
         int end = start + ViewBag.PageSize;
 
@@ -90,16 +29,16 @@
         }
 
         <text>
-            <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
+        <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
         </text>
     }
     @helper PageLinks()
-    {
+{
         const int MaxPages = 15;
 
         if (ViewBag.TotalPages <= MaxPages)
         {
-            @BuildLinks(1, (int)ViewBag.TotalPages, null)
+        @BuildLinks(1, (int)ViewBag.TotalPages, null)
             return;
         }
 
@@ -108,24 +47,24 @@
 
         if (pagesAfter <= 4)
         {
-            @BuildLinks(1, 1, null) // Show 1st page
+        @BuildLinks(1, 1, null) // Show 1st page
 
             int pageSubset = ViewBag.TotalPages - MaxPages - 1 > 1 ? ViewBag.TotalPages - MaxPages - 1 : 2;
-            @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
-            @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
+        @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
 
             return;
         }
 
         if (pagesBefore <= 4)
         {
-            @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
+        @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
 
             int pageSubset = MaxPages + 2 < ViewBag.TotalPages ? MaxPages + 2 : ViewBag.TotalPages - 1;
-            @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
-            @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+        @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
 
             return;
         }
@@ -144,8 +83,8 @@
 
         @BuildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
 
-        // Show 2nd page subset (...)
-        // only show ... if page is contigous to the previous one.
+            // Show 2nd page subset (...)
+            // only show ... if page is contigous to the previous one.
         @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
         @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
     }
@@ -156,25 +95,15 @@
     <div class="numbers">@PageLinks()</div>
     <div class="clearBoth"></div>
 </div>
-<script type="text/javascript">
-    function GetSelfText(thingId) {
-        $.getJSON('http://www.reddit.com/r/playitforward/comments/' + thingId + '/.json?jsonp=?', { id: thingId }, function (data) {
-            $('#selfText-' + thingId).html(data[0].data.children[0].data.selftext.replace(/\n/g, '<br />'));
-        });
-    }
-</script>
 @foreach (var item in Model)
 {
     <div class="pif">
         <div class="left">
             <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThreadID })">@item.ThreadTitle</a></div>
-            <div class="description">
-                <div class="expandable">
-                    <p id="selfText-@item.ThreadID"></p>
-                    <script>
-                        $(document).ready(function() { GetSelfText('@item.ThreadID'); });
-                    </script>
-                </div>
+            <div class="description" id="selfText-@item.ThreadID">
+                        <script type="text/javascript">
+                            $(document).ready(function () { GetSelfText('@item.ThreadID'); });
+                        </script>
             </div>
             <div class="createdTime">
                 <strong>@Html.TimeAgo(@item.CreatedDate)</strong>

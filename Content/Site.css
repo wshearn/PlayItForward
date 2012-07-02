@@ -21,6 +21,8 @@
     float: left;
 }
 
+li a { cursor:pointer}
+
 .pagination {
     padding: 5px 10px;
     border: 1px solid #E4E4E4;
