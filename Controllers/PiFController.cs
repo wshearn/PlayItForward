@@ -14,14 +14,14 @@ using PiF.Models;
 
 namespace PiF.Controllers
 {
-    [Authorize]
     public class PiFController : Controller
     {
+        [Authorize]
         public ActionResult Complete(string thingID)
         {
             if (AccountHelper.CurrentUser.Threads.All(t => t.ThingID != thingID))
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Me", "Account");
             }
 
             var cpm = new CompletePiFModel
@@ -46,13 +46,14 @@ namespace PiF.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Complete(CompletePiFModel model)
         {
             Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == model.ThingID);
 
             if (thread == null)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Me", "Account");
             }
 
             if (ModelState.IsValid)
@@ -105,13 +106,14 @@ namespace PiF.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Edit(string thingID)
         {
             Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == thingID);
 
             if (thread == null)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Me", "Account");
             }
 
             if (thread.ThreadGames.Any(tg => tg.WinnerID == null))
@@ -137,13 +139,14 @@ namespace PiF.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(EditPiFModel model)
         {
             Thread thread = AccountHelper.CurrentUser.Threads.SingleOrDefault(t => t.ThingID == model.ThingID);
 
             if (thread == null)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Me", "Account");
             }
 
             var db = new PiFDbDataContext();
@@ -163,12 +166,7 @@ namespace PiF.Controllers
             return View(model);
         }
 
-        public ActionResult List()
-        {
-            ViewBag.Title = "My PiFs";
-            return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
-        }
-
+        [Authorize]
         public ActionResult New()
         {
             ViewBag.Title = "Create a new PiF";
@@ -178,6 +176,7 @@ namespace PiF.Controllers
 
         // POST: /PiF/New
         [HttpPost]
+        [Authorize]
         public ActionResult New(NewPiFModel model)
         {
             if (!SessionNewGamesRepository.All().Any())
@@ -199,10 +198,10 @@ namespace PiF.Controllers
                 try
                 {
                     response = PostPiF(
-                        model.ThreadTitle,
-                        model.SelfText,
-                        Session["ModHash"].ToString(),
-                        model.Captcha,
+                        model.ThreadTitle, 
+                        model.SelfText, 
+                        Session["ModHash"].ToString(), 
+                        model.Captcha, 
                         Session["CaptchaID"].ToString());
                 }
                 catch (WebException)
@@ -237,7 +236,7 @@ namespace PiF.Controllers
                 var r = new Random();
                 var thread = new Thread
                     {
-                        EndDate = SqlDateTime.MinValue.Value,
+                        EndDate = SqlDateTime.MinValue.Value, 
                         CreatedDate = DateTime.UtcNow, 
                         Title = model.ThreadTitle, 
                         ThingID =
@@ -275,6 +274,11 @@ namespace PiF.Controllers
 
         public ActionResult View(string thingID)
         {
+            if (string.IsNullOrWhiteSpace(thingID))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(new PiFDbDataContext().Threads.First(t => t.ThingID == thingID));
         }
 
@@ -291,6 +295,7 @@ namespace PiF.Controllers
             return new JsonResult { Data = data.Select(n => n.Username).ToList() };
         }
 
+        [Authorize]
         dynamic PostPiF(string title, string text, string modhash, string captcha = null, string iden = null)
         {
             string data =
@@ -308,10 +313,11 @@ namespace PiF.Controllers
             return SendPost(data, "http://www.reddit.com/api/submit");
         }
 
-        /// <summary>Sends data in POST to the specified URI</summary>
+        // <summary>Sends data in POST to the specified URI</summary>
         /// <param name="data">POST data</param>
         /// <param name="uri">URI to POST data to</param>
         /// <returns>True/false based on success (NYI)</returns>
+        [Authorize]
         dynamic SendPost(string data, string uri)
         {
             var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;

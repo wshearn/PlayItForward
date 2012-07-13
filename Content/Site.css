@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.t-button:hover {
+    color: black!important;
+}
+
 .createdTime {
     color: #b5b8be;
     font-size: .8em;

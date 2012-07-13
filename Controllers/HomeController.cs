@@ -22,12 +22,12 @@ namespace PiF.Controllers
             return View();
         }
 
-        static List<PiFDetailsModel> GetThreads(IEnumerable<Thread> threads)
+        static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
         {
-            var details = new List<PiFDetailsModel>();
+            var details = new List<PiFListModel>();
                 foreach (Thread thread in threads)
                 {
-                    var model = new PiFDetailsModel();
+                    var model = new PiFListModel();
 
                     var games = new List<Game>();
 
@@ -50,7 +50,7 @@ namespace PiF.Controllers
                     model.ThreadTitle = thread.Title;
                     model.Username = thread.User.Username;
                     model.CreatedDate = thread.CreatedDate;
-                    model.ThreadID = thread.ThingID;
+                    model.ThingID = thread.ThingID;
 
                     details.Add(model);
                 }

@@ -43,7 +43,7 @@
 </fieldset>
 <p>
     @{ bool canEdit = Model.ThreadGames.Any(tg => tg.WinnerID == null); }
-    @if (Model.UserID == AccountHelper.CurrentUser.id && canEdit)
+    @if (AccountHelper.CurrentUser != null && Model.UserID == AccountHelper.CurrentUser.id && canEdit)
     {
 <text>@Html.ActionLink("Edit", "Edit", new { Model.ThingID }) | </text>
     }

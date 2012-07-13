@@ -15,7 +15,7 @@ namespace PiF.Controllers
 {
     public class AccountController : Controller
     {
-        public ActionResult LogOff()
+        public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             HttpCookie httpCookie = Request.Cookies.Get("RedditCookie");

@@ -1,4 +1,4 @@
-﻿@model List<PiF.Models.PiFDetailsModel>
+﻿@model List<PiF.Models.PiFListModel>
 @section HeadContent {
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.timeago.js"></script>
@@ -99,10 +99,10 @@
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThreadID })">@item.ThreadTitle</a></div>
-            <div class="description" id="selfText-@item.ThreadID">
+            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThingID })">@item.ThreadTitle</a></div>
+            <div class="description" id="selfText-@item.ThingID">
                         <script type="text/javascript">
-                            $(document).ready(function () { GetSelfText('@item.ThreadID'); });
+                            $(document).ready(function () { GetSelfText('@item.ThingID'); });
                         </script>
             </div>
             <div class="createdTime">

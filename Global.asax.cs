@@ -16,13 +16,50 @@ namespace PiF
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute("New", "new", new { controller = "PiF", action = "New" });
             routes.MapRoute(
-                "PiF",
-                "{controller}/{action}/{ThingID}",
-                new { controller = "PiF", action = "List", ThingID = UrlParameter.Optional });
+                "Complete", 
+                "complete/{thingID}", 
+                new { controller = "PiF", action = "Complete", thingID = UrlParameter.Optional });
+
             routes.MapRoute(
-                "Default",
-                "{controller}/{action}/{id}",
+                "Delete", 
+                "delete/{thingID}", 
+                new { controller = "PiF", action = "delete", thingID = UrlParameter.Optional });
+
+            routes.MapRoute(
+                "Edit", "edit/{thingID}", new { controller = "PiF", action = "Edit", thingID = UrlParameter.Optional });
+
+            routes.MapRoute(
+                "PiF", "pif/{thingID}", new { controller = "PiF", action = "View", thingID = UrlParameter.Optional });
+
+            routes.MapRoute("About", "about", new { controller = "Home", action = "About" });
+
+            routes.MapRoute("Rules", "rules", new { controller = "Home", action = "Rules" });
+
+            routes.MapRoute("Me", "me", new { controller = "Account", action = "Me" });
+
+            routes.MapRoute(
+                "Login", 
+                "login/{ReturnUrl}", 
+                new { controller = "Account", action = "Login", ReturnUrl = UrlParameter.Optional });
+
+            routes.MapRoute("Logout", "logout", new { controller = "Account", action = "Logout" });
+
+            routes.MapRoute(
+                "User", 
+                "user/{username}", 
+                new { controller = "Account", action = "User", username = UrlParameter.Optional });
+
+            routes.MapRoute(
+    "Index",
+    "{page}",
+    new { controller = "Home", action = "Index", page = UrlParameter.Optional });
+
+            routes.MapRoute(
+                "Default", 
+                "{controller}/{action}/{id}", 
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 
