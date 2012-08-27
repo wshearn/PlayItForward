@@ -1,0 +1,51 @@
+﻿@model PiF.Models.LoginModel
+
+<section id="loginContent">
+    <p>
+        Play it Forward is built on an idea that gifting games can be personal and fun. Offer up a game for free and select a winner by holding a contest or random drawing. Winners play the game, then gift a copy to someone else.
+    </p>
+    <ol class="round">
+        <li class="one">
+            <h3>Give away games</h3>
+            <br />
+            Pick the game(s) and the terms of the giveaway. Give away multiple games with one contest!</li>
+        <li class="two">
+            <h3>Choice</h3>
+            <br />
+            You pick the winner on your terms. Hold a competition or let chance decide.</li>
+        <li class="three">
+            <h3>Winning is only half the fun</h3>
+            <br />
+            Play the game and give a copy to someone else! you can post a review and tell the gifter you enjoyed it.</li>
+    </ol>
+</section>
+<section id="loginForm">
+    @using (this.Html.BeginForm(new { this.ViewBag.ReturnUrl }))
+    {
+        <fieldset>
+            <legend>Sign in</legend>
+            <ol>
+                <li>
+                    @this.Html.LabelFor(m => m.UserName)
+                    @this.Html.TextBoxFor(m => m.UserName)
+                    @this.Html.ValidationMessageFor(m => m.UserName)
+                </li>
+                <li>
+                    @this.Html.LabelFor(m => m.Password)
+                    @this.Html.PasswordFor(m => m.Password)
+                    @this.Html.ValidationMessageFor(m => m.Password)
+                </li>
+            </ol>
+            <input type="submit" value="Sign in" class="button-blue" />
+            @this.Html.CheckBoxFor(m => m.RememberMe)
+            @this.Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            @this.Html.ValidationMessage("SignIn")
+        </fieldset>
+        <p>
+            You need a <a href="http://reddit.com">reddit</a> and a <a href="http://steampowered.com">steam</a> account to use this site.
+        </p>
+    }
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

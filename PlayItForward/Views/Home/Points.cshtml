@@ -1,0 +1,28 @@
+﻿@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+<article>
+    <p>Most games sold on Steam are worth 1 point. The amount of points for each item is displayed next to the game title. For packs and bundles, points are calculated by adding 1 point for each full game that can purchased individually. DLC and other content are ineligible for points, they are worth 0.</p>
+    <p>MMO subscriptions or play time are ineligible for points. Keys from games that have been featured in a Indie Bundle, are ineligible for points, see the sidebar for more info.</p>
+    
+    <h3>What does not count:</h3>
+<ol class="round">
+    <li class="one">Indie Bundles, this includes but not limited to: Indie Royale, Humble Bundle, Indie Gala, Indie FaceKick, BeMine. Keys from those games aren't eligible for points either.</li>
+    <li class="two">Free games, demos, betas, coupons, iTunes Promo codes, MMO Trial Memberships or game time. DLC, in game content (TF2 weapons/hats, etc), Expansion packs that require a base game to play.</li>
+    <li class="three">PiFing to a specific small group of people or to a specific person does not count for points. Anything given outside the site.</li>
+</ol>
+</article>
+<aside>
+    <h3>Learn more</h3>
+    <ul>
+        <li>@Html.ActionLink("Rules & Guidelines", "Rules", "Home")</li>
+        <li>@Html.ActionLink("Point exceptions", "Exceptions", "Home")</li>
+        <li><a href="https://docs.google.com/spreadsheet/ccc?key=0AiFZyanaAvZDdHdyS0dQMnRSY01HVWYzSldTaGowbXc&hl=en_US#gid=0">Shared Ban List</a></li>
+    </ul>
+</aside>

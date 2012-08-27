@@ -1,0 +1,2 @@
+﻿@*@Html.Kendo().DropDownList().Name("").BindTo(new SelectList(Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))*@
+@Html.Kendo().AutoComplete().Name("WinnerUserName").DataSource(dataBinding => dataBinding.Read("AutoCompleteUserName", "PiF")).HighlightFirst(true).Filter(FilterType.StartsWith).MinLength(3).Suggest(true)

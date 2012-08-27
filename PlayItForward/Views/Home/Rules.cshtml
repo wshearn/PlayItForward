@@ -1,0 +1,39 @@
+﻿@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+<article>
+<h2>Important Details</h2>
+    <ol class="round">
+        <li class="one">Users will receive 1 point for each eligible game. Bundles are counted on a <strong>per game</strong> basis only if the games in the bundle are sold individually on steam. The amount of points an item is worth is displayed next to the name.</li>
+        <li class="two">If you give a game to someone that is ineligible, you won't get a point for that person. A warning is displayed when you pick someone that is ineligible.</li>
+        <li class="three">No requests are allowed. Those who want to give games need to create a PiF using this site. People who are looking for games then can enter that giveaway. Begging the community for games is not tolerated.</li>
+        <li class="four">Be wary of gifting to relatively new accounts, please research users before picking a winner. Please check for serial requesters as well. This is ultimately the gifter's responsibility.</li>
+        <li class="five">PiFers will not receive points if they do a First Come, First Serve thread. Please allow 24 hours or more before closing entries.</li>
+        <li class="six">Asking for donations or requiring users to visit a website is forbidden. This includes requiring comments, likes, or follows. When in doubt, please message support.</li>
+    </ol>
+    
+    <h2>Rules</h2>
+<ol class="round">
+    <li class="one">Alt accounts are <strong>not allowed</strong>. If you are caught using an alt account to circumvent the rules or ratio, all of your accounts will be banned and your steam profiles and reddit accounts will be publicly listed in the <a href="https://docs.google.com/spreadsheet/ccc?key=0AiFZyanaAvZDdHdyS0dQMnRSY01HVWYzSldTaGowbXc&hl=en_US#gid=0">Shared Ban List</a>.</li>
+    <li class="two">Once you receive 5 more games than you have given, you will be placed on probation. You won't be able to enter anymore giveaway until your ratio is .8 or higher. Your existing entries will be removed.<strong> If you atempt to enter another giveaway after the warning, a ban will be issued.</strong></li>
+    <li class="three">If you receive a game on PiF, it is absolutely forbidden to trade or sell it. If you are caught, permanent ban will be issued.</li>
+    <li class="four">If you win a PiF and change your mind, then give it back to the gifter so he/she can pick another winner. You are not allowed to redeem a PiF on someone else's account or PiF it to someone else without permission from the original PiFer.</li>
+    <li class="five">You are not allowed to enter a PiF for someone else. If you enter a PiF, the game is to be given to you. If your friend wants the game, they need to enter for it themselves. If you are caught doing this, it's considered point manipulation and permanent bans will be issued.</li>
+    <li class="six">PiFers must give to users older than 2 months with at least 300 karma to receive points. This is to prevent alt accounts, ratio manipulation, inactive accounts and accounts created for entering giveaways. This also goes for accounts with large amounts of inactivity.</li>
+    <li class="seven">Rigging PiFs and making Fake PiFs is against the rules and subject for an immediate ban. You are not allowed to make a PiF that appears to be random and then pick your friend as the winner. That is considered ratio/point manipulation.</li>
+</ol>
+</article>
+<aside>
+    <h3>Learn more</h3>
+    <ul>
+        <li>@Html.ActionLink("How are points calculated?", "Points", "Home")</li>
+        <li>@Html.ActionLink("Games that are worth 0 points.", "Exceptions", "Home")</li>
+        <li><a href="https://docs.google.com/spreadsheet/ccc?key=0AiFZyanaAvZDdHdyS0dQMnRSY01HVWYzSldTaGowbXc&hl=en_US#gid=0">Shared Ban List</a></li>
+    </ul>
+</aside>

@@ -11,3 +11,4 @@ _ReSharper
 /App_Data/Database.mdf
 /App_Data/Database_log.ldf
 /_ReSharper.PiF/PersistentCaches/LOG
+/packages

@@ -1,9 +1,0 @@
-﻿@using PiF.Models
-@{
-    var db = new PiFDbDataContext().Games;
-    string term = Request["term"] + "%";
-    var result = db.Where(oh => oh.Name.Contains(term));
-    var data = result.Select(p => new { label = p.Name });
-    Json.Write(data, Response.Output);
-
-}
