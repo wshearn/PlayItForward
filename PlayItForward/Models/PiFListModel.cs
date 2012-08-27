@@ -1,25 +1,19 @@
-﻿// <copyright file="PiFListModel.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="PiFListModel.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.Collections.Generic;
-using System.Web;
-
 namespace PiF.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class PiFListModel
     {
         /// <summary>
-        /// Gets or sets the thread title.
+        /// Gets or sets the date the thread was created.
         /// </summary>
-        public string ThreadTitle { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the thing ID for the thread.
-        /// </summary>
-        public string ThingID { get; set; }
-
-        /// <summary>
-        /// Gets or set the number of games in the PiF.
+        /// Gets or sets the number of games in the PiF.
         /// </summary>
         public int GameCount { get; set; }
 
@@ -29,9 +23,14 @@ namespace PiF.Models
         public IEnumerable<Game> Games { get; set; }
 
         /// <summary>
-        /// Gets or sets the date the thread was created.
+        /// Gets or sets the thing ID for the thread.
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public string ThingID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thread title.
+        /// </summary>
+        public string ThreadTitle { get; set; }
 
         /// <summary>
         /// Gets or sets the PiFer username.

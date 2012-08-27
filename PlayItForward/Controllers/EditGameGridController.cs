@@ -1,30 +1,17 @@
-﻿// <copyright file="EditGameGridController.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="EditGameGridController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System.Linq;
-using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using PiF.Models;
-
 namespace PiF.Controllers
 {
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using Kendo.Mvc.Extensions;
+    using Kendo.Mvc.UI;
+
+    using PiF.Models;
+
     public class EditGameGridController : Controller
     {
-        public ActionResult Editing_Inline()
-        {
-            return View();
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int id)
-        {
-            // Delete the record
-            SessionEditGamesRepository.Delete(id);
-
-            // Rebind the grid
-            return Json(ModelState.ToDataSourceResult());
-        }
-
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
@@ -51,6 +38,21 @@ namespace PiF.Controllers
             return Json(new[] { pifgame }.ToDataSourceResult(request, ModelState));
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(int id)
+        {
+            // Delete the record
+            SessionEditGamesRepository.Delete(id);
+
+            // Rebind the grid
+            return Json(ModelState.ToDataSourceResult());
+        }
+
+        public ActionResult Editing_Inline()
+        {
+            return View();
+        }
+
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
             return Json(SessionEditGamesRepository.All().ToDataSourceResult(request));
@@ -59,8 +61,7 @@ namespace PiF.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Update([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
-            //PiFGame pifgame = SessionEditGamesRepository.One(p => p.ID == id);
-
+            // PiFGame pifgame = SessionEditGamesRepository.One(p => p.ID == id);
             if (pifgame != null && ModelState.IsValid)
             {
                 Game game = GameHelper.GetGameList().FirstOrDefault(g => g.Name == pifgame.Name);

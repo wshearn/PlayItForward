@@ -1,92 +1,92 @@
 ﻿@using PiF
 @model List<PiF.Models.PiFListModel>
-    <script type="text/javascript" src="~/Scripts/jquery.timeago.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.expander.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/index.min.js"></script>
-    @*    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.timeago.js"> </script>
+<script type="text/javascript" src="~/Scripts/jquery.expander.min.js"> </script>
+<script type="text/javascript" src="~/Scripts/index.min.js"> </script>
+@*    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"></script>
     <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
-    @helper BuildLinks(int start, int end, string innerContent)
+@helper BuildLinks(int start, int end, string innerContent)
 {
-        for (int i = start; i <= end; i++)
-        {
+    for (int i = start; i <= end; i++)
+    {
         <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "Home", new { page = i })">@(innerContent ?? i.ToString())</a>
-        }
     }
-    @helper ItemsDisplayed()
+}
+@helper ItemsDisplayed()
 {
-        int start = (ViewBag.CurrentPage - 1) * ViewBag.PageSize;
-        int end = start + ViewBag.PageSize;
+    int start = (ViewBag.CurrentPage - 1) * ViewBag.PageSize;
+    int end = start + ViewBag.PageSize;
 
-        if (start == 0)
-        {
-            start = 1;
-        }
+    if (start == 0)
+    {
+        start = 1;
+    }
 
-        if (end > ViewBag.ThreadCount)
-        {
-            end = ViewBag.ThreadCount;
-        }
+    if (end > ViewBag.ThreadCount)
+    {
+        end = ViewBag.ThreadCount;
+    }
 
-        <text>
+    <text>
         <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
-        </text>
-    }
-    @helper PageLinks()
+    </text>
+}
+@helper PageLinks()
 {
-        const int MaxPages = 15;
+    const int MaxPages = 15;
 
-        if (ViewBag.TotalPages <= MaxPages)
-        {
+    if (ViewBag.TotalPages <= MaxPages)
+    {
         @BuildLinks(1, (int)ViewBag.TotalPages, null)
-            return;
-        }
+        return;
+    }
 
-        int pagesAfter = ViewBag.TotalPages - ViewBag.CurrentPage; // Number of pages after current
-        int pagesBefore = ViewBag.CurrentPage - 1; // Number of pages before current
+    int pagesAfter = ViewBag.TotalPages - ViewBag.CurrentPage; // Number of pages after current
+    int pagesBefore = ViewBag.CurrentPage - 1; // Number of pages before current
 
-        if (pagesAfter <= 4)
-        {
+    if (pagesAfter <= 4)
+    {
         @BuildLinks(1, 1, null) // Show 1st page
 
-            int pageSubset = ViewBag.TotalPages - MaxPages - 1 > 1 ? ViewBag.TotalPages - MaxPages - 1 : 2;
+        int pageSubset = ViewBag.TotalPages - MaxPages - 1 > 1 ? ViewBag.TotalPages - MaxPages - 1 : 2;
         @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
         @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
 
-            return;
-        }
+        return;
+    }
 
-        if (pagesBefore <= 4)
-        {
+    if (pagesBefore <= 4)
+    {
         @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
 
-            int pageSubset = MaxPages + 2 < ViewBag.TotalPages ? MaxPages + 2 : ViewBag.TotalPages - 1;
+        int pageSubset = MaxPages + 2 < ViewBag.TotalPages ? MaxPages + 2 : ViewBag.TotalPages - 1;
         @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
         @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
 
-            return;
-        }
-
-        if (pagesAfter <= 4)
-        {
-            return;
-        }
-
-        @BuildLinks(1, 1, null) // Show 1st pages
-
-        int pageSubset1 = ViewBag.CurrentPage - 7 > 1 ? ViewBag.CurrentPage - 7 : 2;
-        int pageSubset2 = ViewBag.CurrentPage + 7 < ViewBag.TotalPages ? ViewBag.CurrentPage + 7 : ViewBag.TotalPages - 1;
-
-        @BuildLinks(pageSubset1, pageSubset1, pageSubset1 == ViewBag.CurrentPage - 4 ? null : "...") // Show 1st page subset (...)
-
-        @BuildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
-
-            // Show 2nd page subset (...)
-            // only show ... if page is contigous to the previous one.
-        @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
-        @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+        return;
     }
+
+    if (pagesAfter <= 4)
+    {
+        return;
+    }
+
+    @BuildLinks(1, 1, null) // Show 1st pages
+
+    int pageSubset1 = ViewBag.CurrentPage - 7 > 1 ? ViewBag.CurrentPage - 7 : 2;
+    int pageSubset2 = ViewBag.CurrentPage + 7 < ViewBag.TotalPages ? ViewBag.CurrentPage + 7 : ViewBag.TotalPages - 1;
+
+    @BuildLinks(pageSubset1, pageSubset1, pageSubset1 == ViewBag.CurrentPage - 4 ? null : "...") // Show 1st page subset (...)
+
+    @BuildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
+
+    // Show 2nd page subset (...)
+    // only show ... if page is contigous to the previous one.
+    @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
+    @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+}
 
 @section featured {
     <section class="featured">
@@ -108,9 +108,9 @@
         <div class="left">
             <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThingID })">@item.ThreadTitle</a></div>
             <div class="description" id="selfText-@item.ThingID">
-                        <script type="text/javascript">
-                            $(document).ready(function () { GetSelfText('@item.ThingID'); });
-                        </script>
+                <script type="text/javascript">
+                    $(document).ready(function() { GetSelfText('@item.ThingID'); });
+                </script>
             </div>
             <div class="createdTime">
                 <strong>@Html.TimeAgo(@item.CreatedDate)</strong>

@@ -1,19 +1,18 @@
-﻿// <copyright file="Utilities.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="Utilities.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
-using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-
 namespace PiF
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+
     public static class Utilities
     {
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
@@ -53,6 +52,41 @@ namespace PiF
             return buff.ToString();
         }
 
+        [OutputCache(Duration = 60 * 5)]
+        public static dynamic GetThreadInfo(string thingID)
+        {
+            string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
+            var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
+
+            connect.UserAgent = "r/playitforward site by /u/sevenalive";
+
+            // Do the actual connection
+            WebResponse response = connect.GetResponse();
+
+            string resp;
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                resp = reader.ReadToEnd();
+            }
+
+            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+        }
+
+        public static Cookie HttpCookieToCookie(HttpCookie httpCookie)
+        {
+            var cookie = new Cookie
+                {
+                    Domain = httpCookie.Domain, 
+                    Expires = httpCookie.Expires, 
+                    HttpOnly = httpCookie.HttpOnly, 
+                    Path = httpCookie.Path, 
+                    Secure = httpCookie.Secure, 
+                    Value = httpCookie.Value
+                };
+
+            return cookie;
+        }
+
         public static string RedditError(dynamic response)
         {
             if (response == null)
@@ -72,7 +106,7 @@ namespace PiF
                     case "RATELIMIT":
                         error = response["errors"][0][1];
                         error = string.Format(
-                            "{0} before attempting again.",
+                            "{0} before attempting again.", 
                             error.Replace("you are doing that too much. try again in", "You need to wait").Replace(
                                 ".", string.Empty));
                         return error;
@@ -82,21 +116,6 @@ namespace PiF
             }
         }
 
-        public static Cookie HttpCookieToCookie(HttpCookie httpCookie)
-        {
-            var cookie = new Cookie
-                {
-                    Domain = httpCookie.Domain,
-                    Expires = httpCookie.Expires,
-                    HttpOnly = httpCookie.HttpOnly,
-                    Path = httpCookie.Path,
-                    Secure = httpCookie.Secure,
-                    Value = httpCookie.Value
-                };
-
-            return cookie;
-        }
-
         public static HtmlString TimeAgo(this HtmlHelper helper, DateTime dateTime)
         {
             var tag = new TagBuilder("time");
@@ -104,26 +123,6 @@ namespace PiF
             tag.Attributes.Add("datetime", dateTime.ToString("s") + "Z");
             tag.SetInnerText(dateTime.ToString());
             return new HtmlString(tag.ToString());
-        }
-
-        [OutputCache(Duration = 60 * 5)]
-        public static dynamic GetThreadInfo(string thingID)
-        {
-            string uri = string.Format("http://www.reddit.com/{0}/.json", thingID);
-            var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
-
-            connect.UserAgent = "r/playitforward site by /u/sevenalive";
-
-            // Do the actual connection
-            WebResponse response = connect.GetResponse();
-
-            string resp;
-            using (var reader = new StreamReader(response.GetResponseStream()))
-            {
-                resp = reader.ReadToEnd();
-            }
-
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
         }
     }
 }

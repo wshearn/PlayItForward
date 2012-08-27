@@ -1,6 +1,6 @@
 ﻿@using System.Data.SqlTypes
-@using System.Linq
-@model IEnumerable<PiF.Models.Thread>
+@using PiF.Models
+@model IEnumerable<Thread>
 
 
 @section featured {
@@ -9,13 +9,13 @@
             <hgroup class="title">
                 <h1>@ViewBag.Title</h1>
             </hgroup>
-                    <p>Games Given: @PiF.Models.AccountHelper.CurrentUser.GivenCount<br/>Games Received: @PiF.Models.AccountHelper.CurrentUser.ReceivedCount</p>
+            <p>Games Given: @AccountHelper.CurrentUser.GivenCount<br/>Games Received: @AccountHelper.CurrentUser.ReceivedCount</p>
         </div>
     </section>
 }
-        <p>
+<p>
     @Html.ActionLink("Create New", "New", "PiF")
-        </p>
+</p>
 <table>
     <tr>
         <th>
@@ -48,11 +48,11 @@
                 }
                 else
                 {
-                @Html.DisplayFor(modelItem => item.EndDate)
+                    @Html.DisplayFor(modelItem => item.EndDate)
                 }
             </td>
             <td>
-                <a href="@String.Format("http://redd.it/{0}", item.ThingID)">@String.Format("http://redd.it/{0}", item.ThingID)</a>
+                <a href="@string.Format("http://redd.it/{0}", item.ThingID)">@string.Format("http://redd.it/{0}", item.ThingID)</a>
             </td>
             <td>
                 @{ bool canEdit = item.ThreadGames.Any(tg => tg.WinnerID == null); }

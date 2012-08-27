@@ -1,15 +1,15 @@
-﻿// <copyright file="CompletePiFModel.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="CompletePiFModel.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-
 namespace PiF.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+
     /// <summary>Properties containing data when completing a PiF</summary>
     public class CompletePiFModel
     {

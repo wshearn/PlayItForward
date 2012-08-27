@@ -1,12 +1,12 @@
-﻿// <copyright file="SessionCompleteGamesRepository.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="SessionCompleteGamesRepository.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace PiF.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
     public static class SessionCompleteGamesRepository
     {
         public static IList<PiFGameComplete> All()
@@ -36,6 +36,15 @@ namespace PiF.Models
             }
         }
 
+        public static void Delete(PiFGameComplete game)
+        {
+            PiFGameComplete target = One(p => p.ID == game.ID);
+            if (target != null)
+            {
+                All().Remove(target);
+            }
+        }
+
         /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
         public static void Insert(PiFGameComplete game)
@@ -46,15 +55,6 @@ namespace PiF.Models
         public static PiFGameComplete One(Func<PiFGameComplete, bool> predicate)
         {
             return All().Where(predicate).FirstOrDefault();
-        }
-
-        public static void Delete(PiFGameComplete game)
-        {
-            var target = One(p => p.ID == game.ID);
-            if (target != null)
-            {
-                All().Remove(target);
-            }
         }
     }
 }

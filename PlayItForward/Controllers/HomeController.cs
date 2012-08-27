@@ -1,16 +1,16 @@
-﻿// <copyright file="HomeController.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="HomeController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-
-using System;
-using System.Collections.Generic;
-using System.Data.Linq;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Web.Mvc;
-using PiF.Models;
-
 namespace PiF.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Linq;
+    using System.Data.SqlTypes;
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using PiF.Models;
+
     public class HomeController : Controller
     {
         static Func<PiFDbDataContext, IQueryable<Thread>> openThreads;
@@ -21,51 +21,21 @@ namespace PiF.Controllers
             return View();
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        [OutputCache(Duration = 60 * 60)]
+        public ActionResult Exceptions()
+        {
+            ViewBag.Title = "Ineligible Games";
+            return View();
+        }
 
         public JsonResult GetGames()
         {
             return Json(GameHelper.GetGameList());
-        }
-
-        static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
-        {
-            var details = new List<PiFListModel>();
-                foreach (Thread thread in threads)
-                {
-                    var model = new PiFListModel();
-
-                    var games = new List<Game>();
-
-                    foreach (ThreadGame game in thread.ThreadGames)
-                    {
-                        if (games.Any(x => x.Name == game.Game.Name))
-                        {
-                            games.Find(x => x.Name == game.Game.Name).Count += 1;
-                        }
-                        else
-                        {
-                            var simpleGame = game.Game;
-                            simpleGame.Count = 1;
-                            games.Add(simpleGame);
-                        }
-                    }
-
-                    model.Games = games;
-                    model.GameCount = thread.ThreadGames.Count;
-                    model.ThreadTitle = thread.Title;
-                    model.Username = thread.User.Username;
-                    model.CreatedDate = thread.CreatedDate;
-                    model.ThingID = thread.ThingID;
-
-                    details.Add(model);
-                }
-
-                return details;
-        }
-
-        public ActionResult Contact()
-        {
-            return View();
         }
 
         public ActionResult Index(int page = 1)
@@ -80,9 +50,9 @@ namespace PiF.Controllers
                         CompiledQuery.Compile<PiFDbDataContext, IQueryable<Thread>>(
                             ctx => ctx.Threads.Where(c => c.EndDate.CompareTo(SqlDateTime.MinValue.Value) != 0));
                 }
-                
-                var threadCount = openThreads.Invoke(context).Count();
-                
+
+                int threadCount = openThreads.Invoke(context).Count();
+
                 double totalPages = (double)threadCount / pageSize;
                 List<Thread> pifs = openThreads.Invoke(context).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
@@ -96,13 +66,6 @@ namespace PiF.Controllers
         }
 
         [OutputCache(Duration = 60 * 60)]
-        public ActionResult Rules()
-        {
-            ViewBag.Title = "Rules & Guidelines";
-            return View();
-        }
-
-        [OutputCache(Duration = 60 * 60)]
         public ActionResult Points()
         {
             ViewBag.Title = "How are points calculated?";
@@ -110,10 +73,46 @@ namespace PiF.Controllers
         }
 
         [OutputCache(Duration = 60 * 60)]
-        public ActionResult Exceptions()
+        public ActionResult Rules()
         {
-            ViewBag.Title = "Ineligible Games";
+            ViewBag.Title = "Rules & Guidelines";
             return View();
+        }
+
+        static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
+        {
+            var details = new List<PiFListModel>();
+            foreach (var thread in threads)
+            {
+                var model = new PiFListModel();
+
+                var games = new List<Game>();
+
+                foreach (var game in thread.ThreadGames)
+                {
+                    if (games.Any(x => x.Name == game.Game.Name))
+                    {
+                        games.Find(x => x.Name == game.Game.Name).Count += 1;
+                    }
+                    else
+                    {
+                        Game simpleGame = game.Game;
+                        simpleGame.Count = 1;
+                        games.Add(simpleGame);
+                    }
+                }
+
+                model.Games = games;
+                model.GameCount = thread.ThreadGames.Count;
+                model.ThreadTitle = thread.Title;
+                model.Username = thread.User.Username;
+                model.CreatedDate = thread.CreatedDate;
+                model.ThingID = thread.ThingID;
+
+                details.Add(model);
+            }
+
+            return details;
         }
     }
 }

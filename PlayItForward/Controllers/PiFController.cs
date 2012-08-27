@@ -1,21 +1,28 @@
-﻿// <copyright file="PiFController.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="PiFController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using PiF.Models;
-
 namespace PiF.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlTypes;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+
+    using PiF.Models;
+
     public class PiFController : Controller
     {
+        public ActionResult AutoCompleteUserName(string text)
+        {
+            IEnumerable<User> data = AccountHelper.GetAllUsers().Where(p => p.Username.StartsWith(text));
+            return new JsonResult { Data = data.Select(n => n.Username).ToList() };
+        }
+
         [Authorize]
         public ActionResult Complete(string thingID)
         {
@@ -166,6 +173,13 @@ namespace PiF.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult GetGames(string text)
+        {
+            IEnumerable<Game> data = GameHelper.GetGameList().Where(p => p.Name.StartsWith(text));
+            return new JsonResult { Data = data.Select(n => n.Name).ToList() };
+        }
+
         [Authorize]
         public ActionResult New()
         {
@@ -273,19 +287,6 @@ namespace PiF.Controllers
             }
 
             return View(new PiFDbDataContext().Threads.First(t => t.ThingID == thingID));
-        }
-
-        [HttpPost]
-        public ActionResult GetGames(string text)
-        {
-            IEnumerable<Game> data = GameHelper.GetGameList().Where(p => p.Name.StartsWith(text));
-            return new JsonResult { Data = data.Select(n => n.Name).ToList() };
-        }
-
-        public ActionResult AutoCompleteUserName(string text)
-        {
-            IEnumerable<User> data = AccountHelper.GetAllUsers().Where(p => p.Username.StartsWith(text));
-            return new JsonResult { Data = data.Select(n => n.Username).ToList() };
         }
 
         [Authorize]

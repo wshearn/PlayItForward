@@ -1,50 +1,41 @@
 ﻿@using PiF.Models
 @model CompletePiFModel
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js"></script>
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/jquery-ui.min.js"></script>
-    <script src="@Url.Content("~/Scripts/kendo.web.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/themes/ui-lightness/jquery-ui.css"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js"> </script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/jquery-ui.min.js"> </script>
+<script src="@Url.Content("~/Scripts/kendo.web.min.js")"> </script>
+<script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")"> </script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/themes/ui-lightness/jquery-ui.css"> </script>
 
-    <script type="text/javascript">
-        function Grid_onError(e) {
-            //`this` is the DOM element of the grid
-            var grid = $(this).data("tGrid");
+<script type="text/javascript">
+    function Grid_onError(e) {
+        //`this` is the DOM element of the grid
+        var grid = $(this).data("tGrid");
 
-            //the current XMLHttpRequest object
-            var xhr = e.XMLHttpRequest;
-            //the text status of the error - "timeout", "error" etc.
-            var status = e.textStatus;
+        //the current XMLHttpRequest object
+        var xhr = e.XMLHttpRequest;
+        //the text status of the error - "timeout", "error" etc.
+        var status = e.textStatus;
 
-            if (status == "error") {
-                //xhr.status is the HTTP code returned by the server
-                if (xhr.status == "404") {
-                    alert("requested url not found");
-                }
+        if (status == "error") {
+            //xhr.status is the HTTP code returned by the server
+            if (xhr.status == "404") {
+                alert("requested url not found");
+            }
 
-                if (e.XMLHttpRequest.status == "500") {
-                    alert("The server was unable to process your request.\n" + e.XMLHttpRequest.responseText);
-                    e.preventDefault();
-                }
+            if (e.XMLHttpRequest.status == "500") {
+                alert("The server was unable to process your request.\n" + e.XMLHttpRequest.responseText);
+                e.preventDefault();
             }
         }
-    </script>
+    }
+</script>
 
 <h2>@ViewBag.Title</h2>
 
 @Html.ValidationSummary(false)
 
 
-@(Html.Kendo().Grid<PiFGameComplete>().Name("CompleteGrid").ToolBar(commands => commands.Create())
-   .DataSource(dataSource => dataSource        
-        .Ajax()                 
-        .Events(events => events.Error("error_handler"))
-        .Model(model => model.Id(p => p.ID))
-        .Read(read => read.Action("Read", "CompleteGrid"))
-        .Update(update => update.Action("Update", "CompleteGrid"))
-        .Destroy(update => update.Action("Delete", "CompleteGrid")))
-
-.Columns(columns =>
+@(Html.Kendo().Grid<PiFGameComplete>().Name("CompleteGrid").ToolBar(commands => commands.Create()).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid")).Destroy(update => update.Action("Delete", "CompleteGrid"))).Columns(columns =>
       {
           columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
           columns.Bound(p => p.Name).Width(400);

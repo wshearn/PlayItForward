@@ -1,45 +1,21 @@
-﻿// <copyright file="AccountController.cs" project="PiF">Robert Baker</copyright>
+﻿// <copyright file="AccountController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using System.Web.Security;
-using PiF.Models;
-
 namespace PiF.Controllers
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+    using System.Web.Security;
+
+    using PiF.Models;
+
     public class AccountController : Controller
     {
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
-            HttpCookie httpCookie = Request.Cookies.Get("RedditCookie");
-            if (httpCookie != null)
-            {
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            }
-
-            httpCookie = Request.Cookies.Get("Username");
-            if (httpCookie != null)
-            {
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            }
-
-            httpCookie = Request.Cookies.Get("ModHash");
-            if (httpCookie != null)
-            {
-                httpCookie.Expires = DateTime.Now.AddDays(-1d);
-            }
-
-            Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
-
         public ActionResult Login()
         {
             ViewBag.Title = "Sign in";
@@ -68,18 +44,18 @@ namespace PiF.Controllers
 
             if (response["errors"].Length > 0)
             {
-                 string error = response["errors"][0][0];
+                string error = response["errors"][0][0];
 
-                 switch (error)
-                 {
-                     case "BAD_USERNAME":
-                     case "WRONG_PASSWORD":
-                         this.ModelState.AddModelError("Password", Utilities.RedditError(response));
-                         break;
-                     default:
-                         this.ModelState.AddModelError("SignIn", Utilities.RedditError(response));
-                         break;
-                 }
+                switch (error)
+                {
+                    case "BAD_USERNAME":
+                    case "WRONG_PASSWORD":
+                        ModelState.AddModelError("Password", Utilities.RedditError(response));
+                        break;
+                    default:
+                        ModelState.AddModelError("SignIn", Utilities.RedditError(response));
+                        break;
+                }
 
                 return View(model);
             }
@@ -98,8 +74,7 @@ namespace PiF.Controllers
 
             var redditCookie = new HttpCookie("reddit_session")
                 {
-                    Value = Server.UrlEncode(response["data"]["cookie"]),
-                    Expires = DateTime.Now.AddYears(1)
+                   Value = Server.UrlEncode(response["data"]["cookie"]), Expires = DateTime.Now.AddYears(1) 
                 };
             Session["RedditCookie"] = redditCookie;
 
@@ -120,6 +95,31 @@ namespace PiF.Controllers
                 return Redirect(returnUrl);
             }
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            HttpCookie httpCookie = Request.Cookies.Get("RedditCookie");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+
+            httpCookie = Request.Cookies.Get("Username");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+
+            httpCookie = Request.Cookies.Get("ModHash");
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

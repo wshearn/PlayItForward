@@ -1,14 +1,14 @@
-// <copyright file="PiFGame.cs" project="PiF">Robert Baker</copyright>
+// <copyright file="PiFGame.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace PiF.Models
 {
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public class PiFGame
     {
-        private int count = 1;
+        int count = 1;
 
         public PiFGame()
         {
@@ -32,10 +32,15 @@ namespace PiF.Models
         [DisplayName("Quantity")]
         public int Count
         {
-            get { return count; }
+            get
+            {
+                return count;
+            }
 
-
-            set { count = Math.Max(1, value); }
+            set
+            {
+                count = Math.Max(1, value);
+            }
         }
 
         /// <summary>Gets or sets the game id.</summary>
@@ -44,18 +49,15 @@ namespace PiF.Models
         [DefaultValue(0)]
         public int ID { get; set; }
 
-
         /// <summary>Gets or sets the game name.</summary>
         [Required]
         public string Name { get; set; }
-
 
         /// <summary>Gets or sets the number of copies being given.</summary>
         [DisplayName("Points")]
         [DefaultValue(1)]
         [ReadOnly(true)]
         public int PointWorth { get; set; }
-
 
         /// <summary>Gets or sets the game Steam ID.</summary>
         [ReadOnly(true)]

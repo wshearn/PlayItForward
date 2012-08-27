@@ -1,7 +1,6 @@
 ﻿@using PiF.Models
 @if (Request.IsAuthenticated)
-{
-    <text>@Html.ActionLink(User.Identity.Name, "Me", "Account") <span class="points">(@AccountHelper.CurrentUser.GivenCount · @AccountHelper.CurrentUser.ReceivedCount</span>) | @Html.ActionLink("Sign out", "Logout", "Account")</text>
+{@:@Html.ActionLink(User.Identity.Name, "Me", "Account") <span class="points">(@AccountHelper.CurrentUser.GivenCount · @AccountHelper.CurrentUser.ReceivedCount</span>) | @Html.ActionLink("Sign out", "Logout", "Account")
 }
 else
 {

@@ -20,26 +20,26 @@
     </ol>
 </section>
 <section id="loginForm">
-    @using (this.Html.BeginForm(new { this.ViewBag.ReturnUrl }))
+    @using (Html.BeginForm(new { ViewBag.ReturnUrl }))
     {
         <fieldset>
             <legend>Sign in</legend>
             <ol>
                 <li>
-                    @this.Html.LabelFor(m => m.UserName)
-                    @this.Html.TextBoxFor(m => m.UserName)
-                    @this.Html.ValidationMessageFor(m => m.UserName)
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
                 </li>
                 <li>
-                    @this.Html.LabelFor(m => m.Password)
-                    @this.Html.PasswordFor(m => m.Password)
-                    @this.Html.ValidationMessageFor(m => m.Password)
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
                 </li>
             </ol>
             <input type="submit" value="Sign in" class="button-blue" />
-            @this.Html.CheckBoxFor(m => m.RememberMe)
-            @this.Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            @this.Html.ValidationMessage("SignIn")
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            @Html.ValidationMessage("SignIn")
         </fieldset>
         <p>
             You need a <a href="http://reddit.com">reddit</a> and a <a href="http://steampowered.com">steam</a> account to use this site.

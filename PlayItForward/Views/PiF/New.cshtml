@@ -29,63 +29,57 @@
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>@this.ViewBag.Title</h1>
+                <h1>@ViewBag.Title</h1>
             </hgroup>
         </div>
     </section>
 }
 <p>
-    @this.Html.Label("Grid", "Add the games you want to PiF")
+    @Html.Label("Grid", "Add the games you want to PiF")
 </p>
 
 <div id="grid">
 </div>
 
-@(this.Html.Kendo().Grid<PiFGame>().Name("NewGameGrid")
-.ToolBar(toolbar => toolbar.Create())
-.DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID))
-        .Create(update => update.Action("Create", "NewGameGrid")).Read(read => read.Action("Read", "NewGameGrid"))
-        .Update(update => update.Action("Update", "NewGameGrid")).Destroy(update => update.Action("Delete", "NewGameGrid"))
-        .ServerOperation(false).Model(model => model.Id(p => p.ID)))
-        .Columns(columns =>
-          {
-              columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
-              columns.Bound(p => p.Count).Width(80);
-              columns.Bound(p => p.PointWorth).Width(80);
-              columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
-              columns.Command(commands =>
-                  {
-                      commands.Edit();
-                      commands.Destroy();
-                  }).Width(170);
-          }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionNewGamesRepository.All()))
+@(Html.Kendo().Grid<PiFGame>().Name("NewGameGrid").ToolBar(toolbar => toolbar.Create()).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Create(update => update.Action("Create", "NewGameGrid")).Read(read => read.Action("Read", "NewGameGrid")).Update(update => update.Action("Update", "NewGameGrid")).Destroy(update => update.Action("Delete", "NewGameGrid")).ServerOperation(false).Model(model => model.Id(p => p.ID))).Columns(columns =>
+      {
+          columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
+          columns.Bound(p => p.Count).Width(80);
+          columns.Bound(p => p.PointWorth).Width(80);
+          columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
+          columns.Command(commands =>
+              {
+                  commands.Edit();
+                  commands.Destroy();
+              }).Width(170);
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionNewGamesRepository.All()))
 <br />
-@this.Html.ValidationMessage("Grid")
+@Html.ValidationMessage("Grid")
 <section id="newPiFForm">
-    @using (this.Html.BeginForm("New", "PiF"))
+    @using (Html.BeginForm("New", "PiF"))
     {
         <fieldset>
             <legend>Sign in</legend>
             <ol>
                 <li>
-                    @this.Html.LabelFor(m => m.ThreadTitle)
-                    @this.Html.TextBoxFor(m => m.ThreadTitle, new { maxlength = 300, width = "50%" })
-                    @this.Html.ValidationMessageFor(m => m.ThreadTitle)
+                    @Html.LabelFor(m => m.ThreadTitle)
+                    @Html.TextBoxFor(m => m.ThreadTitle, new { maxlength = 300, width = "50%" })
+                    @Html.ValidationMessageFor(m => m.ThreadTitle)
                 </li>
                 <li>
-                    @this.Html.LabelFor(m => m.SelfText)
-                    @this.Html.TextAreaFor(m => m.SelfText, new { maxlength = 900 })
-                    @this.Html.ValidationMessageFor(m => m.SelfText)
+                    @Html.LabelFor(m => m.SelfText)
+                    @Html.TextAreaFor(m => m.SelfText, new { maxlength = 900 })
+                    @Html.ValidationMessageFor(m => m.SelfText)
                 </li>
-                @if (this.Model.CaptchaRequired)
+                @if (Model.CaptchaRequired)
                 {
                     <li>
-                        @this.Html.LabelFor(m => m.Captcha)
-                        <img src="@this.Url.Content("http://reddit.com/captcha/" + this.Session["CaptchaID"] + ".png")" />
+                        @Html.LabelFor(m => m.Captcha)
+                        <img src="@Url.Content("http://reddit.com/captcha/" + Session["CaptchaID"] + ".png")" />
                         <div class="captcha-field">
-                            @this.Html.TextBoxFor(m => m.Captcha, new { maxlength = 8 })
+                            @Html.TextBoxFor(m => m.Captcha, new { maxlength = 8 })
                         </div>
-                        @this.Html.ValidationMessageFor(m => m.Captcha);
+                        @Html.ValidationMessageFor(m => m.Captcha);
                     </li>
                 }
             </ol>
