@@ -1,29 +1,29 @@
 ﻿// <copyright file="NewGameGridController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System.Linq;
+using System.Web.Mvc;
+
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using Kendo.Mvc.Extensions;
-    using Kendo.Mvc.UI;
-
-    using PiF.Models;
-
     public class NewGameGridController : Controller
     {
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
-            // Create a new instance of the PiFGame class.
-
-
-
-
             // Perform model binding (fill the game properties and validate it).
             if (pifgame != null && ModelState.IsValid)
             {
-                if (pifgame.Count < 1) pifgame.Count = 1;
+                if (pifgame.Count < 1)
+                {
+                    pifgame.Count = 1;
+                }
+
                 Game game = new PiFDbDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
                 if (game == null)
                 {

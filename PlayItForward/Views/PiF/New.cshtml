@@ -1,6 +1,7 @@
 ﻿@using PiF.Models
 @model NewPiFModel
 
+@{ ViewBag.Title = "Create a new PiF"; }
 <script type="text/javascript">
 
     function error_handler(e) {
@@ -31,9 +32,6 @@
 <p>
     @Html.Label("Grid", "Add the games you want to PiF")
 </p>
-
-<div id="grid">
-</div>
 
 @(Html.Kendo().Grid<PiFGame>().Name("NewGameGrid").ToolBar(toolbar => toolbar.Create()).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Create(update => update.Action("Create", "NewGameGrid")).Read(read => read.Action("Read", "NewGameGrid")).Update(update => update.Action("Update", "NewGameGrid")).Destroy(update => update.Action("Delete", "NewGameGrid")).ServerOperation(false).Model(model => model.Id(p => p.ID))).Columns(columns =>
       {

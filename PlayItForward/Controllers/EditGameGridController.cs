@@ -1,15 +1,16 @@
 ﻿// <copyright file="EditGameGridController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System.Linq;
+using System.Web.Mvc;
+
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using Kendo.Mvc.Extensions;
-    using Kendo.Mvc.UI;
-
-    using PiF.Models;
-
     public class EditGameGridController : Controller
     {
         [AcceptVerbs(HttpVerbs.Post)]

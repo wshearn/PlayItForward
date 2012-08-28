@@ -1,15 +1,26 @@
 ﻿@using PiF.Models
 @model CompletePiFModel
 
+@{
+    ViewBag.Title = "Submit your PiF for review";
+}
+
 @section scripts
 {
     <script type="text/javascript">
+
+        function onAdditionalData() {
+            return {
+                text: $("#UserAutoComplete").val()
+            };
+        }
+
         function error_handler(e) {
             if (e.errors) {
                 var message = "Errors:\n";
-                $.each(e.errors, function (key, value) {
+                $.each(e.errors, function(key, value) {
                     if ('errors' in value) {
-                        $.each(value.errors, function () {
+                        $.each(value.errors, function() {
                             message += this + "\n";
                         });
                     }
@@ -26,18 +37,16 @@
             <hgroup class="title">
                 <h1>@ViewBag.Title</h1>
             </hgroup>
-            <p>Once you have </p>
+            <p>Help text goes here.</p>
         </div>
     </section>
 }
 
-@(Html.Kendo().Grid<PiFGameComplete>().Name("CompleteGrid").DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler"))
-    .Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid"))
-    .Destroy(update => update.Action("Delete", "CompleteGrid"))).HtmlAttributes(new { style = "height: 466px;" }).Columns(columns =>
+@(Html.Kendo().Grid<CompletePiFModel>().Name("CompleteGrid").DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid")).Destroy(update => update.Action("Delete", "CompleteGrid"))).HtmlAttributes(new { style = "height: 466px;" }).Columns(columns =>
       {
           columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
           columns.Bound(p => p.Name).Width(350);
-          columns.Bound(p => p.WinnerUserName).Width(200).EditorTemplateName("GameList");
+          columns.Bound(p => p.WinnerUserName).Width(200).EditorTemplateName("UserList");
           columns.Bound(p => p.PointWorth).Width(80);
 
           columns.Command(commands =>

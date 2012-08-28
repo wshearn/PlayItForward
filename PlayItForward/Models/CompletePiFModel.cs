@@ -1,20 +1,47 @@
 ﻿// <copyright file="CompletePiFModel.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+
 namespace PiF.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
-
     /// <summary>Properties containing data when completing a PiF</summary>
-    public class CompletePiFModel
+    public class CompletePiFModel : PiFGame
     {
+        public CompletePiFModel()
+        {
+        }
+
+        public CompletePiFModel(ThreadGame tg, string winnerUserName)
+        {
+            ID = tg.id;
+            Name = tg.Game.Name;
+            Count = 1;
+            SteamID = tg.Game.SteamID;
+            PointWorth = tg.Game.PointWorth;
+            WinnerUserName = winnerUserName;
+        }
+
+        /// <summary>Gets or sets the game name.</summary>
+        [Required]
+        [ReadOnly(true)]
+        public new string Name { get; set; }
+
         /// <summary>Gets or sets the ThingID.</summary>
         public string ThingID { get; set; }
+
+        /// <summary>Gets or sets the username who won the game.</summary>
+        [Required]
+        [DisplayName("Winner")]
+        public string WinnerUserName { get; set; }
 
         [OutputCache(Duration = 60 * 5)]
         public IList<SelectListItem> ThreadUserList(string thingID)
@@ -41,14 +68,15 @@ namespace PiF.Models
                 throw;
             }
 
-            users.Add(new SelectListItem { Value = string.Empty, Text = string.Empty });
-            return users.OrderBy(u => u.Text.ToLower()).ToList();
+            // users.Add(new SelectListItem { Value = string.Empty, Text = string.Empty });
+            return users.ToList();
         }
 
         Dictionary<string, string> GetAllUsers(dynamic data)
         {
             var userDictionary = new Dictionary<string, string>();
-            if (!userDictionary.ContainsKey(data["author"]))
+            if (!userDictionary.ContainsKey(data["author"]) && data["author"] != "[deleted]"
+                && data["author"] != string.Empty)
             {
                 userDictionary.Add(data["author"], data["author"]);
             }
@@ -63,7 +91,10 @@ namespace PiF.Models
                     }
 
                     Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
-                    foreach (var kvp in subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value)))
+                    foreach (
+                        var kvp in
+                            subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value)).Where(
+                                kvp => data["author"] != "[deleted]" && data["author"] != string.Empty))
                     {
                         userDictionary.Add(kvp.Key, kvp.Value);
                     }

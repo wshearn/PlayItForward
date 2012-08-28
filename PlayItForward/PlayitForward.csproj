@@ -137,7 +137,6 @@
     </Compile>
     <Compile Include="Models\PiFListModel.cs" />
     <Compile Include="Models\PiFGame.cs" />
-    <Compile Include="Models\PiFGameComplete.cs" />
     <Compile Include="Models\SessionCompleteGamesRepository.cs" />
     <Compile Include="Models\SessionEditGamesRepository.cs" />
     <Compile Include="Models\SessionNewGamesRepository.cs" />

@@ -1,16 +1,22 @@
 ﻿// <copyright file="BundleConfig.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System.Web.Optimization;
+
 namespace PiF
 {
-    using System.Web.Optimization;
-
     public class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.7.*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/index").Include("~/Scripts/jquery.expander*", "~/Scripts/jquery.timeago*", "~/Scripts/jquery-ui.*", "~/Scripts/index.*"));
+            bundles.Add(
+                new ScriptBundle("~/bundles/index").Include(
+                    "~/Scripts/jquery.expander*", 
+                    "~/Scripts/jquery.timeago*", 
+                    "~/Scripts/jquery-ui.*", 
+                    "~/Scripts/index.*"));
 
             // The Kendo JavaScript bundle
             bundles.Add(

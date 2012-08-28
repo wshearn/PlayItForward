@@ -1,3 +1,1 @@
-﻿@model IEnumerable<PiF.Models.Game>
-@*@Html.Telerik().DropDownList().Name("ID").BindTo(new SelectList(GameHelper.GetGameList(), "ID", "Name"))*@
-@Html.Kendo().AutoComplete().Name("gameAutoComplete").DataTextField("Name").DataSource(source => source.Read(read => read.Action("GetGames", "Home")).ServerFiltering(false)).HighlightFirst(true).Filter(FilterType.StartsWith).MinLength(3).Suggest(true).Placeholder("Enter the game name")
+﻿@Html.Kendo().AutoComplete().Name("Name").HighlightFirst(true).Filter(FilterType.StartsWith).Suggest(true).Placeholder("Enter the game name").BindTo((IEnumerable<string>)ViewData["Games"]).IgnoreCase(true).MinLength(3)

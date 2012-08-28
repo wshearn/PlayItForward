@@ -1,27 +1,22 @@
 ﻿// <copyright file="HomeController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
+using System.Collections.Generic;
+using System.Data.Linq;
+using System.Data.SqlTypes;
+using System.Linq;
+using System.Web.Mvc;
+
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Linq;
-    using System.Data.SqlTypes;
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using PiF.Models;
-
     public class HomeController : Controller
     {
         static Func<PiFDbDataContext, IQueryable<Thread>> openThreads;
 
         public ActionResult About()
-        {
-            ViewBag.Title = "About Play It Forward";
-            return View();
-        }
-
-        public ActionResult Support()
         {
             return View();
         }
@@ -29,18 +24,11 @@ namespace PiF.Controllers
         [OutputCache(Duration = 60 * 60)]
         public ActionResult Exceptions()
         {
-            ViewBag.Title = "Ineligible Games";
             return View();
-        }
-
-        public JsonResult GetGames()
-        {
-            return Json(GameHelper.GetGameList());
         }
 
         public ActionResult Index(int page = 1)
         {
-            ViewBag.Title = "Recent Giveaways";
             const int pageSize = 15;
             using (var context = new PiFDbDataContext())
             {
@@ -68,14 +56,17 @@ namespace PiF.Controllers
         [OutputCache(Duration = 60 * 60)]
         public ActionResult Points()
         {
-            ViewBag.Title = "How are points calculated?";
             return View();
         }
 
         [OutputCache(Duration = 60 * 60)]
         public ActionResult Rules()
         {
-            ViewBag.Title = "Rules & Guidelines";
+            return View();
+        }
+
+        public ActionResult Support()
+        {
             return View();
         }
 

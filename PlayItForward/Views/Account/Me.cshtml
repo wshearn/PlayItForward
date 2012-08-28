@@ -2,6 +2,7 @@
 @using PiF.Models
 @model IEnumerable<Thread>
 
+@{ ViewBag.Title = User.Identity.Name + "'s PiFs"; }
 
 @section featured {
     <section class="featured">

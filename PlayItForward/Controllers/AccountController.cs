@@ -1,24 +1,24 @@
 ﻿// <copyright file="AccountController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Security;
+
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
-    using System.Web.Security;
-
-    using PiF.Models;
-
     public class AccountController : Controller
     {
         public ActionResult Login()
         {
-            ViewBag.Title = "Sign in";
             return View();
         }
 
@@ -126,7 +126,6 @@ namespace PiF.Controllers
         [Authorize]
         public ActionResult Me()
         {
-            ViewBag.Title = User.Identity.Name + "'s PiFs";
             return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
         }
 

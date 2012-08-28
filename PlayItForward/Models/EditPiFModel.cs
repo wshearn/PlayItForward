@@ -1,10 +1,11 @@
 ﻿// <copyright file="EditPiFModel.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace PiF.Models
 {
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
     /// <summary>Properties containing data when completing a PiF</summary>
     public class EditPiFModel
     {

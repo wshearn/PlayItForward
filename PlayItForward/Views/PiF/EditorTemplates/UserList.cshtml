@@ -1,1 +1,1 @@
-﻿@Html.Kendo().AutoComplete().Name("WinnerUserName").DataTextField("Username").DataSource(source => source.Read(read => read.Action("AutoCompleteUserName", "PiF")).ServerFiltering(false)).HighlightFirst(true).Filter(FilterType.StartsWith).MinLength(3).Suggest(true).Placeholder("Enter the game name")
+﻿@Html.Kendo().AutoComplete().Name("WinnerUserName").DataTextField("Text").HighlightFirst(true).Filter(FilterType.StartsWith).Suggest(true).Placeholder("Enter the reddit username").BindTo((IList<SelectListItem>)ViewData["ThreadUsers"]).IgnoreCase(true).MinLength(3)

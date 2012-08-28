@@ -1,28 +1,23 @@
 ﻿// <copyright file="PiFController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+
+using PiF.Models;
+
 namespace PiF.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.SqlTypes;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Script.Serialization;
-
-    using PiF.Models;
-
     public class PiFController : Controller
     {
-        public ActionResult AutoCompleteUserName(string text)
-        {
-            IEnumerable<User> data = AccountHelper.GetAllUsers().Where(p => p.Username.StartsWith(text));
-            return new JsonResult { Data = data.Select(n => n.Username).ToList() };
-        }
-
         [Authorize]
         public ActionResult Complete(string thingID)
         {
@@ -36,7 +31,7 @@ namespace PiF.Controllers
                    ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID).ThingID 
                 };
 
-            Session["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
+            ViewData["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
             var db = new PiFDbDataContext();
             SessionCompleteGamesRepository.Clear();
@@ -44,10 +39,8 @@ namespace PiF.Controllers
             {
                 User user = db.Users.SingleOrDefault(u => u.id == tg.WinnerID);
                 SessionCompleteGamesRepository.Insert(
-                    new PiFGameComplete(tg, user != null ? user.Username : string.Empty));
+                    new CompletePiFModel(tg, user != null ? user.Username : string.Empty));
             }
-
-            ViewData["Message"] = "Complete PiF";
 
             return View(cpm);
         }
@@ -105,7 +98,6 @@ namespace PiF.Controllers
                 if (ModelState.IsValid)
                 {
                     db.SubmitChanges();
-                    Session["ThreadUsers"] = null;
                     return RedirectToAction("View", "PiF", new { thread.ThingID });
                 }
             }
@@ -122,6 +114,8 @@ namespace PiF.Controllers
             {
                 return RedirectToAction("Me", "Account");
             }
+
+            ViewData["Games"] = GameHelper.GetGameNameList();
 
             if (thread.ThreadGames.Any(tg => tg.WinnerID == null))
             {
@@ -183,8 +177,7 @@ namespace PiF.Controllers
         [Authorize]
         public ActionResult New()
         {
-            ViewBag.Title = "Create a new PiF";
-            SessionNewGamesRepository.Clear();
+            ViewData["Games"] = GameHelper.GetGameNameList();
             return View(new NewPiFModel());
         }
 

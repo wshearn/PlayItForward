@@ -1,10 +1,10 @@
 ﻿@using PiF.Models
 @model EditPiFModel
-
+@{ ViewBag.Title = "Edit your PiF"; }
 @section scripts
 {        
     <script type="text/javascript">
-        function error_handler(e) {
+        function error(e) {
             if (e.errors) {
                 var message = "Errors:\n";
                 $.each(e.errors, function(key, value) {
@@ -30,25 +30,19 @@
     </section>
 }
 
-@(Html.Kendo().Grid<PiFGame>().Name("EditGameGrid").ToolBar(commands => commands.Create()).HtmlAttributes(new { style = "height: 501px;" })
-.DataSource(dataSource => dataSource.Ajax()
-.Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Create(update => update.Action("Create", "EditGameGrid"))
-.Read(read => read.Action("Read", "EditGameGrid")).Update(update => update.Action("Update", "EditGameGrid"))
-.Destroy(update => update.Action("Delete", "EditGameGrid")))
-      .Columns(columns =>
-          {
-              columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
-              columns.Bound(p => p.Count).Width(80);
-              columns.Bound(p => p.PointWorth).Width(80);
-              columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
-              columns.Command(commands =>
-                  {
-                      commands.Edit();
-                      commands.Destroy();
-                  }).Width(180);
-          }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable()
-          .BindTo(SessionEditGamesRepository.All()).Resizable(builder => builder.Columns(false)))
-    <br />
+@(Html.Kendo().Grid<PiFGame>().Name("EditGameGrid").ToolBar(commands => commands.Create()).HtmlAttributes(new { style = "height: 501px;" }).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error")).Model(model => model.Id(p => p.ID)).Create(update => update.Action("Create", "EditGameGrid")).Read(read => read.Action("Read", "EditGameGrid")).Update(update => update.Action("Update", "EditGameGrid")).Destroy(update => update.Action("Delete", "EditGameGrid"))).Columns(columns =>
+      {
+          columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
+          columns.Bound(p => p.Count).Width(80);
+          columns.Bound(p => p.PointWorth).Width(80);
+          columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
+          columns.Command(commands =>
+              {
+                  commands.Edit();
+                  commands.Destroy();
+              }).Width(180);
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionEditGamesRepository.All()))
+<br />
 @using (Html.BeginForm())
 {
     <input type="submit" value="Save Changes" class="button-blue" />

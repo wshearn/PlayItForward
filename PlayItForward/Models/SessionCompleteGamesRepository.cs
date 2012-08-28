@@ -1,20 +1,21 @@
 ﻿// <copyright file="SessionCompleteGamesRepository.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
 namespace PiF.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-
     public static class SessionCompleteGamesRepository
     {
-        public static IList<PiFGameComplete> All()
+        public static IList<CompletePiFModel> All()
         {
-            var result = HttpContext.Current.Session["CompletePiFGames"] as IList<PiFGameComplete>;
+            var result = HttpContext.Current.Session["CompletePiFGames"] as IList<CompletePiFModel>;
             if (result == null)
             {
-                HttpContext.Current.Session["CompletePiFGames"] = result = new List<PiFGameComplete>();
+                HttpContext.Current.Session["CompletePiFGames"] = result = new List<CompletePiFModel>();
             }
 
             return result;
@@ -29,16 +30,16 @@ namespace PiF.Models
         /// <param name="index">The row index</param>
         public static void Delete(int index)
         {
-            PiFGameComplete target = One(p => p.ID == index);
+            CompletePiFModel target = One(p => p.ID == index);
             if (target != null)
             {
                 All().Remove(target);
             }
         }
 
-        public static void Delete(PiFGameComplete game)
+        public static void Delete(CompletePiFModel game)
         {
-            PiFGameComplete target = One(p => p.ID == game.ID);
+            CompletePiFModel target = One(p => p.ID == game.ID);
             if (target != null)
             {
                 All().Remove(target);
@@ -47,12 +48,12 @@ namespace PiF.Models
 
         /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
-        public static void Insert(PiFGameComplete game)
+        public static void Insert(CompletePiFModel game)
         {
             All().Insert(0, game);
         }
 
-        public static PiFGameComplete One(Func<PiFGameComplete, bool> predicate)
+        public static CompletePiFModel One(Func<CompletePiFModel, bool> predicate)
         {
             return All().Where(predicate).FirstOrDefault();
         }

@@ -1,10 +1,11 @@
 ﻿// <copyright file="RouteConfig.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
+using System.Web.Mvc;
+using System.Web.Routing;
+
 namespace PiF
 {
-    using System.Web.Mvc;
-    using System.Web.Routing;
-
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
@@ -34,7 +35,7 @@ namespace PiF
 
             routes.MapRoute("Points", "rules/points", new { controller = "Home", action = "Points" });
             routes.MapRoute("Exceptions", "rules/exceptions", new { controller = "Home", action = "Exceptions" });
-
+            routes.MapRoute("Support", "support", new { controller = "Home", action = "Support" });
             routes.MapRoute("Me", "me", new { controller = "Account", action = "Me" });
 
             routes.MapRoute(
