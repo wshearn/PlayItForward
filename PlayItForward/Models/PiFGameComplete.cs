@@ -21,8 +21,12 @@ namespace PiF.Models
             WinnerUserName = winnerUserName;
         }
 
+        /// <summary>Gets or sets the game name.</summary>
         [Required]
-        [UIHint("UserList")]
+        [ReadOnly(true)]
+        public new string Name { get; set; }
+
+        [Required]
         [DisplayName("Winner")]
         public string WinnerUserName { get; set; }
     }

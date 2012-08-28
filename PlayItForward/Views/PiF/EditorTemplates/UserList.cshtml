@@ -1,2 +1,1 @@
-﻿@*@Html.Kendo().DropDownList().Name("").BindTo(new SelectList(Session["ThreadUsers"] as List<SelectListItem>, "Value", "Text")))*@
-@Html.Kendo().AutoComplete().Name("WinnerUserName").DataSource(dataBinding => dataBinding.Read("AutoCompleteUserName", "PiF")).HighlightFirst(true).Filter(FilterType.StartsWith).MinLength(3).Suggest(true)
+﻿@Html.Kendo().AutoComplete().Name("WinnerUserName").DataTextField("Username").DataSource(source => source.Read(read => read.Action("AutoCompleteUserName", "PiF")).ServerFiltering(false)).HighlightFirst(true).Filter(FilterType.StartsWith).MinLength(3).Suggest(true).Placeholder("Enter the game name")

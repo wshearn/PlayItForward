@@ -1,10 +1,9 @@
 ﻿@using PiF
 @model List<PiF.Models.PiFListModel>
-<script type="text/javascript" src="~/Scripts/jquery.timeago.js"> </script>
-<script type="text/javascript" src="~/Scripts/jquery.expander.min.js"> </script>
-<script type="text/javascript" src="~/Scripts/index.min.js"> </script>
-@*    <script type="text/javascript" src="~/Scripts/slides.min.jquery.js"></script>
-    <link href="~/Content/slide.css" rel="stylesheet" type="text/css" />*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/index")
+}
 @helper BuildLinks(int start, int end, string innerContent)
 {
     for (int i = start; i <= end; i++)

@@ -19,7 +19,6 @@
 .button, .button-blue, .button-red, .button-green {
     border-radius: 2px;
     display: inline-block;
-    font-weight: bold;
     line-height: 27px;
     min-width: 54px;
     padding: 0 8px;
@@ -61,7 +60,6 @@
     background: -moz-linear-gradient(top, #4d90fe, #4787ed)!important;
     background: -ms-linear-gradient(top, #4d90fe, #4787ed)!important;
     background: -o-linear-gradient(top, #4d90fe, #4787ed)!important;
-    background: linear-gradient(top, #4d90fe, #4787ed)!important;
 }
 
     .button-blue:active {
@@ -175,7 +173,9 @@
     float: left;
 }
 
-li a { cursor:pointer}
+li a {
+    cursor: pointer;
+}
 
 .pagination {
     padding: 5px 10px;
@@ -183,14 +183,17 @@ li a { cursor:pointer}
     background-color: #F9F9FB;
     color: #4F565A;
     font-size: .9em;
-    margin:  10px 0;
+    margin: 10px 0;
 }
 
-.pagination a { padding: 0 2px;}
+    .pagination a {
+        padding: 0 2px;
+    }
 
 a.current:link, a.current:visited {
     color: #DD4B39;
 }
+
 .pif {
     padding: 10px 0;
     border-bottom: 1px dotted #C3C3C3;
@@ -203,7 +206,7 @@ a.current:link, a.current:visited {
 
     .pif.left .pif {
         font-size: 1.125em;
-        font-weight: bold;
+        font-weight: 600;
         text-shadow: 1px 1px white;
     }
 
@@ -215,9 +218,11 @@ a.current:link, a.current:visited {
         float: left;
         width: 700px;
     }
-    .games {
+
+.games {
     list-style: none;
 }
+
 .clearBoth {
     clear: both;
 }
@@ -268,7 +273,7 @@ body {
     color: #333;
     font-size: .85em;
     font-family: 'Open Sans', sans-serif;
-   /* font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;*/
+    /* font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;*/
     margin: 0;
     padding: 0;
 }
@@ -322,6 +327,7 @@ h4, h5, h6 {
     color: #000;
     margin-bottom: 0;
     padding-bottom: 0;
+    font-weight: 600;
 }
 
 h1 {
@@ -358,15 +364,15 @@ h5, h6 {
     padding-bottom: 35px;
 }
 
-    .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 30px;
-    }
+.main-content {
+    background: url("../Images/accent.png") no-repeat;
+    padding-left: 10px;
+    padding-top: 30px;
+}
 
-    .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
-    }
+.featured + .main-content {
+    background: url("../Images/heroAccent.png") no-repeat;
+}
 
 footer {
     clear: both;
@@ -385,12 +391,12 @@ footer {
     margin: 20px 0;
 }
 
-.site-title a, .site-title a:hover, .site-title a:active {
-    background: none;
-    color: #c8c8c8;
-    outline: none;
-    text-decoration: none;
-}
+    .site-title a, .site-title a:hover, .site-title a:active {
+        background: none;
+        color: #c8c8c8;
+        outline: none;
+        text-decoration: none;
+    }
 
 
 /* login
@@ -410,11 +416,11 @@ footer {
         text-decoration: none;
     }
 
-    #login a.username {
-        background: none;
-        margin-left: 0px;
-        text-decoration: underline;
-    }
+        #login a.username {
+            background: none;
+            margin-left: 0px;
+            text-decoration: underline;
+        }
 
     #login ul {
         margin: 0;
@@ -447,10 +453,10 @@ ul#menu {
             text-decoration: none;
         }
 
-        ul#menu li a:hover {
-            color: #333;
-            text-decoration: none;
-        }
+            ul#menu li a:hover {
+                color: #333;
+                text-decoration: none;
+            }
 
 
 /* page elements
@@ -471,27 +477,27 @@ ul#menu {
         padding: 20px 40px 30px 40px;
     }
 
-        .featured hgroup.title h1, .featured hgroup.title h2 {
-            color: #fff;
-        }
+    .featured hgroup.title h1, .featured hgroup.title h2 {
+        color: #fff;
+    }
 
-        .featured p {
-            font-size: 1.1em;
-        }
+    .featured p {
+        font-size: 1.1em;
+    }
 
 /* page titles */
 hgroup.title {
     margin-bottom: 10px;
 }
 
-hgroup.title h1, hgroup.title h2 {
-    display: inline;
-}
+    hgroup.title h1, hgroup.title h2 {
+        display: inline;
+    }
 
-hgroup.title h2 {
-    font-weight: normal;
-    margin-left: 3px;
-}
+    hgroup.title h2 {
+        font-weight: normal;
+        margin-left: 3px;
+    }
 
 /* features */
 section.feature {
@@ -621,7 +627,7 @@ input.passwordEntry {
 }
 
 textarea {
- font-family: 'Open Sans', sans-serif!important; 
+    font-family: 'Open Sans', sans-serif!important;
 }
 
 /*input[type="email"], input[type="number"], input[type="password"], input[type="text"], input[type="url"], textarea {
@@ -663,7 +669,7 @@ fieldset {
     fieldset legend {
         display: none;
     }
-    
+
     fieldset ol {
         padding: 0;
         list-style: none;
@@ -678,9 +684,9 @@ fieldset {
         font-size: 1.2em;
     }
 
-    fieldset label.checkbox {
-        display: inline;
-    }
+        fieldset label.checkbox {
+            display: inline;
+        }
 
     fieldset textarea,
     fieldset input[type="text"],
@@ -729,7 +735,7 @@ fieldset {
     font-weight: inherit;
     border: 0 none;
     background: none;
-    float: right;    
+    float: right;
 }
 
 .ui-dialog-titlebar-close {
@@ -738,13 +744,12 @@ fieldset {
     border-radius: 0;
 }
 
-.ui-widget-header {   
+.ui-widget-header {
     border: 0 none;
-    background: none;  
+    background: none;
 }
 
 .modal-popup {
-    
 }
 
     .modal-popup input[type="text"],
@@ -763,14 +768,14 @@ fieldset {
     clear: both;
     color: #e80c4d;
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: 600;
     margin: 20px 0 10px 0;
 }
 
 .message-success {
     color: #7ac0da;
     font-size: 1.3em;
-    font-weight: bold;
+    font-weight: 600;
     margin: 20px 0 10px 0;
 }
 
@@ -812,22 +817,22 @@ ul#social li {
         text-decoration: none;
     }
 
-    a.facebook, a.twitter {
-        display: block;
-        float: left;
-        height: 24px;
-        padding-left: 17px;
-        text-indent: -9999px;
-        width: 16px;
-    }
+a.facebook, a.twitter {
+    display: block;
+    float: left;
+    height: 24px;
+    padding-left: 17px;
+    text-indent: -9999px;
+    width: 16px;
+}
 
-    a.facebook {
-        background: url("../Images/facebook.png") no-repeat;
-    }
+a.facebook {
+    background: url("../Images/facebook.png") no-repeat;
+}
 
-    a.twitter {
-        background: url("../Images/twitter.png") no-repeat;
-    }
+a.twitter {
+    background: url("../Images/twitter.png") no-repeat;
+}
 
 /* tables
 ----------------------------------------------------------*/
@@ -839,7 +844,7 @@ table {
 }
 
 th {
-	font-size: 1.2em;
+    font-size: 1.2em;
     text-align: left;
     border: none 0px;
     padding-left: 0;
@@ -848,39 +853,38 @@ th {
     th a {
         display: block;
         position: relative;
-        
     }
 
-	th a:link, th a:visited, th a:active, th a:hover {
-		color: #333;
-		font-weight: 600;
-		text-decoration: none;
-        padding: 0;
-	}
+        th a:link, th a:visited, th a:active, th a:hover {
+            color: #333;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0;
+        }
 
-	th a:hover {
-		color: #000;
-	}
+        th a:hover {
+            color: #000;
+        }
 
     th.asc a, th.desc a {
         margin-right: .75em;
     }
-    
-    th.asc a:after, th.desc a:after {
-		display: block;
-        position: absolute;
-        right: 0em;
-        top: 0;
-        font-size: 0.75em;
-	}
 
-	th.asc a:after {
-		content: '▲';
-	}
+        th.asc a:after, th.desc a:after {
+            display: block;
+            position: absolute;
+            right: 0em;
+            top: 0;
+            font-size: 0.75em;
+        }
 
-	th.desc a:after {
-		content: '▼';
-	}
+        th.asc a:after {
+            content: '▲';
+        }
+
+        th.desc a:after {
+            content: '▼';
+        }
 
 td {
     padding: 0.25em 2em 0.25em 0em;
@@ -937,9 +941,9 @@ tr.pager td {
             padding: 0;
         }
 
-        #login a:hover {
-            color: #333;
-        }
+            #login a:hover {
+                color: #333;
+            }
 
     /* menu */
     nav {
@@ -1004,12 +1008,12 @@ tr.pager td {
                 background: none;
             }
 
-     /* features */
-     section.feature {
+    /* features */
+    section.feature {
         float: none;
         padding: 10px;
         width: auto;
-     }
+    }
 
         section.feature img {
             color: #999;
@@ -1018,7 +1022,8 @@ tr.pager td {
             font-weight: 600;
         }
 
-    fieldset input[type="submit"] { margin: 0!important;
+    fieldset input[type="submit"] {
+        margin: 0!important;
     }
 
     /* forms */
@@ -1067,16 +1072,16 @@ tr.pager td {
             margin: 0;
         }
 
-        ul#social {
-            padding: 0;
-            margin: 0;
-        }
+    ul#social {
+        padding: 0;
+        margin: 0;
+    }
 
-        a.facebook, a.twitter {
-            background: none;
-            display: inline;
-            float: none;
-            padding-left: 0;
-            text-indent: 0;
-        }
+    a.facebook, a.twitter {
+        background: none;
+        display: inline;
+        float: none;
+        padding-left: 0;
+        text-indent: 0;
+    }
 }

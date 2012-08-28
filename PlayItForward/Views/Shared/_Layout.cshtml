@@ -1,14 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
     <head>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
+        @Styles.Render("~/Content/themes/base/css", "~/Content/Site.css")
+        @Styles.Render("~/Content/kendo")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/kendo")
+        @Scripts.Render("~/bundles/modernizr")
+        @RenderSection("scripts", required: false)
         <meta charset="utf-8" />
         <title>@ViewBag.Title</title>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"> </script>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet" type="text/css">
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/themes/base/css", "~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
+              <meta name="viewport" content="width=device-width" />
+
     </head>
     <body>
         <header>
@@ -25,7 +28,7 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Rules & Guidelines", "Rules", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Support", "Support", "Home")</li>
                         </ul>
                     </nav>
                 </div>
@@ -47,6 +50,5 @@
                 </div>
             </div>
         </footer>
-        @RenderSection("scripts", required: false)
     </body>
 </html>

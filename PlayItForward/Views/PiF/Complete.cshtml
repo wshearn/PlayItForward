@@ -1,45 +1,43 @@
 ﻿@using PiF.Models
 @model CompletePiFModel
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js"> </script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/jquery-ui.min.js"> </script>
-<script src="@Url.Content("~/Scripts/kendo.web.min.js")"> </script>
-<script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")"> </script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/themes/ui-lightness/jquery-ui.css"> </script>
 
-<script type="text/javascript">
-    function Grid_onError(e) {
-        //`this` is the DOM element of the grid
-        var grid = $(this).data("tGrid");
-
-        //the current XMLHttpRequest object
-        var xhr = e.XMLHttpRequest;
-        //the text status of the error - "timeout", "error" etc.
-        var status = e.textStatus;
-
-        if (status == "error") {
-            //xhr.status is the HTTP code returned by the server
-            if (xhr.status == "404") {
-                alert("requested url not found");
-            }
-
-            if (e.XMLHttpRequest.status == "500") {
-                alert("The server was unable to process your request.\n" + e.XMLHttpRequest.responseText);
-                e.preventDefault();
+@section scripts
+{
+    <script type="text/javascript">
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
             }
         }
-    }
-</script>
+    </script>
+}
 
-<h2>@ViewBag.Title</h2>
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+            <p>Once you have </p>
+        </div>
+    </section>
+}
 
-@Html.ValidationSummary(false)
-
-
-@(Html.Kendo().Grid<PiFGameComplete>().Name("CompleteGrid").ToolBar(commands => commands.Create()).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid")).Destroy(update => update.Action("Delete", "CompleteGrid"))).Columns(columns =>
+@(Html.Kendo().Grid<PiFGameComplete>().Name("CompleteGrid").DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler"))
+    .Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid"))
+    .Destroy(update => update.Action("Delete", "CompleteGrid"))).HtmlAttributes(new { style = "height: 466px;" }).Columns(columns =>
       {
           columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
-          columns.Bound(p => p.Name).Width(400);
-          columns.Bound(p => p.WinnerUserName).Width(80);
+          columns.Bound(p => p.Name).Width(350);
+          columns.Bound(p => p.WinnerUserName).Width(200).EditorTemplateName("GameList");
           columns.Bound(p => p.PointWorth).Width(80);
 
           columns.Command(commands =>
@@ -47,9 +45,9 @@
                   commands.Edit();
                   commands.Destroy();
               }).Width(180);
-      }).Editable(editing => editing.Mode(GridEditMode.InCell)).Pageable().Scrollable().Sortable().BindTo(SessionCompleteGamesRepository.All())))
+      }).Editable(editing => editing.Mode(GridEditMode.InLine)).Pageable().Scrollable().Sortable().BindTo(SessionCompleteGamesRepository.All()))
 @using (Html.BeginForm())
 {
     <br />
-    <input type="submit" value="Complete PiF" />
+    <input type="submit" value="Complete PiF" class="button-blue"/>
 }

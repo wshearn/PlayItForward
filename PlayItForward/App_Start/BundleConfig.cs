@@ -4,22 +4,29 @@ namespace PiF
 {
     using System.Web.Optimization;
 
-    /// <summary>
-    /// The bundle config.
-    /// </summary>
     public class BundleConfig
     {
-        /// <summary>
-        /// The register bundles.
-        /// </summary>
-        /// <param name="bundles">
-        /// The bundles.
-        /// </param>
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.*"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.7.*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui*"));
+            bundles.Add(new ScriptBundle("~/bundles/index").Include("~/Scripts/jquery.expander*", "~/Scripts/jquery.timeago*", "~/Scripts/jquery-ui.*", "~/Scripts/index.*"));
+
+            // The Kendo JavaScript bundle
+            bundles.Add(
+                new ScriptBundle("~/bundles/kendo").Include("~/Scripts/kendo.web.*", "~/Scripts/kendo.aspnetmvc.*"));
+
+            // The Kendo CSS bundle
+            bundles.Add(
+                new StyleBundle("~/Content/kendo").Include("~/Content/kendo.common.*", "~/Content/kendo.metro.*"));
+
+            // Clear all items from the default ignore list to allow minified CSS and JavaScript files to be included in debug mode
+            bundles.IgnoreList.Clear();
+
+            // Add back the default ignore list rules sans the ones which affect minified files and debug mode
+            bundles.IgnoreList.Ignore("*.intellisense.js");
+            bundles.IgnoreList.Ignore("*-vsdoc.js");
+            bundles.IgnoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
 
             bundles.Add(
                 new ScriptBundle("~/bundles/jqueryval").Include(

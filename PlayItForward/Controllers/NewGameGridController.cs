@@ -17,9 +17,13 @@ namespace PiF.Controllers
         {
             // Create a new instance of the PiFGame class.
 
+
+
+
             // Perform model binding (fill the game properties and validate it).
             if (pifgame != null && ModelState.IsValid)
             {
+                if (pifgame.Count < 1) pifgame.Count = 1;
                 Game game = new PiFDbDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
                 if (game == null)
                 {

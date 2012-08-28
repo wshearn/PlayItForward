@@ -48,11 +48,6 @@ namespace PiF.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        public ActionResult Editing_Inline()
-        {
-            return View();
-        }
-
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
             return Json(SessionEditGamesRepository.All().ToDataSourceResult(request));

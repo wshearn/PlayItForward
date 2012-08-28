@@ -21,7 +21,7 @@ namespace PiF.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Support()
         {
             return View();
         }
