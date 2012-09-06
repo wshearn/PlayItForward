@@ -1,22 +1,45 @@
 ﻿@using System.Data.SqlTypes
+@using PiF
 @using PiF.Models
 @model IEnumerable<Thread>
 
-@{ ViewBag.Title = User.Identity.Name + "'s PiFs"; }
+    @Scripts.Render("~/bundles/index")
+@{ ViewBag.Title = User.Identity.Name; }
 
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Title</h2>
             </hgroup>
-            <p>Games Given: @AccountHelper.CurrentUser.GivenCount<br/>Games Received: @AccountHelper.CurrentUser.ReceivedCount</p>
+            <div class="games-given">Given @AccountHelper.CurrentUser.GivenCount</div><div class="games-received">Received @AccountHelper.CurrentUser.ReceivedCount</div>
         </div>
     </section>
 }
 <p>
     @Html.ActionLink("Create New", "New", "PiF")
 </p>
+
+<div class="giveaways">
+    <h2>Open giveaways</h2>
+    <ol>
+         @foreach (var item in Model)
+    {
+        <li class="pif">
+            <a href="@item.ThreadGames.First().Game.StoreUrl"><img src="@item.ThreadGames.First().Game.ImageUrl" alt="@item.ThreadGames.First().Game.Name"/></a>
+            <h3><a href="@string.Format("http://redd.it/{0}", item.ThingID)">@item.Title</a><span class="pifscore">1</span></h3>
+            <div class="createdTime">Created <strong>@Html.TimeAgo(@item.CreatedDate)</strong>
+                @if (item.EndDate != SqlDateTime.MinValue)
+                {
+                    <text> Closed<strong>@Html.TimeAgo(@item.CreatedDate)</strong></text>
+                }
+            </div>
+        </li>                            
+         }
+             </ol>
+
+</div>
+
 <table>
     <tr>
         <th>
@@ -28,9 +51,7 @@
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <th>Link
-        </th>
-        <th></th>
+        <th>@Html.DisplayNameFor(model => model.ThingID)</th>
     </tr>
 
     @foreach (var item in Model)
