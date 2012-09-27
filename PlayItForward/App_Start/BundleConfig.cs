@@ -9,7 +9,7 @@ namespace PiF
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.7.*"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.8.*"));
 
             bundles.Add(
                 new ScriptBundle("~/bundles/index").Include(
