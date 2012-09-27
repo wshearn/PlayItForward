@@ -25,21 +25,21 @@
     <ol>
          @foreach (var item in Model)
     {
-        <li class="pif">
-            <a href="@item.ThreadGames.First().Game.StoreUrl"><img src="@item.ThreadGames.First().Game.ImageUrl" alt="@item.ThreadGames.First().Game.Name"/></a>
-            <h3><a href="@string.Format("http://redd.it/{0}", item.ThingID)">@item.Title</a><span class="pifscore">1</span></h3>
-            <div class="createdTime">Created <strong>@Html.TimeAgo(@item.CreatedDate)</strong>
-                @if (item.EndDate != SqlDateTime.MinValue)
-                {
-                    <text> Closed<strong>@Html.TimeAgo(@item.CreatedDate)</strong></text>
-                }
-            </div>
-        </li>                            
-         }
+             if (item.EndDate == SqlDateTime.MinValue)
+              {
+                  <li class="pif">
+                      <a href="@item.ThreadGames.First().Game.StoreUrl"><img src="@item.ThreadGames.First().Game.ImageUrl" alt="@item.ThreadGames.First().Game.Name"/></a>
+                      <h3><a href="@string.Format("http://redd.it/{0}", item.ThingID)">@item.Title</a><span class="pifscore">1</span></h3>
+                      <div class="createdTime">Created <strong>@Html.TimeAgo(@item.CreatedDate)</strong>
+                      </div>
+                  </li>
+              }
+    }
              </ol>
 
 </div>
 
+<h2>Closed Giveaways</h2>
 <table>
     <tr>
         <th>
