@@ -178,9 +178,6 @@
     <Compile Include="Models\GameHelper.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\NewPiFModel.cs" />
-    <Compile Include="Models\PiFDb.cs">
-      <DependentUpon>PiFDb.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\PiFDb1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
