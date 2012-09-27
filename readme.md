@@ -8,5 +8,5 @@ The site will list running PiFs and user stats.
 Requirements
 ----------------
 * MVC3 with Razor 2
-* .NET 4.0 Framework
-* SQL Server
+* .NET 4.5 Framework
+* SQL Server Express 2012
