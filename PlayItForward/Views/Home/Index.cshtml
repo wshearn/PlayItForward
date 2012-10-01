@@ -1,6 +1,6 @@
 ﻿@using PiF
 @model List<PiF.Models.PiFListModel>
-@{ ViewBag.Title = "Recent Giveaways"; }
+@{ ViewBag.Title = "Open Giveaways"; }
 @section scripts
 {
     @Scripts.Render("~/bundles/index")
@@ -121,25 +121,38 @@
                     @item.Games.Single().Name
                 }
                 else
-                {<text>@item.GameCount games</text>
+                {
+                    <text>@item.GameCount games</text>
                 }
                 being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Username)">@item.Username</a>
             </div>
         </div>
-        <div class="left">
-            <ul class="games">
+        <div class="right">
+            @if (item.GameCount > 1)
+            {
+                <script type="text/javascript">
+                    $(function() {
+                        $('#slider-@item.ThingID').bxSlider({
+                            displaySlideQty: 2,
+                            moveSlideQty: 2,
+                            auto: true,
+                            controls: false,
+                            mode: 'vertical',
+                            autoHover: true,
+                            infiniteLoop: false
+                        });
+                    });
+                </script>
+            }
+           
+            <ul class="games" id="slider-@item.ThingID">
                 @foreach (var game in item.Games)
                 {
-                    <li>
-                        <a href="@game.StoreUrl" title="@game.Name">@game.Name</a> <span style="color: #b5b8be; font-weight: 600">@string.Format("({0}P)", game.PointWorth)</span>
-                        @if (game.Count > 1)
-                        {
-                            <span style="color: #b5b8be; font-weight: 600">(@game.Count copies)</span>
-                        }
-                    </li>
+                    <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
                 }
             </ul>
         </div>
+        
         <div class="clearBoth"></div>
     </div>
 }

@@ -91,10 +91,9 @@ namespace PiF.Models
                     }
 
                     Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
-                    foreach (
-                        var kvp in
-                            subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value)).Where(
-                                kvp => data["author"] != "[deleted]" && data["author"] != string.Empty))
+                    foreach (var kvp in
+                        subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value))
+                            .Where(kvp => data["author"] != "[deleted]" && data["author"] != string.Empty))
                     {
                         userDictionary.Add(kvp.Key, kvp.Value);
                     }

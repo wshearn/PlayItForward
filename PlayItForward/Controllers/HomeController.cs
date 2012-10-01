@@ -49,7 +49,7 @@ namespace PiF.Controllers
                 ViewBag.CurrentPage = page;
                 ViewBag.PageSize = pageSize;
 
-                return View(GetThreads(pifs));
+                return View(Utilities.GetThreads(pifs));
             }
         }
 
@@ -68,42 +68,6 @@ namespace PiF.Controllers
         public ActionResult Support()
         {
             return View();
-        }
-
-        static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
-        {
-            var details = new List<PiFListModel>();
-            foreach (var thread in threads)
-            {
-                var model = new PiFListModel();
-
-                var games = new List<Game>();
-
-                foreach (var game in thread.ThreadGames)
-                {
-                    if (games.Any(x => x.Name == game.Game.Name))
-                    {
-                        games.Find(x => x.Name == game.Game.Name).Count += 1;
-                    }
-                    else
-                    {
-                        Game simpleGame = game.Game;
-                        simpleGame.Count = 1;
-                        games.Add(simpleGame);
-                    }
-                }
-
-                model.Games = games;
-                model.GameCount = thread.ThreadGames.Count;
-                model.ThreadTitle = thread.Title;
-                model.Username = thread.User.Username;
-                model.CreatedDate = thread.CreatedDate;
-                model.ThingID = thread.ThingID;
-
-                details.Add(model);
-            }
-
-            return details;
         }
     }
 }

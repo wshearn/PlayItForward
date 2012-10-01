@@ -74,7 +74,8 @@ namespace PiF.Controllers
 
             var redditCookie = new HttpCookie("reddit_session")
                 {
-                   Value = Server.UrlEncode(response["data"]["cookie"]), Expires = DateTime.Now.AddYears(1) 
+                    Value = Server.UrlEncode(response["data"]["cookie"]),
+                    Expires = DateTime.Now.AddYears(1)
                 };
             Session["RedditCookie"] = redditCookie;
 
@@ -126,7 +127,7 @@ namespace PiF.Controllers
         [Authorize]
         public ActionResult Me()
         {
-            return View(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate));
+            return View(Utilities.GetThreads(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate)));
         }
 
         /// <summary>Logs the user in</summary>

@@ -2,6 +2,7 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,10 +13,47 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
+using PiF.Models;
+
 namespace PiF
 {
     public static class Utilities
     {
+        internal static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
+        {
+            var details = new List<PiFListModel>();
+            foreach (var thread in threads)
+            {
+                var model = new PiFListModel();
+
+                var games = new List<Game>();
+
+                foreach (var game in thread.ThreadGames)
+                {
+                    if (games.Any(x => x.Name == game.Game.Name))
+                    {
+                        games.Find(x => x.Name == game.Game.Name).Count += 1;
+                    }
+                    else
+                    {
+                        Game simpleGame = game.Game;
+                        simpleGame.Count = 1;
+                        games.Add(simpleGame);
+                    }
+                }
+
+                model.Games = games;
+                model.GameCount = thread.ThreadGames.Count;
+                model.ThreadTitle = thread.Title;
+                model.Username = thread.User.Username;
+                model.CreatedDate = thread.CreatedDate;
+                model.ThingID = thread.ThingID;
+                model.ClosedDate = thread.EndDate;
+                details.Add(model);
+            }
+
+            return details;
+        }
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
         {
             var httpCookie = new HttpCookie(cookie.Name);

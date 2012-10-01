@@ -13,7 +13,7 @@ namespace PiF.Models
         [DisplayName("Captcha")]
         public string Captcha { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether a captcah code is needed.</summary>
+        /// <summary>Gets or sets a value indicating whether a captcha code is needed.</summary>
         public bool CaptchaRequired { get; set; }
 
         /// <summary>Gets or sets the self text for the post.</summary>

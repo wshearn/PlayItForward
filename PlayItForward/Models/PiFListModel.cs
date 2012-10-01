@@ -14,6 +14,11 @@ namespace PiF.Models
         public DateTime CreatedDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the date the thread was closed.
+        /// </summary>
+        public DateTime ClosedDate { get; set; }
+
+        /// <summary>
         /// Gets or sets the number of games in the PiF.
         /// </summary>
         public int GameCount { get; set; }
@@ -34,7 +39,7 @@ namespace PiF.Models
         public string ThreadTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the PiFer username.
+        /// Gets or sets the username for the giver.
         /// </summary>
         public string Username { get; set; }
     }

@@ -196,6 +196,10 @@
   <ItemGroup>
     <Content Include="App_Data\Database.mdf" />
     <Content Include="App_Data\Database_log.ldf" />
+    <Content Include="Content\arrows.png" />
+    <Content Include="Content\arrowsh.png" />
+    <Content Include="Content\gray_next.png" />
+    <Content Include="Content\gray_prev.png" />
     <Content Include="Content\kendo.metro.min.css" />
     <Content Include="Content\metro\editor.png" />
     <Content Include="Content\metro\imagebrowser.png" />
@@ -217,14 +221,13 @@
       <LastGenOutput>PiFDb1.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\index.min.js" />
-    <Content Include="Scripts\jquery-1.8.0.js" />
-    <Content Include="Scripts\jquery-1.8.0.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery.bxSlider.min.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
     <Content Include="Scripts\jquery.expander.min.js" />
     <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -238,7 +241,6 @@
     <Content Include="Scripts\kendo.web.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
-    <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

@@ -1,8 +1,10 @@
 ﻿@using PiF.Models
-@model EditPiFModel
+@model PiF.Models.EditPiFModel
 @{ ViewBag.Title = "Edit your PiF"; }
 @section scripts
-{        
+{      
+        @Styles.Render("~/Content/kendo")
+        @Scripts.Render("~/bundles/kendo")  
     <script type="text/javascript">
         function error(e) {
             if (e.errors) {

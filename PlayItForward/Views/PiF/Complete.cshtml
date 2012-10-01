@@ -1,5 +1,5 @@
 ﻿@using PiF.Models
-@model CompletePiFModel
+@model PiF.Models.CompletePiFModel
 
 @{
     ViewBag.Title = "Submit your PiF for review";
@@ -7,6 +7,8 @@
 
 @section scripts
 {
+            @Styles.Render("~/Content/kendo")
+        @Scripts.Render("~/bundles/kendo")
     <script type="text/javascript">
 
         function onAdditionalData() {

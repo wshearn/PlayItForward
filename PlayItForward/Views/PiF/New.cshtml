@@ -1,7 +1,11 @@
 ﻿@using PiF.Models
-@model NewPiFModel
+@model PiF.Models.NewPiFModel
 
 @{ ViewBag.Title = "Create a new PiF"; }
+
+@section scripts {        
+    @Styles.Render("~/Content/kendo")
+@Scripts.Render("~/bundles/kendo")}
 <script type="text/javascript">
 
     function error_handler(e) {

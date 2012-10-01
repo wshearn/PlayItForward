@@ -28,7 +28,9 @@ namespace PiF.Controllers
 
             var cpm = new CompletePiFModel
                 {
-                   ThingID = AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID).ThingID 
+                    ThingID =
+                        AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID)
+                        .ThingID
                 };
 
             ViewData["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
@@ -205,10 +207,10 @@ namespace PiF.Controllers
                 try
                 {
                     response = PostPiF(
-                        model.ThreadTitle, 
-                        model.SelfText, 
-                        Session["ModHash"].ToString(), 
-                        model.Captcha, 
+                        model.ThreadTitle,
+                        model.SelfText,
+                        Session["ModHash"].ToString(),
+                        model.Captcha,
                         Session["CaptchaID"].ToString());
                 }
                 catch (WebException)
@@ -236,19 +238,19 @@ namespace PiF.Controllers
                 var r = new Random();
                 var thread = new Thread
                     {
-                        EndDate = SqlDateTime.MinValue.Value, 
-                        CreatedDate = DateTime.UtcNow, 
-                        Title = model.ThreadTitle, 
+                        EndDate = SqlDateTime.MinValue.Value,
+                        CreatedDate = DateTime.UtcNow,
+                        Title = model.ThreadTitle,
                         ThingID =
                             debug == false
                                 ? thingID
                                 : string.Format(
-                                    "{0}{1}{2}{3}{4}", 
-                                    (char)r.Next(97, 123), 
-                                    (char)r.Next(97, 123), 
-                                    (char)r.Next(97, 123), 
-                                    (char)r.Next(97, 123), 
-                                    (char)r.Next(97, 123)), 
+                                    "{0}{1}{2}{3}{4}",
+                                    (char)r.Next(97, 123),
+                                    (char)r.Next(97, 123),
+                                    (char)r.Next(97, 123),
+                                    (char)r.Next(97, 123),
+                                    (char)r.Next(97, 123)),
                         UserID = AccountHelper.CurrentUser.id
                     };
                 foreach (var pifgame in SessionNewGamesRepository.All())
@@ -287,9 +289,9 @@ namespace PiF.Controllers
         {
             string data =
                 string.Format(
-                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward", 
-                    modhash, 
-                    text, 
+                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward",
+                    modhash,
+                    text,
                     title);
 
             if (!string.IsNullOrWhiteSpace(iden) && !string.IsNullOrWhiteSpace(captcha))
@@ -300,7 +302,7 @@ namespace PiF.Controllers
             return SendPost(data, "http://www.reddit.com/api/submit");
         }
 
-        // <summary>Sends data in POST to the specified URI</summary>
+        /// <summary>Sends data in POST to the specified URI</summary>
         /// <param name="data">POST data</param>
         /// <param name="uri">URI to POST data to</param>
         /// <returns>True/false based on success (NYI)</returns>
