@@ -13,18 +13,20 @@ namespace PiF.Controllers
 {
     public class NewGameGridController : Controller
     {
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
+        [HttpPost]
+        public ActionResult NggCreate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
+            System.Diagnostics.Debug.WriteLine("Create Method Fired");
             // Perform model binding (fill the game properties and validate it).
-            if (pifgame != null && ModelState.IsValid)
+            if (pifgame != null)
             {
-                if (pifgame.Count < 1)
-                {
-                    pifgame.Count = 1;
-                }
+                //if (pifgame.Count < 1)
+                //{
+                //    pifgame.Count = 1;
+                //}
 
-                Game game = new PiFDbDataContext().Games.FirstOrDefault(g => g.Name == pifgame.Name);
+                Game game = new PiFDbDataContext().Games.SingleOrDefault(g => g.Name == pifgame.Name);
+
                 if (game == null)
                 {
                     ModelState.AddModelError("Name", "Invalid game name.");
@@ -35,6 +37,9 @@ namespace PiF.Controllers
                 }
                 else
                 {
+                    pifgame.PointWorth = game.PointWorth;
+                    pifgame.SteamID = game.SteamID;
+                    pifgame.ID = game.id;
                     SessionNewGamesRepository.Insert(pifgame);
                 }
             }
@@ -43,8 +48,8 @@ namespace PiF.Controllers
             return Json(new[] { pifgame }.ToDataSourceResult(request, ModelState));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete([DataSourceRequest] DataSourceRequest request, PiFGame game)
+        [HttpPost]
+        public ActionResult NggDelete([DataSourceRequest] DataSourceRequest request, PiFGame game)
         {
             // Delete the record
             SessionNewGamesRepository.Delete(game);
@@ -53,14 +58,17 @@ namespace PiF.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+        [HttpPost]
+        public ActionResult NggRead([DataSourceRequest] DataSourceRequest request)
         {
+            System.Diagnostics.Debug.WriteLine("Read Method Fired");
             return Json(SessionNewGamesRepository.All().ToDataSourceResult(request));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
+        [HttpPost]
+        public ActionResult NggUpdate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
+            System.Diagnostics.Debug.WriteLine("Update Method Fired");
             // PiFGame pifgame = SessionNewGamesRepository.One(p => p.ID == id);
             if (pifgame != null && ModelState.IsValid)
             {

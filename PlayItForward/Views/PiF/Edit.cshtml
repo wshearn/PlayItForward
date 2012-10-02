@@ -32,7 +32,11 @@
     </section>
 }
 
-@(Html.Kendo().Grid<PiFGame>().Name("EditGameGrid").ToolBar(commands => commands.Create()).HtmlAttributes(new { style = "height: 501px;" }).DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error")).Model(model => model.Id(p => p.ID)).Create(update => update.Action("Create", "EditGameGrid")).Read(read => read.Action("Read", "EditGameGrid")).Update(update => update.Action("Update", "EditGameGrid")).Destroy(update => update.Action("Delete", "EditGameGrid"))).Columns(columns =>
+@(Html.Kendo().Grid<PiFGame>().Name("EditGameGrid").ToolBar(commands => commands.Create()).HtmlAttributes(new { style = "height: 501px;" })
+.DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error")).Model(model => model.Id(p => p.ID))
+    .Create(update => update.Action("EggCreate", "EditGameGrid")).Read(read => read.Action("EggRead", "EditGameGrid"))
+    .Update(update => update.Action("EggUpdate", "EditGameGrid")).Destroy(update => update.Action("EggDelete", "EditGameGrid")))
+    .Columns(columns =>
       {
           columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
           columns.Bound(p => p.Count).Width(80);

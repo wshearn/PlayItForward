@@ -1,7 +1,15 @@
 ﻿@using PiF.Models
-@model PiF.Models.Thread
+@model Thread
 
-<h2>@ViewBag.Title</h2>
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@Html.DisplayFor(model => model.Title)</h2>
+            </hgroup>
+        </div>
+    </section>
+}
 
 <fieldset>
     <legend>Thread</legend>

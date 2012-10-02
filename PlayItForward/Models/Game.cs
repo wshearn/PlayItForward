@@ -19,7 +19,7 @@ namespace PiF.Models
                         SteamID);
                 }
 
-                return null;
+                return "/Images/capsules/" + ImageName +".jpg";
             }
         }
     }

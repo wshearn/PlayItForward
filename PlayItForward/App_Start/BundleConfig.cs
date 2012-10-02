@@ -25,7 +25,7 @@ namespace PiF
 
             // The Kendo JavaScript bundle
             bundles.Add(
-                new ScriptBundle("~/bundles/kendo").Include("~/Scripts/jquery.web.*", "~/Scripts/kendo.aspnetmvc.*"));
+                new ScriptBundle("~/bundles/kendo").Include("~/Scripts/kendo.web.*", "~/Scripts/kendo.aspnetmvc.*"));
 
             // The Kendo CSS bundle
             bundles.Add(

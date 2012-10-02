@@ -44,7 +44,10 @@
     </section>
 }
 
-@(Html.Kendo().Grid<CompletePiFModel>().Name("CompleteGrid").DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID)).Read(read => read.Action("Read", "CompleteGrid")).Update(update => update.Action("Update", "CompleteGrid")).Destroy(update => update.Action("Delete", "CompleteGrid"))).HtmlAttributes(new { style = "height: 466px;" }).Columns(columns =>
+@(Html.Kendo().Grid<CompletePiFModel>().Name("CompleteGrid").DataSource(dataSource => dataSource.Ajax().Events(events => events.Error("error_handler")).Model(model => model.Id(p => p.ID))
+.Read(read => read.Action("CggRead", "CompleteGrid")).Update(update => update.Action("cggUpdate", "CompleteGrid"))
+.Destroy(update => update.Action("CggDelete", "CompleteGrid"))).HtmlAttributes(new { style = "height: 466px;" })
+.Columns(columns =>
       {
           columns.Bound(p => p.SteamID).Title("Steam ID").Width(80);
           columns.Bound(p => p.Name).Width(350);

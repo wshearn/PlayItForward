@@ -13,7 +13,7 @@ namespace PiF.Controllers
     public class CompleteGridController : Controller
     {
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
+        public ActionResult CggCreate([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
         {
             // FIXME: add code to verify user exists on reddit if they are not in our DB
             // Rebind the grid
@@ -26,7 +26,7 @@ namespace PiF.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
+        public ActionResult CggDelete([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
         {
             // Delete the record
             SessionCompleteGamesRepository.Delete(game);
@@ -41,7 +41,7 @@ namespace PiF.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
+        public ActionResult CggUpdate([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
         {
             // CompletePiFModel game = SessionCompleteGamesRepository.One(p => p.ID == id);
             TryUpdateModel(game);

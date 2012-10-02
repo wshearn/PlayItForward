@@ -42,54 +42,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetOpenAuth.Core">
-      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.0.12182\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.Core.UI">
-      <HintPath>..\packages\DotNetOpenAuth.Core.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.Core.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.InfoCard">
-      <HintPath>..\packages\DotNetOpenAuth.InfoCard.4.1.0.12182\lib\net45-full\DotNetOpenAuth.InfoCard.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.InfoCard.UI">
-      <HintPath>..\packages\DotNetOpenAuth.InfoCard.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.InfoCard.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth">
-      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth.Common">
-      <HintPath>..\packages\DotNetOpenAuth.OAuth.Common.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OAuth.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
-      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OAuth.ServiceProvider">
-      <HintPath>..\packages\DotNetOpenAuth.OAuth.ServiceProvider.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OAuth.ServiceProvider.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.Provider">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.Provider.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.Provider.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.Provider.UI">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.Provider.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.Provider.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty.UI">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenId.UI">
-      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenIdInfoCard.UI">
-      <HintPath>..\packages\DotNetOpenAuth.OpenIdInfoCard.UI.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenIdInfoCard.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenAuth.OpenIdOAuth">
-      <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -213,6 +165,15 @@
     <Content Include="Content\textures\glass.png" />
     <Content Include="Content\textures\highlight.png" />
     <Content Include="Global.asax" />
+    <Content Include="Images\capsules\HIB.jpg" />
+    <Content Include="Images\capsules\HIB2.jpg" />
+    <Content Include="Images\capsules\HIB3.jpg" />
+    <Content Include="Images\capsules\HIB5.jpg" />
+    <Content Include="Images\capsules\HIB6.jpg" />
+    <Content Include="Images\capsules\HIBAndroid3.jpg" />
+    <Content Include="Images\capsules\HIBFrozen.jpg" />
+    <Content Include="Images\capsules\IndieGala.jpg" />
+    <Content Include="Images\capsules\OOZi.jpg" />
     <Content Include="Images\Point.png" />
     <Content Include="Images\reddit.png" />
     <Content Include="Images\steam.png" />
@@ -222,7 +183,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\index.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -232,6 +192,7 @@
     <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -324,7 +285,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>27418</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:1392/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

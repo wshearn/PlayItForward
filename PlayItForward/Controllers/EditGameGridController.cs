@@ -14,7 +14,7 @@ namespace PiF.Controllers
     public class EditGameGridController : Controller
     {
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
+        public ActionResult EggCreate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
             // Perform model binding (fill the game properties and validate it).
             if (pifgame != null && ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace PiF.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int id)
+        public ActionResult EggDelete(int id)
         {
             // Delete the record
             SessionEditGamesRepository.Delete(id);
@@ -55,7 +55,7 @@ namespace PiF.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
+        public ActionResult EggUpdate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
             // PiFGame pifgame = SessionEditGamesRepository.One(p => p.ID == id);
             if (pifgame != null && ModelState.IsValid)

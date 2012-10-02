@@ -12,7 +12,7 @@ namespace PiF.Models
     {
         public static IList<PiFGame> All()
         {
-            var result = HttpContext.Current.Session["NewPiFGames"] as IList<PiFGame>;
+            var result = HttpContext.Current.Session["NewPiFGames"] as List<PiFGame>;
             if (result == null)
             {
                 HttpContext.Current.Session["NewPiFGames"] = result = new List<PiFGame>();

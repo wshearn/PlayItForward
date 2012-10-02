@@ -183,96 +183,96 @@ namespace PiF.Controllers
             return View(new NewPiFModel());
         }
 
-        // POST: /PiF/New
-        [HttpPost]
-        [Authorize]
-        public ActionResult New(NewPiFModel model)
-        {
-            if (!SessionNewGamesRepository.All().Any())
-            {
-                ModelState.AddModelError("Grid", "At least 1 game is required to PiF");
-                return View(model);
-            }
+//        // POST: /PiF/New
+//        [HttpPost]
+//        [Authorize]
+//        public ActionResult New(NewPiFModel model)
+//        {
+//            if (!SessionNewGamesRepository.All().Any())
+//            {
+//                ModelState.AddModelError("NewGameGrid", "At least 1 game is required to PiF");
+//                return View(model);
+//            }
 
-            string thingID = string.Empty;
-            bool debug;
-#if DEBUG
+//            string thingID = string.Empty;
+//            bool debug;
+//#if DEBUG
 
-            // We don't want to send an actual Self.PlayItForward thread to reddit if we are debugging, we will generate a random string instead
-            debug = true;
-#endif
-            if (debug == false)
-            {
-                dynamic response;
-                try
-                {
-                    response = PostPiF(
-                        model.ThreadTitle,
-                        model.SelfText,
-                        Session["ModHash"].ToString(),
-                        model.Captcha,
-                        Session["CaptchaID"].ToString());
-                }
-                catch (WebException)
-                {
-                    ModelState.AddModelError("Submit", "Reddit is currently down.");
-                    return View(model);
-                }
+//            // We don't want to send an actual Self.PlayItForward thread to reddit if we are debugging, we will generate a random string instead
+//            debug = true;
+//#endif
+//            if (debug == false)
+//            {
+//                dynamic response;
+//                try
+//                {
+//                    response = PostPiF(
+//                        model.ThreadTitle,
+//                        model.SelfText,
+//                        Session["ModHash"].ToString(),
+//                        model.Captcha,
+//                        Session["CaptchaID"].ToString());
+//                }
+//                catch (WebException)
+//                {
+//                    ModelState.AddModelError("Submit", "Reddit is currently down.");
+//                    return View(model);
+//                }
 
-                if (response["errors"].Length > 0)
-                {
-                    Session["CaptchaID"] = response["captcha"];
-                    model.CaptchaRequired = !string.IsNullOrWhiteSpace(Session["CaptchaID"].ToString());
-                    ModelState.AddModelError("Submit", Utilities.RedditError(response["errors"][0][0]));
-                    return View(model);
-                }
+//                if (response["errors"].Length > 0)
+//                {
+//                    Session["CaptchaID"] = response["captcha"];
+//                    model.CaptchaRequired = !string.IsNullOrWhiteSpace(Session["CaptchaID"].ToString());
+//                    ModelState.AddModelError("Submit", Utilities.RedditError(response["errors"][0][0]));
+//                    return View(model);
+//                }
 
-                Session["CaptchaID"] = null;
-                thingID = response["data"]["id"];
-            }
+//                Session["CaptchaID"] = null;
+//                thingID = response["data"]["id"];
+//            }
 
-            if (ModelState.IsValid)
-            {
-                var db = new PiFDbDataContext();
+//            if (ModelState.IsValid)
+//            {
+//                var db = new PiFDbDataContext();
 
-                var r = new Random();
-                var thread = new Thread
-                    {
-                        EndDate = SqlDateTime.MinValue.Value,
-                        CreatedDate = DateTime.UtcNow,
-                        Title = model.ThreadTitle,
-                        ThingID =
-                            debug == false
-                                ? thingID
-                                : string.Format(
-                                    "{0}{1}{2}{3}{4}",
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123)),
-                        UserID = AccountHelper.CurrentUser.id
-                    };
-                foreach (var pifgame in SessionNewGamesRepository.All())
-                {
-                    for (int i = 1; i <= pifgame.Count; i++)
-                    {
-                        thread.ThreadGames.Add(new ThreadGame { Thread = thread, GameID = pifgame.ID });
-                    }
-                }
+//                var r = new Random();
+//                var thread = new Thread
+//                    {
+//                        EndDate = SqlDateTime.MinValue.Value,
+//                        CreatedDate = DateTime.UtcNow,
+//                        Title = model.ThreadTitle,
+//                        ThingID =
+//                            debug == false
+//                                ? thingID
+//                                : string.Format(
+//                                    "{0}{1}{2}{3}{4}",
+//                                    (char)r.Next(97, 123),
+//                                    (char)r.Next(97, 123),
+//                                    (char)r.Next(97, 123),
+//                                    (char)r.Next(97, 123),
+//                                    (char)r.Next(97, 123)),
+//                        UserID = AccountHelper.CurrentUser.id
+//                    };
+//                foreach (var pifgame in SessionNewGamesRepository.All())
+//                {
+//                    for (int i = 1; i <= pifgame.Count; i++)
+//                    {
+//                        thread.ThreadGames.Add(new ThreadGame { Thread = thread, GameID = pifgame.ID });
+//                    }
+//                }
 
-                // Get a typed table to run queries and insert the data into the table.
-                db.Threads.InsertOnSubmit(thread);
-                db.SubmitChanges();
-                SessionNewGamesRepository.Clear();
+//                // Get a typed table to run queries and insert the data into the table.
+//                db.Threads.InsertOnSubmit(thread);
+//                db.SubmitChanges();
+//                SessionNewGamesRepository.Clear();
 
-                // TODO: Handle errors.
-                return RedirectToAction("Edit", "PiF", new { thread.ThingID });
-            }
+//                // TODO: Handle errors.
+//                return RedirectToAction("Edit", "PiF", new { thread.ThingID });
+//            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+//            // If we got this far, something failed, redisplay form
+//            return View(model);
+//        }
 
         public new ActionResult View(string thingID)
         {
@@ -281,7 +281,7 @@ namespace PiF.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(new PiFDbDataContext().Threads.First(t => t.ThingID == thingID));
+            return View(new PiFDbDataContext().Threads.Single(t => t.ThingID == thingID));
         }
 
         [Authorize]
