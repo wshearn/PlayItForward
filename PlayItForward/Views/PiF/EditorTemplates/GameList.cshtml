@@ -1,1 +1,2 @@
-﻿@Html.Kendo().AutoComplete().Name("Name").HighlightFirst(true).Filter(FilterType.StartsWith).Suggest(true).Placeholder("Enter the game name").BindTo((IEnumerable<string>)ViewData["Games"]).IgnoreCase(true).MinLength(3)
+﻿
+@Html.Kendo().DropDownList().Name("ID").DataValueField("ID").DataTextField("Name").IgnoreCase(true).DataSource(source => source.Read(read => read.Action("GetGames", "Home")).ServerFiltering(false)).SelectedIndex(-1)

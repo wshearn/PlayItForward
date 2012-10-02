@@ -10,6 +10,7 @@ namespace PiF.Models
     public class PiFGame
     {
         int count = 1;
+        int id = 1;
 
         public PiFGame()
         {
@@ -45,10 +46,20 @@ namespace PiF.Models
         }
 
         /// <summary>Gets or sets the game id.</summary>
-        [ReadOnly(true)]
-        [DisplayName("ID")]
-        [DefaultValue(0)]
-        public int ID { get; set; }
+        [DisplayName("Name")]
+        [DefaultValue(1)]
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = Math.Max(1, value);
+            }
+        }
 
         /// <summary>Gets or sets the game name.</summary>
         [Required]

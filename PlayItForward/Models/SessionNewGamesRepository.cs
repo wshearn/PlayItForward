@@ -46,6 +46,22 @@ namespace PiF.Models
             }
         }
 
+        public static void Update(PiFGame game)
+        {
+            var target = One(p => p.ID == game.ID);
+            if (target == null)
+            {
+                return;
+            }
+
+            target.Name = game.Name;
+            target.ID = game.ID;
+            target.PointWorth = game.PointWorth;
+            target.SteamID = game.SteamID;
+            target.Count = game.Count;
+        }
+
+
         /// <summary>Insert a game into the table.</summary>
         /// <param name="game">The game object to insert.</param>
         public static void Insert(PiFGame game)

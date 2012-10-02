@@ -22,6 +22,18 @@
             //alert(message);
         }
     }
+    
+    function displayName(id) {
+        var name = "";
+        $.each(window.dropdownData, function () {
+            if (this.id == id) {
+                name = this.name;
+                return false;
+            }
+        });
+        return name;
+    }
+
 
 </script>
 
@@ -48,8 +60,8 @@
     .Destroy(d => d.Action("NggDelete", "NewGameGrid"))
     .ServerOperation(false).Model(model => model.Id(p => p.ID)))
     .Columns(columns =>
-      {
-          columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList");
+        {
+            columns.Bound(p => p.Name).Width(400).EditorTemplateName("GameList").Title("Name");
           columns.Bound(p => p.Count).Width(80);
           columns.Bound(p => p.PointWorth).Width(80);
           columns.Bound(p => p.SteamID).Title("Steam ID").Width(100);

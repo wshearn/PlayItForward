@@ -8,6 +8,9 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Web.Mvc;
 
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -26,6 +29,14 @@ namespace PiF.Controllers
         {
             return View();
         }
+
+        [OutputCache(Duration = 60 * 60)]
+        public JsonResult GetGames([DataSourceRequest] DataSourceRequest request)
+        {
+            var games = new PiFDbDataContext().Games.ToDataSourceResult(request, o => new { o.Name, ID = o.id }).Data;
+            return Json(games, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult Index(int page = 1)
         {

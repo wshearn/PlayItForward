@@ -25,7 +25,7 @@ namespace PiF.Controllers
                 //    pifgame.Count = 1;
                 //}
 
-                Game game = new PiFDbDataContext().Games.SingleOrDefault(g => g.Name == pifgame.Name);
+                Game game = new PiFDbDataContext().Games.Single(g => g.id == pifgame.ID);
 
                 if (game == null)
                 {
@@ -39,6 +39,7 @@ namespace PiF.Controllers
                 {
                     pifgame.PointWorth = game.PointWorth;
                     pifgame.SteamID = game.SteamID;
+                    pifgame.Name = game.Name;
                     pifgame.ID = game.id;
                     SessionNewGamesRepository.Insert(pifgame);
                 }
@@ -70,24 +71,18 @@ namespace PiF.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Update Method Fired");
             // PiFGame pifgame = SessionNewGamesRepository.One(p => p.ID == id);
+
             if (pifgame != null && ModelState.IsValid)
             {
-                Game game = GameHelper.GetGameList().FirstOrDefault(g => g.Name == pifgame.Name);
-                if (game == null)
+                var target = SessionNewGamesRepository.One(g => g.ID == pifgame.ID);
+                if (target != null)
                 {
-                    ModelState.AddModelError("Name", "Invalid game name.");
-                }
-                else if (SessionNewGamesRepository.One(p => p.ID == game.id && game.id != pifgame.ID) != null)
-                {
-                    ModelState.AddModelError("Name", "Duplicate game, please edit existing row.");
-                }
-                else
-                {
-                    SessionNewGamesRepository.Delete(pifgame);
-                    if (pifgame.Count > 0)
-                    {
-                        SessionNewGamesRepository.Insert(new PiFGame(pifgame.Count, game));
-                    }
+                    target.Name = pifgame.Name;
+                    target.PointWorth = pifgame.PointWorth;
+                    target.SteamID = pifgame.SteamID;
+                    target.Count = pifgame.Count;
+                    target.ID = pifgame.ID;
+                    SessionNewGamesRepository.Update(target);
                 }
             }
 
