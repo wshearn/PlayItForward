@@ -240,7 +240,7 @@ a.current:link, a.current:visited {
 }
 .pif {
     border-bottom: 1px dotted #C3C3C3;
-    padding: 10px 0;
+    padding: 6px 0;
 }
 
     .pif .left .title, .pif .left .title a {

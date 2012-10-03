@@ -28,15 +28,15 @@
         {
             continue;
         }
-        <div style="width: 700px" class="pif">
+        <div class="pif">
             <h3 style="margin-bottom:10px"><a href="@Url.Action("View", "PiF", new { @open.ThingID })">@open.ThreadTitle</a><span class="pifscore">@open.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
             @if (open.GameCount > 1)
             {
                 <script type="text/javascript">
                     $(function() {
                         $('#slider-@open.ThingID').bxSlider({
-                            displaySlideQty: 5,
-                            moveSlideQty: 3,
+                            displaySlideQty: 4,
+                            moveSlideQty: 2,
                             auto: true,
                             controls: false,
                             autoHover: true,
@@ -46,7 +46,7 @@
                 </script>
             }
 
-            <ul class="games" id="slider-@open.ThingID">
+            <ul class="games" id="slider-@open.ThingID" style="width:250px">
                 @foreach (var game in open.Games)
                 {
                     <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
@@ -55,7 +55,7 @@
 
             <div class="clearBoth"></div>
             @Html.ActionLink("Edit", "Edit", "PiF", new { open.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { open.ThingID }, null)
-                        <div style="float:right" class="createdTime">Created <strong>@Html.TimeAgo(@open.CreatedDate)</strong>
+            <div style="float:right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@open.CreatedDate)</strong>
             </div>
         </div>
     }

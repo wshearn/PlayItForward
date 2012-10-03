@@ -148,10 +148,6 @@
   <ItemGroup>
     <Content Include="App_Data\Database.mdf" />
     <Content Include="App_Data\Database_log.ldf" />
-    <Content Include="Content\arrows.png" />
-    <Content Include="Content\arrowsh.png" />
-    <Content Include="Content\gray_next.png" />
-    <Content Include="Content\gray_prev.png" />
     <Content Include="Content\kendo.metro.min.css" />
     <Content Include="Content\metro\editor.png" />
     <Content Include="Content\metro\imagebrowser.png" />
