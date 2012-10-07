@@ -141,6 +141,7 @@
     <Compile Include="Models\SessionCompleteGamesRepository.cs" />
     <Compile Include="Models\SessionEditGamesRepository.cs" />
     <Compile Include="Models\SessionNewGamesRepository.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadGameEqualityComparer.cs" />
     <Compile Include="Utilities.cs" />
@@ -170,9 +171,11 @@
     <Content Include="Images\capsules\HIBFrozen.jpg" />
     <Content Include="Images\capsules\IndieGala.jpg" />
     <Content Include="Images\capsules\OOZi.jpg" />
+    <Content Include="Images\glyph-pipe.png" />
     <Content Include="Images\Point.png" />
-    <Content Include="Images\reddit.png" />
-    <Content Include="Images\steam.png" />
+    <Content Include="Images\sprites-30px.png" />
+    <Content Include="Images\sprites-32px.png" />
+    <Content Include="Images\sprites-18px.png" />
     <Content Include="Models\PiFDb.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>PiFDb1.designer.cs</LastGenOutput>
@@ -215,16 +218,6 @@
     <Content Include="Images\findHosting.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\NuGetGallery.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\windowsLive.png" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -233,7 +226,7 @@
     <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\PiF\Complete.cshtml" />

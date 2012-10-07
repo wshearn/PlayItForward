@@ -14,13 +14,10 @@
     <body>
         <header>
             <div class="content-wrapper">
+                 <section id="headerbar">
+                           @Html.Partial("_HeaderPartial")
+                       </section>
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("play it forward", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>

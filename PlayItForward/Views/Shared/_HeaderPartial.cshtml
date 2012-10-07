@@ -1,0 +1,33 @@
+﻿@using PiF.Models
+@if (Request.IsAuthenticated)
+{
+    <div id="MeBarArea">
+        <div id="ShellLogo" class="site-title">@Html.ActionLink("play it forward", "Index", "Home")</div>
+        <div id="SignedInExperience">
+                            <div id="Avatar" class="SignedIn" title="@AccountHelper.CurrentUser.Username">
+                    <a href="/user/me"><div class="avatar" style="background-image: url(http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg);"></div></a>
+                </div>
+            <div id="MeBar" class="SignedIn">
+                <div id="StatArea" class="StatArea">
+                    <h2 class="username" id="username"><a href="/user/me">@AccountHelper.CurrentUser.Username</a></h2>
+                    <div class="Stats">
+                        <a id="messages" href="/user/me/messages"><div class="messages">@AccountHelper.CurrentUser.MessageCount</div></a>
+                        <a id="pifscore" href="user/me/activity"><div class="pifscore">18</div></a>
+                    </div>
+                </div>
+                <div class="LinkArea">
+                    <span id="AdditionalLinks" class="AdditionalLinks">
+                        <span>@Html.ActionLink("Preferences", "Preferences", "Account")</span>
+                    </span>
+                    <span class="spread">
+                        @Html.ActionLink("Sign out", "Logout", "Account")
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
+}
+else
+{
+    @Html.ActionLink("Sign in", "Login", "Account")
+}

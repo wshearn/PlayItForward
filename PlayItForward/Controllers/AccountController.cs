@@ -22,6 +22,11 @@ namespace PiF.Controllers
             return View();
         }
 
+        public ActionResult Preferences()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(LoginModel model, string returnUrl)
         {

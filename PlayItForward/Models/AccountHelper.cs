@@ -25,32 +25,37 @@ namespace PiF.Models
                                       ? HttpContext.Current.User.Identity.Name
                                       : HttpContext.Current.Session["Username"].ToString();
                 var db = new PiFDbDataContext();
-                string userIP = Utilities.GetHash(HttpContext.Current.Request.UserHostAddress);
-                User user = db.Users.SingleOrDefault(u => u.Username == username);
-                if (user == null)
-                {
-                    // new user - this is mostly here for debugging so we can reset the database when needed
-                    var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
-                    user = new User { Username = username, RecordCreatedDate = DateTime.UtcNow };
 
-                    user.UserIPs.Add(ip);
-                    db.Users.InsertOnSubmit(user);
-                    db.SubmitChanges();
-                }
-                else
-                {
-                    // existing user
-                    if (user.UserIPs.All(ips => ips.HashedIP != userIP))
-                    {
-                        var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
-                        user.UserIPs.Add(ip);
-                        db.SubmitChanges();
-                    }
-                }
+
+                User user = db.Users.SingleOrDefault(u => u.Username == username);
+                // TODO: Move this code to something that is called less often. Needs done at login
+                //string userIP = Utilities.GetHash(HttpContext.Current.Request.UserHostAddress);
+                //if (user == null)
+                //{
+                //    // new user - this is mostly here for debugging so we can reset the database when needed
+                //    var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
+                //    user = new User { Username = username, RecordCreatedDate = DateTime.UtcNow };
+
+                //    user.UserIPs.Add(ip);
+                //    db.Users.InsertOnSubmit(user);
+                //    db.SubmitChanges();
+                //}
+                //else
+                //{
+                //    // existing user
+                //    if (user.UserIPs.All(ips => ips.HashedIP != userIP))
+                //    {
+                //        var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
+                //        user.UserIPs.Add(ip);
+                //        db.SubmitChanges();
+                //    }
+                //}
 
                 return user;
             }
         }
+
+
 
         [OutputCache(Duration = 60)]
         public static IEnumerable<User> GetAllUsers()

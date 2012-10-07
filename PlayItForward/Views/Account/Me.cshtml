@@ -5,15 +5,61 @@
 
 @{ ViewBag.Title = User.Identity.Name; }
 
-@section scripts {@Scripts.Render("~/bundles/me")}
+@section scripts {@Scripts.Render("~/bundles/me")
+<script type="text/javascript">$(document).ready(function () { jQuery("time.timeago").timeago(); });</script>
+}
 @section featured {
     <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h2>@ViewBag.Title</h2>
-            </hgroup>
-            <div class="games-given">Given @AccountHelper.CurrentUser.GivenCount</div>
-            <div class="games-received">Received @AccountHelper.CurrentUser.ReceivedCount</div>
+        <div class="content-wrapper" style="height: 200px">
+            <div class="profile">
+                <div class="left">
+                        <div class="avatar">
+                        <img src="http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg" width="64" height="64"></div>
+         
+                    <div class="userDetails">
+                        <h2 class="title">@ViewBag.Title</h2>
+                        <div class="row">
+                            <div class="rowLeft">Last Online</div>
+                            <div class="rowRight">Need to Implement</div>
+                            <div class="clearBoth"></div>	
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row">
+                            <div class="rowLeft">Registered</div>
+                            <div class="rowRight">@Html.TimeAgo(AccountHelper.CurrentUser.RecordCreatedDate)</div>
+                            <div class="clearBoth"></div>	
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row">
+                            <div class="rowLeft">Giveaways Entered</div>
+                            <div class="rowRight">Need to Implement</div>
+                            <div class="clearBoth"></div>	
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row">
+                            <div class="rowLeft">Games Given</div>
+                            <div class="rowRight">@AccountHelper.CurrentUser.GivenCount</div>
+                            <div class="clearBoth"></div>	
+                        </div>
+                        <div class="divider"></div>
+                        <div class="row">
+                            <div class="rowLeft">Games Received</div>
+                            <div class="rowRight">@AccountHelper.CurrentUser.ReceivedCount</div>
+                            <div class="clearBoth"></div>	
+                        </div>
+
+                    </div>
+                </div>
+                <div class="right">
+                    <h2 class="title">Achievements</h2>
+                    <div class="row">
+                        <div class="rowLeft">Registered</div>
+                        <div class="rowRight">@Html.TimeAgo(AccountHelper.CurrentUser.RecordCreatedDate)</div>
+                        <div class="clearBoth"></div>	
+                    </div>
+                    <div class="divider"></div>
+                </div>
+            </div>
         </div>
     </section>
 }
