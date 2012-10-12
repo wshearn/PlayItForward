@@ -28,6 +28,29 @@
         display: inline;
         list-style: none;
     }*/
+
+div#MeBarArea div#MeBar.SignedOut div.LinkArea span.spread, div#MeBarArea div#MeBar.SignedIn div.LinkArea span.spread {
+    background-image: url(/Images/glyph-pipe.png);
+    background-position: 7px center;
+    padding-left: 15px;
+    background-repeat: no-repeat;
+}
+div#MeBarArea div#Avatar.SignedOut {
+    width: 39px;
+    background: url("../Images/sprites-32px.png") no-repeat 0 -33px;
+    height: 32px;
+    top: 20%;
+    right: 3%;
+}
+
+div#MeBarArea div#MeBar.SignedOut div.StatArea div.WelcomeText {
+float: right;
+padding-top: 1px;
+height: 20px;
+font-size: 1.3em;
+font-weight: 600;
+color: #636468;
+}
 .profile .right {
     float: right;
     width: 475px;
@@ -105,7 +128,7 @@ div#MeBarArea div#MeBar {
 }
 
 div#MeBar.SignedIn div.StatArea h2.username {
-    color: #F17922; /* Live Orange */
+    color: #DD4B38;
     font-weight: normal;
     float: right;
     margin: 0px;
@@ -115,11 +138,11 @@ div#MeBar.SignedIn div.StatArea h2.username {
 
     div#MeBar.SignedIn div.StatArea h2.username a,
     div#MeBar.SignedIn div.StatArea h2.username a:visited {
-        color: #F17922 !important; /* Live Orange */
+        color: #DD4B38 !important; /* Live Orange */
     }
 
         div#MeBar.SignedIn div.StatArea h2.username a:hover {
-            color: #EE9933 !important; /* Live Hover Orange */
+            color: #DD4B38 !important;
         }
 
 div#MeBar.SignedIn div.StatArea div.Stats {
