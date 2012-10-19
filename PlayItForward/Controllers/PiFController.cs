@@ -277,7 +277,7 @@ namespace PiF.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(new PiFDbDataContext().Threads.Single(t => t.ThingID == thingID));
+            return View(Utilities.GetPiFDetails(new PiFDbDataContext().Threads.Single(t => t.ThingID == thingID)));
         }
 
         [Authorize]

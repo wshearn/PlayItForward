@@ -37,12 +37,10 @@ namespace PiF.Controllers
             return Json(games, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult Index(int page = 1)
         {
             const int pageSize = 15;
-            using (var context = new PiFDbDataContext())
-            {
+            var context = new PiFDbDataContext();
                 if (openThreads == null)
                 {
                     openThreads =
@@ -60,8 +58,7 @@ namespace PiF.Controllers
                 ViewBag.CurrentPage = page;
                 ViewBag.PageSize = pageSize;
 
-                return View(Utilities.GetThreads(pifs));
-            }
+            return View(Utilities.GetThreads(pifs));
         }
 
         [OutputCache(Duration = 60 * 60)]

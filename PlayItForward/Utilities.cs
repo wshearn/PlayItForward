@@ -19,41 +19,42 @@ namespace PiF
 {
     public static class Utilities
     {
-        internal static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
+        internal static PiFListModel GetPiFDetails(Thread thread)
         {
-            var details = new List<PiFListModel>();
-            foreach (var thread in threads)
+            var model = new PiFListModel();
+
+            var games = new List<Game>();
+
+            foreach (var game in thread.ThreadGames)
             {
-                var model = new PiFListModel();
-
-                var games = new List<Game>();
-
-                foreach (var game in thread.ThreadGames)
+                if (games.Any(x => x.Name == game.Game.Name))
                 {
-                    if (games.Any(x => x.Name == game.Game.Name))
-                    {
-                        games.Find(x => x.Name == game.Game.Name).Count += 1;
-                    }
-                    else
-                    {
-                        Game simpleGame = game.Game;
-                        simpleGame.Count = 1;
-                        games.Add(simpleGame);
-                    }
+                    games.Find(x => x.Name == game.Game.Name).Count += 1;
                 }
-
-                model.Games = games;
-                model.GameCount = thread.ThreadGames.Count;
-                model.ThreadTitle = thread.Title;
-                model.Username = thread.User.Username;
-                model.CreatedDate = thread.CreatedDate;
-                model.ThingID = thread.ThingID;
-                model.ClosedDate = thread.EndDate;
-                details.Add(model);
+                else
+                {
+                    Game simpleGame = game.Game;
+                    simpleGame.Count = 1;
+                    games.Add(simpleGame);
+                }
             }
 
-            return details;
+            model.Games = games;
+            model.GameCount = thread.ThreadGames.Count;
+            model.Thread = thread;
+            //model.ThreadTitle = thread.Title;
+            //model.Username = thread.User.Username;
+            //model.CreatedDate = thread.CreatedDate;
+            //model.ThingID = thread.ThingID;
+            //model.ClosedDate = thread.EndDate;
+            return model;
         }
+
+        internal static List<PiFListModel> GetThreads(IEnumerable<Thread> threads)
+        {
+            return threads.Select(GetPiFDetails).ToList();
+        }
+
         public static HttpCookie CookieToHttpCookie(Cookie cookie)
         {
             var httpCookie = new HttpCookie(cookie.Name);

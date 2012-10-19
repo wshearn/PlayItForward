@@ -1,6 +1,6 @@
 ﻿@using PiF.Models
-@model PiF.Models.EditPiFModel
-@{ ViewBag.Title = "Edit your PiF"; }
+@model EditPiFModel
+@{ ViewBag.Title = "Editing " + @Model.ThreadTitle; }
 @section scripts
 {      
         @Styles.Render("~/Content/kendo")

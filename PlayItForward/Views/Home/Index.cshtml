@@ -9,7 +9,7 @@
 {
     for (int i = start; i <= end; i++)
     {
-        <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "Home", new { page = i })">@(innerContent ?? i.ToString())</a>
+    <a class="@(i == ViewBag.CurrentPage ? "current" : "")" href="@Url.Action("Index", "Home", new { page = i })">@(innerContent ?? i.ToString())</a>
     }
 }
 @helper ItemsDisplayed()
@@ -28,7 +28,7 @@
     }
 
     <text>
-        <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
+    <strong>@start</strong> - <strong>@end</strong> of <strong>@ViewBag.ThreadCount</strong> results
     </text>
 }
 @helper PageLinks()
@@ -37,7 +37,7 @@
 
     if (ViewBag.TotalPages <= MaxPages)
     {
-        @BuildLinks(1, (int)ViewBag.TotalPages, null)
+    @BuildLinks(1, (int)ViewBag.TotalPages, null)
         return;
     }
 
@@ -46,24 +46,24 @@
 
     if (pagesAfter <= 4)
     {
-        @BuildLinks(1, 1, null) // Show 1st page
+    @BuildLinks(1, 1, null) // Show 1st page
 
         int pageSubset = ViewBag.TotalPages - MaxPages - 1 > 1 ? ViewBag.TotalPages - MaxPages - 1 : 2;
-        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+    @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
-        @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
+    @BuildLinks(ViewBag.TotalPages - MaxPages + 3, ViewBag.TotalPages, null) // Show last pages
 
         return;
     }
 
     if (pagesBefore <= 4)
     {
-        @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
+    @BuildLinks(1, MaxPages - 2, null) // Show 1st pages
 
         int pageSubset = MaxPages + 2 < ViewBag.TotalPages ? MaxPages + 2 : ViewBag.TotalPages - 1;
-        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+    @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
 
-        @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
+    @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
 
         return;
     }
@@ -82,8 +82,8 @@
 
     @BuildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
 
-    // Show 2nd page subset (...)
-    // only show ... if page is contigous to the previous one.
+        // Show 2nd page subset (...)
+        // only show ... if page is contigous to the previous one.
     @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
     @BuildLinks(ViewBag.TotalPages, ViewBag.TotalPages, null) // Show last page
 }
@@ -106,14 +106,14 @@
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.ThingID })">@item.ThreadTitle</a></div>
-            <div class="description" id="selfText-@item.ThingID">
+            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.Thread.ThingID })">@item.Thread.Title</a></div>
+            <div class="description" id="selfText-@item.Thread.ThingID">
                 <script type="text/javascript">
-                    $(document).ready(function() { GetSelfText('@item.ThingID'); });
+                    $(document).ready(function () { GetSelfText('@item.Thread.ThingID'); });
                 </script>
             </div>
             <div class="createdTime">
-                <strong>@Html.TimeAgo(@item.CreatedDate)</strong>
+                <strong>@Html.TimeAgo(@item.Thread.CreatedDate)</strong>
             </div>
             <div class="createdBy">
                 @if (item.Games.Count() == 1)
@@ -124,15 +124,15 @@
                 {
                     <text>@item.GameCount games</text>
                 }
-                being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Username)">@item.Username</a>
+                being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Thread.User.Username)">@item.Thread.User.Username</a>
             </div>
         </div>
         <div class="right">
             @if (item.GameCount > 1)
             {
                 <script type="text/javascript">
-                    $(function() {
-                        $('#slider-@item.ThingID').bxSlider({
+                    $(function () {
+                        $('#slider-@item.Thread.ThingID').bxSlider({
                             displaySlideQty: 2,
                             moveSlideQty: 2,
                             auto: true,
@@ -144,15 +144,16 @@
                     });
                 </script>
             }
-           
-            <ul class="games" id="slider-@item.ThingID">
+
+            <ul class="games" id="slider-@item.Thread.ThingID">
                 @foreach (var game in item.Games)
                 {
-                    <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+                    <li>
+                        <img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
                 }
             </ul>
         </div>
-        
+
         <div class="clearBoth"></div>
     </div>
 }

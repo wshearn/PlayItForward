@@ -1,61 +1,68 @@
-﻿@using PiF.Models
-@model Thread
+﻿@using System.Data.SqlTypes
+@using PiF
+@using PiF.Models
+@model PiFListModel
 
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h2>@Html.DisplayFor(model => model.Title)</h2>
-            </hgroup>
-        </div>
-    </section>
+@section scripts {
+    @Scripts.Render("~/bundles/me")
+    <script type="text/javascript">$(document).ready(function () { jQuery("time.timeago").timeago(); });
+        function GetSelfText(thingId) {
+            $.getJSON("http://www.reddit.com/r/playitforward/comments/" + thingId + "/.json?jsonp=?", { id: thingId }, function (data) {
+                var tempHtml = $('<div/>').html(data[0].data.children[0].data.selftext_html).text();
+                $("#selfText-" + thingId).html(tempHtml);
+            }).success(function () {
+                $('div.md').expander({ slicePoint: 250 });
+            });
+        }
+    </script>
 }
 
-<fieldset>
-    <legend>Thread</legend>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.UserID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UserID)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.CreatedDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedDate)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.EndDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndDate)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.ThingID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ThingID)
-    </div>
-</fieldset>
-<p>
-    @{ bool canEdit = Model.ThreadGames.Any(tg => tg.WinnerID == null); }
-    @if (AccountHelper.CurrentUser != null && Model.UserID == AccountHelper.CurrentUser.id && canEdit)
+<div class="pif">
+    <hgroup class="title">
+        <h2 style="margin-bottom: 10px">@Html.DisplayFor(model => model.Thread.Title)<span class="pifscore">@Model.Games.Sum(x => x.PointWorth * x.Count)</span></h2>
+    </hgroup>
+    @if (@Model.GameCount > 1)
     {
-        <text>@Html.ActionLink("Edit", "Edit", new { Model.ThingID }) | </text>
+        <script type="text/javascript">
+            $(function () {
+                $('#slider-@Model.Thread.ThingID').bxSlider({
+                    displaySlideQty: 4,
+                    moveSlideQty: 2,
+                    auto: true,
+                    controls: false,
+                    autoHover: true,
+                    infiniteLoop: false
+                });
+            });
+        </script>
     }
 
+    <ul class="games" id="slider-@Model.Thread.ThingID" style="width:250px">
+        @foreach (var game in Model.Games)
+        {
+            <li>
+                <img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+        }
+    </ul>
+    <div class="description" id="selfText-@Model.Thread.ThingID">
+        <script type="text/javascript">
+            $(document).ready(function () { GetSelfText('@Model.Thread.ThingID'); });
+        </script>
+    </div>
+    <div class="clearBoth"></div>
 
-    @Html.ActionLink("Back to List", "Me", "Account")
-</p>
+    @if (@Model.Thread.EndDate != SqlDateTime.MinValue)
+    {
+        <div style="float: right; padding: 7px;" class="createdTime">Closed <strong>@Html.TimeAgo(@Model.Thread.EndDate)</strong></div>
+    }
+    else
+    {
+        <div style="float: right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@Model.Thread.CreatedDate)</strong></div>
+        if (@Model.Thread.UserID == AccountHelper.CurrentUser.id && Model.Thread.ThreadGames.Any(tg => tg.WinnerID == null))
+        {
+        <text>@Html.ActionLink("Edit", "Edit", "PiF", new { @Model.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { Model.Thread.ThingID }, null)</text>
+        }
+
+    }
+
+</div>
