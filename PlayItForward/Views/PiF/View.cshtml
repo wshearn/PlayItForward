@@ -2,24 +2,42 @@
 @using PiF
 @using PiF.Models
 @model PiFListModel
-
+@{ ViewBag.Title = Html.DisplayFor(model => model.Thread.Title); }
 @section scripts {
     @Scripts.Render("~/bundles/me")
-    <script type="text/javascript">$(document).ready(function () { jQuery("time.timeago").timeago(); });
+    <script type="text/javascript"> $(document).ready(function () { jQuery("time.timeago").timeago(); });
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match;
+            });
+        };
+
         function GetSelfText(thingId) {
-            $.getJSON("http://www.reddit.com/r/playitforward/comments/" + thingId + "/.json?jsonp=?", { id: thingId }, function (data) {
+            $.getJSON("http://www.reddit.com/comments/" + thingId + ".json?jsonp=?", function (data) {
                 var tempHtml = $('<div/>').html(data[0].data.children[0].data.selftext_html).text();
                 $("#selfText-" + thingId).html(tempHtml);
-            }).success(function () {
-                $('div.md').expander({ slicePoint: 250 });
+                $.each(data[1].data.children,
+                    function (i, post) {
+                        var comment = $('<div/>').html(post.data.body_html).text();
+                        var date = jQuery.timeago(new Date([post.data.created_utc] * 1000));
+                        $("#reddit-content").append("<div class=\"parent_container\"><div class=\"comment parent\"><div class=\"avatar_container\">"
+                        + "<a href=\"/user/{0}\" class=\"avatar\" style=\"background-image:url({0})\"></a></div>".format("http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg")
+                        + "<div class=\"body_container\"><div class=\"author_name\"><a href=\"/user/{0}\">{0}</a><span class=\"author_date\">{1}</span></div><div class=\"user_body\">".format(post.data.author, date)
+                        + "<div class=\"comment_body markdown\">{0}</div></div></div></div></div>".format(comment));
+                       
+                    }
+                );
             });
         }
-    </script>
-}
 
+        $(document).ready(function () { GetSelfText('@Model.Thread.ThingID'); }); </script>
+}
 <div class="pif">
     <hgroup class="title">
-        <h2 style="margin-bottom: 10px">@Html.DisplayFor(model => model.Thread.Title)<span class="pifscore">@Model.Games.Sum(x => x.PointWorth * x.Count)</span></h2>
+        <h2 style="margin-bottom: 10px">@ViewBag.Title</h2>
     </hgroup>
     @if (@Model.GameCount > 1)
     {
@@ -27,11 +45,11 @@
             $(function () {
                 $('#slider-@Model.Thread.ThingID').bxSlider({
                     displaySlideQty: 4,
-                    moveSlideQty: 2,
+                    moveSlideQty: 4,
                     auto: true,
                     controls: false,
                     autoHover: true,
-                    infiniteLoop: false
+                    infiniteLoop: true
                 });
             });
         </script>
@@ -44,25 +62,56 @@
                 <img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
         }
     </ul>
-    <div class="description" id="selfText-@Model.Thread.ThingID">
-        <script type="text/javascript">
-            $(document).ready(function () { GetSelfText('@Model.Thread.ThingID'); });
-        </script>
-    </div>
+    <div class="description" id="selfText-@Model.Thread.ThingID"></div>
     <div class="clearBoth"></div>
 
     @if (@Model.Thread.EndDate != SqlDateTime.MinValue)
     {
-        <div style="float: right; padding: 7px;" class="createdTime">Closed <strong>@Html.TimeAgo(@Model.Thread.EndDate)</strong></div>
+        <div style="float: right; padding: 7px;" class="createdTime">Ended <strong>@Html.TimeAgo(@Model.Thread.EndDate)</strong></div>
     }
     else
     {
         <div style="float: right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@Model.Thread.CreatedDate)</strong></div>
         if (@Model.Thread.UserID == AccountHelper.CurrentUser.id && Model.Thread.ThreadGames.Any(tg => tg.WinnerID == null))
         {
-        <text>@Html.ActionLink("Edit", "Edit", "PiF", new { @Model.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { Model.Thread.ThingID }, null)</text>
+            <text>@Html.ActionLink("Edit", "Edit", "PiF", new { @Model.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { Model.Thread.ThingID }, null)</text>
         }
 
     }
+</div>
+<div class="content">
+    <div class="sub_navigation">
+        @* TODO: Make these into partial views that can be loaded without reloading the page, using javascript.*@
+        <ol>
+            <li class="selected">@Html.ActionLink("Comments", "View", "PiF", new { @Model.Thread.ThingID })</li>
+            <li>@Html.ActionLink(@Model.Thread.Comments.Count() + " comments", "Entries", "PiF")</li>
+            <li>@Html.ActionLink("Stats", "Stats", "PiF")</li>
+        </ol>
+        <div class="clearBoth"></div>
+    </div>
+    <div class="pagination">
+        <div class="results">Displaying 10-20</div>
+        <div class="numbers">1 2 3  4 5</div>
+        <div class="clearBoth"></div>
+    </div>
+    <br/>
+    <div class="comment_container" id="reddit-content"></div>
+    <div class="clearBoth"></div>
 
+    @*<div class="comment_container">
+    <div class="parent_container">
+        <div class="comment parent">
+            <div class="avatar_container">@Html.ActionLink("Username", "Profile", "Account", new { username="Username"},  new { @class = "avatar", style="background-image: url(http://media.steampowered.com/steamcommunity/public/images/avatars/42/425e083dc84b0e261e6aa2552345e6218c4797bc_medium.jpg)" })
+                <div class="avatar_overlay"></div>
+            </div>
+        <div class="body_container">
+            <div class="author_name"><a href="/user/Arcticvzla">Arcticvzla</a> <span class="author_date">(1 day  ago)</span></div>
+            <div class="user_body">
+                <div class="comment_body markdown">
+                    Comment Goes Here
+                </div>
+            </div>
+        </div>
+            </div></div></div>
+    *@
 </div>

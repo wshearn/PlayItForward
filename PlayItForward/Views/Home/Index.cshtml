@@ -106,7 +106,9 @@
 {
     <div class="pif">
         <div class="left">
-            <div class="title"><a href="@Url.Action("View", "PiF", new { @item.Thread.ThingID })">@item.Thread.Title</a></div>
+            <div class="title">
+                <h3 style="margin-bottom: 10px">@Html.ActionLink(@item.Thread.Title, "View", "PiF", new { thingID=@item.Thread.ThingID }, null)<span class="pifscore">@item.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
+            </div>
             <div class="description" id="selfText-@item.Thread.ThingID">
                 <script type="text/javascript">
                     $(document).ready(function () { GetSelfText('@item.Thread.ThingID'); });
@@ -124,7 +126,7 @@
                 {
                     <text>@item.GameCount games</text>
                 }
-                being given by <a href="@string.Format("http://reddit.com/u/{0}", item.Thread.User.Username)">@item.Thread.User.Username</a>
+                being given by @Html.ActionLink(@item.Thread.User.Username, "Profile", "Account")
             </div>
         </div>
         <div class="right">
@@ -157,6 +159,7 @@
         <div class="clearBoth"></div>
     </div>
 }
+<br/>
 <div class="pagination">
     <div class="results">Displaying @ItemsDisplayed()</div>
     <div class="numbers">@PageLinks()</div>

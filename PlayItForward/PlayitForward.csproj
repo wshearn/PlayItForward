@@ -167,6 +167,7 @@
     <Content Include="Content\textures\glass.png" />
     <Content Include="Content\textures\highlight.png" />
     <Content Include="Global.asax" />
+    <Content Include="Images\avatar_parent.png" />
     <Content Include="Images\capsules\HIB.jpg" />
     <Content Include="Images\capsules\HIB2.jpg" />
     <Content Include="Images\capsules\HIB3.jpg" />

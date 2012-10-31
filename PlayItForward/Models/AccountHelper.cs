@@ -55,12 +55,16 @@ namespace PiF.Models
             }
         }
 
-
-
         [OutputCache(Duration = 60)]
         public static IEnumerable<User> GetAllUsers()
         {
             return new PiFDbDataContext().Users.ToList();
+        }
+
+        [OutputCache(Duration = 60)]
+        public static User GetUser(string username)
+        {
+            return new PiFDbDataContext().Users.SingleOrDefault(e => e.Username == username);
         }
     }
 }

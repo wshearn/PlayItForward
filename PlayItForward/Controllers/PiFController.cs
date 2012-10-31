@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
@@ -268,6 +269,16 @@ namespace PiF.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult Stats(string thingID)
+        {
+            return View();
+        }
+
+        public ActionResult Entries(string thingID)
+        {
+            return View();
         }
 
         public new ActionResult View(string thingID)

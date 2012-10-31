@@ -22,6 +22,11 @@ namespace PiF.Controllers
             return View();
         }
 
+        public ActionResult Profile(string username)
+        {
+            return View();
+        }
+
         public ActionResult Preferences()
         {
             return View();

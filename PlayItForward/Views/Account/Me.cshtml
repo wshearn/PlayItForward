@@ -66,82 +66,85 @@
 <p>
     @Html.ActionLink("Create New", "New", "PiF")
 </p>
+
+@if (Model.Any())
+{
     <div class="open-giveaways">
-   <h2>Open giveaways</h2>
-    @foreach (var open in Model)
-    {
-        if (open.Thread.EndDate != SqlDateTime.MinValue)
+        <h2>Open giveaways</h2>
+        @foreach (var open in Model)
         {
-            continue;
-        }
-        <div class="pif">
-            <h3 style="margin-bottom:10px"><a href="@Url.Action("View", "PiF", new { @open.Thread.ThingID })">@open.Thread.Title</a><span class="pifscore">@open.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
-            @if (open.GameCount > 1)
+            if (open.Thread.EndDate != SqlDateTime.MinValue)
             {
-                <script type="text/javascript">
-                    $(function () {
-                        $('#slider-@open.Thread.ThingID').bxSlider({
-                            displaySlideQty: 4,
-                            moveSlideQty: 2,
-                            auto: true,
-                            controls: false,
-                            autoHover: true,
-                            infiniteLoop: false
-                        });
-                    });
-                </script>
+                continue;
             }
-
-            <ul class="games" id="slider-@open.Thread.ThingID" style="width:250px">
-                @foreach (var game in open.Games)
+            <div class="pif">
+                <h3 style="margin-bottom: 10px"><a href="@Url.Action("View", "PiF", new { @open.Thread.ThingID })">@open.Thread.Title</a><span class="pifscore">@open.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
+                @if (open.GameCount > 1)
                 {
-                    <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+                    <script type="text/javascript">
+                        $(function() {
+                            $('#slider-@open.Thread.ThingID').bxSlider({
+                                displaySlideQty: 4,
+                                moveSlideQty: 4,
+                                auto: true,
+                                controls: false,
+                                autoHover: true,
+                                infiniteLoop: true
+                            });
+                        });
+                    </script>
                 }
-            </ul>
 
-            <div class="clearBoth"></div>
-            @Html.ActionLink("Edit", "Edit", "PiF", new { open.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { open.Thread.ThingID }, null)
-            <div style="float:right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@open.Thread.CreatedDate)</strong></div>
-            <div class="clearBoth"></div>
-        </div>
-    }</div>
+                <ul class="games" id="slider-@open.Thread.ThingID" style="width: 250px">
+                    @foreach (var game in open.Games)
+                    {
+                        <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+                    }
+                </ul>
 
-<div class="closed-giveaways">
-    <h2>Closed giveaways</h2>
-    @foreach (var closed in Model)
-    {
-        if (closed.Thread.EndDate == SqlDateTime.MinValue)
+                <div class="clearBoth"></div>
+                @Html.ActionLink("Edit", "Edit", "PiF", new { open.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { open.Thread.ThingID }, null)
+                <div style="float: right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@open.Thread.CreatedDate)</strong></div>
+                <div class="clearBoth"></div>
+            </div>
+        }</div>
+
+    <div class="closed-giveaways">
+        <h2>Closed giveaways</h2>
+        @foreach (var closed in Model)
         {
-            continue;
-        }
-        <div class="pif">
-            <h3 style="margin-bottom: 10px"><a href="@Url.Action("View", "PiF", new { @closed.Thread.ThingID })">@closed.Thread.Title</a><span class="pifscore">@closed.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
-            @if (closed.GameCount > 1)
+            if (closed.Thread.EndDate == SqlDateTime.MinValue)
             {
-                <script type="text/javascript">
-                    $(function() {
-                        $('#slider-@closed.Thread.ThingID').bxSlider({
-                            displaySlideQty: 4,
-                            moveSlideQty: 2,
-                            auto: true,
-                            controls: false,
-                            autoHover: true,
-                            infiniteLoop: false
-                        });
-                    });
-                </script>
+                continue;
             }
-
-            <ul class="games" id="slider-@closed.Thread.ThingID" style="width: 250px">
-                @foreach (var game in closed.Games)
+            <div class="pif">
+                <h3 style="margin-bottom: 10px"><a href="@Url.Action("View", "PiF", new { @closed.Thread.ThingID })">@closed.Thread.Title</a><span class="pifscore">@closed.Games.Sum(x => x.PointWorth * x.Count)</span></h3>
+                @if (closed.GameCount > 1)
                 {
-                    <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+                    <script type="text/javascript">
+                        $(function() {
+                            $('#slider-@closed.Thread.ThingID').bxSlider({
+                                displaySlideQty: 4,
+                                moveSlideQty: 4,
+                                auto: true,
+                                controls: false,
+                                autoHover: true,
+                                infiniteLoop: true
+                            });
+                        });
+                    </script>
                 }
-            </ul>
 
-            <div class="clearBoth"></div>
-            @Html.ActionLink("Edit", "Edit", "PiF", new { closed.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { closed.Thread.ThingID }, null)
-            <div style="float: right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@closed.Thread.CreatedDate)</strong></div>
-            <div class="clearBoth"></div>
-        </div>
-    }</div>
+                <ul class="games" id="slider-@closed.Thread.ThingID" style="width: 250px">
+                    @foreach (var game in closed.Games)
+                    {
+                        <li><img src="@game.ImageUrl" alt="@game.Name" title="@game.Name" height="69" width="184" /></li>
+                    }
+                </ul>
+
+                <div class="clearBoth"></div>
+                <div style="float: right; padding: 7px;" class="createdTime">Ended <strong>@Html.TimeAgo(@closed.Thread.EndDate)</strong></div>
+                <div class="clearBoth"></div>
+            </div>
+        }</div>
+}
