@@ -42,11 +42,6 @@ namespace PiF
             model.Games = games;
             model.GameCount = thread.ThreadGames.Count;
             model.Thread = thread;
-            //model.ThreadTitle = thread.Title;
-            //model.Username = thread.User.Username;
-            //model.CreatedDate = thread.CreatedDate;
-            //model.ThingID = thread.ThingID;
-            //model.ClosedDate = thread.EndDate;
             return model;
         }
 

@@ -2,10 +2,8 @@
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 using System.Web.Mvc;
-
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -35,17 +33,17 @@ namespace PiF.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
-        {
-            return Json(SessionCompleteGamesRepository.All().ToDataSourceResult(request));
-        }
-
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CggUpdate([DataSourceRequest] DataSourceRequest request, CompletePiFModel game)
         {
             // CompletePiFModel game = SessionCompleteGamesRepository.One(p => p.ID == id);
             TryUpdateModel(game);
             return Json(ModelState.ToDataSourceResult());
+        }
+
+        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(SessionCompleteGamesRepository.All().ToDataSourceResult(request));
         }
     }
 }

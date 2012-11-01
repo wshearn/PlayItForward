@@ -1523,8 +1523,6 @@ namespace PiF.Models
 		
 		private System.Nullable<System.DateTime> _BannedUntil;
 		
-		private string _ModHash;
-		
 		private int _SteamID;
 		
 		private EntitySet<Comment> _Comments;
@@ -1571,8 +1569,6 @@ namespace PiF.Models
     partial void OnGivenCountChanged();
     partial void OnBannedUntilChanging(System.Nullable<System.DateTime> value);
     partial void OnBannedUntilChanged();
-    partial void OnModHashChanging(string value);
-    partial void OnModHashChanged();
     partial void OnSteamIDChanging(int value);
     partial void OnSteamIDChanged();
     #endregion
@@ -1769,26 +1765,6 @@ namespace PiF.Models
 					this._BannedUntil = value;
 					this.SendPropertyChanged("BannedUntil");
 					this.OnBannedUntilChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModHash", DbType="VarChar(255)")]
-		public string ModHash
-		{
-			get
-			{
-				return this._ModHash;
-			}
-			set
-			{
-				if ((this._ModHash != value))
-				{
-					this.OnModHashChanging(value);
-					this.SendPropertyChanging();
-					this._ModHash = value;
-					this.SendPropertyChanged("ModHash");
-					this.OnModHashChanged();
 				}
 			}
 		}

@@ -3,10 +3,14 @@
 @using PiF.Models
 @model IEnumerable<PiFListModel>
 
-@{ ViewBag.Title = User.Identity.Name; }
+@{  }
 
-@section scripts {@Scripts.Render("~/bundles/me")
+@section scripts {@Scripts.Render("~/bundles/profile")
 <script type="text/javascript">$(document).ready(function () { jQuery("time.timeago").timeago(); });</script>
+}
+@{
+    User user = ViewBag.User;
+    ViewBag.Title = user.Username;
 }
 @section featured {
     <section class="featured">
@@ -26,25 +30,25 @@
                         <div class="divider"></div>
                         <div class="row">
                             <div class="rowLeft">Registered</div>
-                            <div class="rowRight">@Html.TimeAgo(AccountHelper.CurrentUser.RecordCreatedDate)</div>
+                            <div class="rowRight">@Html.TimeAgo(user.RecordCreatedDate)</div>
                             <div class="clearBoth"></div>	
                         </div>
                         <div class="divider"></div>
                         <div class="row">
                             <div class="rowLeft">Giveaways Entered</div>
-                            <div class="rowRight">Need to Implement</div>
+                            <div class="rowRight">@user.Entries.Count</div>
                             <div class="clearBoth"></div>	
                         </div>
                         <div class="divider"></div>
                         <div class="row">
                             <div class="rowLeft">Games Given</div>
-                            <div class="rowRight">@AccountHelper.CurrentUser.GivenCount</div>
+                            <div class="rowRight">@user.GivenCount</div>
                             <div class="clearBoth"></div>	
                         </div>
                         <div class="divider"></div>
                         <div class="row">
                             <div class="rowLeft">Games Received</div>
-                            <div class="rowRight">@AccountHelper.CurrentUser.ReceivedCount</div>
+                            <div class="rowRight">@user.ReceivedCount</div>
                             <div class="clearBoth"></div>	
                         </div>
 
@@ -54,7 +58,7 @@
                     <h2 class="title">Achievements</h2>
                     <div class="row">
                         <div class="rowLeft">Registered</div>
-                        <div class="rowRight">@Html.TimeAgo(AccountHelper.CurrentUser.RecordCreatedDate)</div>
+                        <div class="rowRight">@Html.TimeAgo(user.RecordCreatedDate)</div>
                         <div class="clearBoth"></div>	
                     </div>
                     <div class="divider"></div>
@@ -103,7 +107,10 @@
                 </ul>
 
                 <div class="clearBoth"></div>
-                @Html.ActionLink("Edit", "Edit", "PiF", new { open.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { open.Thread.ThingID }, null)
+                @if (ViewBag.User.id == AccountHelper.CurrentUser.id)
+                {
+                    <text>@Html.ActionLink("Edit", "Edit", "PiF", new { open.Thread.ThingID }, null) | @Html.ActionLink("Complete", "Complete", "PiF", new { open.Thread.ThingID }, null)</text>
+                }
                 <div style="float: right; padding: 7px;" class="createdTime">Created <strong>@Html.TimeAgo(@open.Thread.CreatedDate)</strong></div>
                 <div class="clearBoth"></div>
             </div>

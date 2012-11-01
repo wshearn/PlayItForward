@@ -10,24 +10,18 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.Security;
-
 using PiF.Models;
 
 namespace PiF.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult Activity(string username)
+        {
+            return View();
+        }
+
         public ActionResult Login()
-        {
-            return View();
-        }
-
-        public ActionResult Profile(string username)
-        {
-            return View();
-        }
-
-        public ActionResult Preferences()
         {
             return View();
         }
@@ -83,10 +77,10 @@ namespace PiF.Controllers
             Session["ModHash"] = response["data"]["modhash"];
 
             var redditCookie = new HttpCookie("reddit_session")
-                {
-                    Value = Server.UrlEncode(response["data"]["cookie"]),
-                    Expires = DateTime.Now.AddYears(1)
-                };
+                                   {
+                                       Value = Server.UrlEncode(response["data"]["cookie"]), 
+                                       Expires = DateTime.Now.AddYears(1)
+                                   };
             Session["RedditCookie"] = redditCookie;
 
             if (model.RememberMe)
@@ -134,10 +128,26 @@ namespace PiF.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
-        public ActionResult Me()
+        public ActionResult Messages(string username)
         {
-            return View(Utilities.GetThreads(AccountHelper.CurrentUser.Threads.OrderByDescending(t => t.CreatedDate)));
+            return View();
+        }
+
+        public ActionResult Preferences()
+        {
+            return View();
+        }
+
+        public ActionResult Profile(string username)
+        {
+            User user = AccountHelper.GetUser(username);
+            if (user != null)
+            {
+                ViewBag.User = user;
+                return View(Utilities.GetThreads(user.Threads.OrderByDescending(t => t.CreatedDate)));
+            }
+
+            return new HttpNotFoundResult();
         }
 
         /// <summary>Logs the user in</summary>

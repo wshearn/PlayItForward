@@ -76,7 +76,7 @@ namespace PiF.Models
         {
             var userDictionary = new Dictionary<string, string>();
             if (!userDictionary.ContainsKey(data["author"]) && data["author"] != "[deleted]"
-                && data["author"] != string.Empty)
+                                                            && data["author"] != string.Empty)
             {
                 userDictionary.Add(data["author"], data["author"]);
             }
@@ -93,7 +93,7 @@ namespace PiF.Models
                     Dictionary<string, string> subUsers = GetAllUsers(d["data"]);
                     foreach (var kvp in
                         subUsers.Where(kvp => !userDictionary.ContainsKey(kvp.Value))
-                            .Where(kvp => data["author"] != "[deleted]" && data["author"] != string.Empty))
+                                .Where(kvp => data["author"] != "[deleted]" && data["author"] != string.Empty))
                     {
                         userDictionary.Add(kvp.Key, kvp.Value);
                     }

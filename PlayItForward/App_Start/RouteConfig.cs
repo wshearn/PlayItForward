@@ -14,17 +14,19 @@ namespace PiF
 
             routes.MapRoute("New", "new", new { controller = "PiF", action = "New" });
             routes.MapRoute(
-                "Complete",
+                "Complete", 
                 "pif/{thingID}/complete", 
                 new { controller = "PiF", action = "Complete", thingID = UrlParameter.Optional });
 
             routes.MapRoute(
-                "Delete",
+                "Delete", 
                 "pif/{thingID}/delete", 
                 new { controller = "PiF", action = "delete", thingID = UrlParameter.Optional });
 
             routes.MapRoute(
-                "Edit", "pif/{thingID}/edit", new { controller = "PiF", action = "Edit", thingID = UrlParameter.Optional });
+                "Edit", 
+                "pif/{thingID}/edit", 
+                new { controller = "PiF", action = "Edit", thingID = UrlParameter.Optional });
 
             routes.MapRoute(
                 "PiF", "pif/{thingID}", new { controller = "PiF", action = "View", thingID = UrlParameter.Optional });
@@ -38,27 +40,25 @@ namespace PiF
             routes.MapRoute("Points", "rules/points", new { controller = "Home", action = "Points" });
             routes.MapRoute("Exceptions", "rules/exceptions", new { controller = "Home", action = "Exceptions" });
             routes.MapRoute("Support", "support", new { controller = "Home", action = "Support" });
-            routes.MapRoute("Me", "user/me", new { controller = "Account", action = "Me" });
+            routes.MapRoute(
+                "Profile", 
+                "user/{username}", 
+                new { controller = "Account", action = "Profile", username = UrlParameter.Optional });
 
             routes.MapRoute(
                 "Login", 
-                "user/login/{ReturnUrl}", 
+                "login/{ReturnUrl}", 
                 new { controller = "Account", action = "Login", ReturnUrl = UrlParameter.Optional });
 
             routes.MapRoute("Logout", "user/logout", new { controller = "Account", action = "Logout" });
 
             routes.MapRoute(
-                "User", 
-                "user/{username}", 
-                new { controller = "Account", action = "User", username = UrlParameter.Optional });
-
-            routes.MapRoute(
                 "Index", "giveaways/{page}", new { controller = "Home", action = "Index", page = UrlParameter.Optional });
 
             routes.MapRoute(
-            "Default",
-            "{controller}/{action}/{id}",
-            new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+                "Default", 
+                "{controller}/{action}/{id}", 
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿// <copyright file="NewGameGridController.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
-
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -16,15 +15,15 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult NggCreate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
-            System.Diagnostics.Debug.WriteLine("Create Method Fired");
+            Debug.WriteLine("Create Method Fired");
+
             // Perform model binding (fill the game properties and validate it).
             if (pifgame != null)
             {
-                //if (pifgame.Count < 1)
-                //{
-                //    pifgame.Count = 1;
-                //}
-
+                // if (pifgame.Count < 1)
+                // {
+                // pifgame.Count = 1;
+                // }
                 Game game = new PiFDbDataContext().Games.Single(g => g.id == pifgame.ID);
 
                 if (game == null)
@@ -62,19 +61,19 @@ namespace PiF.Controllers
         [HttpPost]
         public ActionResult NggRead([DataSourceRequest] DataSourceRequest request)
         {
-            System.Diagnostics.Debug.WriteLine("Read Method Fired");
+            Debug.WriteLine("Read Method Fired");
             return Json(SessionNewGamesRepository.All().ToDataSourceResult(request));
         }
 
         [HttpPost]
         public ActionResult NggUpdate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
-            System.Diagnostics.Debug.WriteLine("Update Method Fired");
-            // PiFGame pifgame = SessionNewGamesRepository.One(p => p.ID == id);
+            Debug.WriteLine("Update Method Fired");
 
+            // PiFGame pifgame = SessionNewGamesRepository.One(p => p.ID == id);
             if (pifgame != null && ModelState.IsValid)
             {
-                var target = SessionNewGamesRepository.One(g => g.ID == pifgame.ID);
+                PiFGame target = SessionNewGamesRepository.One(g => g.ID == pifgame.ID);
                 if (target != null)
                 {
                     target.Name = pifgame.Name;

@@ -5,35 +5,41 @@
 @{ ViewBag.Title = Html.DisplayFor(model => model.Thread.Title); }
 @section scripts {
     @Scripts.Render("~/bundles/me")
-    <script type="text/javascript"> $(document).ready(function () { jQuery("time.timeago").timeago(); });
-        String.prototype.format = function () {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] != 'undefined'
-                    ? args[number]
-                    : match;
-            });
-        };
+    <script type="text/javascript"> $(document).ready(function() { jQuery("time.timeago").timeago(); });
+String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+        return typeof args[number] != 'undefined'
+            ? args[number]
+            : match;
+    });
+};
 
-        function GetSelfText(thingId) {
-            $.getJSON("http://www.reddit.com/comments/" + thingId + ".json?jsonp=?", function (data) {
-                var tempHtml = $('<div/>').html(data[0].data.children[0].data.selftext_html).text();
-                $("#selfText-" + thingId).html(tempHtml);
-                $.each(data[1].data.children,
-                    function (i, post) {
-                        var comment = $('<div/>').html(post.data.body_html).text();
-                        var date = jQuery.timeago(new Date([post.data.created_utc] * 1000));
-                        $("#reddit-content").append("<div class=\"parent_container\"><div class=\"comment parent\"><div class=\"avatar_container\">"
-                        + "<a href=\"/user/{0}\" class=\"avatar\" style=\"background-image:url({0})\"></a></div>".format("http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg")
-                        + "<div class=\"body_container\"><div class=\"author_name\"><a href=\"/user/{0}\">{0}</a><span class=\"author_date\">{1}</span></div><div class=\"user_body\">".format(post.data.author, date)
-                        + "<div class=\"comment_body markdown\">{0}</div></div></div></div></div>".format(comment));
-                       
-                    }
-                );
-            });
-        }
+function GetRedditInfo(thingId) {
+    $.getJSON("http://www.reddit.com/comments/" + thingId + ".json?jsonp=?", function(data) {
+        var tempHtml = $('<div/>').html(data[0].data.children[0].data.selftext_html).text();
+        $("#selfText-" + thingId).html(tempHtml);
+        $.each(data[1].data.children,
+            function(i, post) {
+                var comment = $('<div/>').html(post.data.body_html).text();
+                var date = jQuery.timeago(new Date([post.data.created_utc] * 1000));
+                $("#reddit-content").append("<div class=\"parent_container\"><div class=\"comment parent\"><div class=\"avatar_container\">"
+                    + "<a href=\"/user/{0}\" class=\"avatar\" style=\"background-image:url({0})\"></a></div>".format("http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg")
+                    + "<div class=\"body_container\"><div class=\"author_name\"><a href=\"/user/{0}\">{0}</a><span class=\"author_date\">{1}</span>".format(post.data.author, date) +
+                    " <span class=\"points\" id=\"points-{0}\"></span></div><div class=\"user_body\">".format(post.data.id)
+                    + "<div class=\"comment_body markdown\">{0}</div></div></div></div></div>".format(comment));
+                $.getJSON("/api/users/?username=" + post.data.author,
+                    function (data) {
+                        if (data != null)
+                            $("#points-" + post.data.id).text("(" + data.GivenCount + " • " + data.ReceivedCount + ")");
+                    });
+            }
+        );
+    });
+}
 
-        $(document).ready(function () { GetSelfText('@Model.Thread.ThingID'); }); </script>
+
+$(document).ready(function() { GetRedditInfo('@Model.Thread.ThingID'); }); </script>
 }
 <div class="pif">
     <hgroup class="title">

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
@@ -12,10 +11,6 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -31,11 +26,11 @@ namespace PiF.Controllers
             }
 
             var cpm = new CompletePiFModel
-                {
-                    ThingID =
-                        AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID)
-                        .ThingID
-                };
+                          {
+                              ThingID =
+                                  AccountHelper.CurrentUser.Threads.Single(t => t.ThingID == thingID)
+                                               .ThingID
+                          };
 
             ViewData["ThreadUsers"] = cpm.ThreadUserList(cpm.ThingID);
 
@@ -173,6 +168,11 @@ namespace PiF.Controllers
             return View(model);
         }
 
+        public ActionResult Entries(string thingID)
+        {
+            return View();
+        }
+
         [Authorize]
         public ActionResult New()
         {
@@ -204,10 +204,10 @@ namespace PiF.Controllers
                 try
                 {
                     response = PostPiF(
-                        model.ThreadTitle,
-                        model.SelfText,
-                        Session["ModHash"].ToString(),
-                        model.Captcha,
+                        model.ThreadTitle, 
+                        model.SelfText, 
+                        Session["ModHash"].ToString(), 
+                        model.Captcha, 
                         Session["CaptchaID"].ToString());
                 }
                 catch (WebException)
@@ -234,22 +234,22 @@ namespace PiF.Controllers
 
                 var r = new Random();
                 var thread = new Thread
-                    {
-                        EndDate = SqlDateTime.MinValue.Value,
-                        CreatedDate = DateTime.UtcNow,
-                        Title = model.ThreadTitle,
-                        ThingID =
-                            debug == false
-                                ? thingID
-                                : string.Format(
-                                    "{0}{1}{2}{3}{4}",
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123),
-                                    (char)r.Next(97, 123)),
-                        UserID = AccountHelper.CurrentUser.id
-                    };
+                                 {
+                                     EndDate = SqlDateTime.MinValue.Value, 
+                                     CreatedDate = DateTime.UtcNow, 
+                                     Title = model.ThreadTitle, 
+                                     ThingID =
+                                         debug == false
+                                             ? thingID
+                                             : string.Format(
+                                                 "{0}{1}{2}{3}{4}", 
+                                                 (char)r.Next(97, 123), 
+                                                 (char)r.Next(97, 123), 
+                                                 (char)r.Next(97, 123), 
+                                                 (char)r.Next(97, 123), 
+                                                 (char)r.Next(97, 123)), 
+                                     UserID = AccountHelper.CurrentUser.id
+                                 };
                 foreach (var pifgame in SessionNewGamesRepository.All())
                 {
                     for (int i = 1; i <= pifgame.Count; i++)
@@ -276,11 +276,6 @@ namespace PiF.Controllers
             return View();
         }
 
-        public ActionResult Entries(string thingID)
-        {
-            return View();
-        }
-
         public new ActionResult View(string thingID)
         {
             if (string.IsNullOrWhiteSpace(thingID))
@@ -296,9 +291,9 @@ namespace PiF.Controllers
         {
             string data =
                 string.Format(
-                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward",
-                    modhash,
-                    text,
+                    "api_type=json&uh={0}&kind=self&text={1}&sr=playitforward&title={2}&r=playitforward", 
+                    modhash, 
+                    text, 
                     title);
 
             if (!string.IsNullOrWhiteSpace(iden) && !string.IsNullOrWhiteSpace(captcha))

@@ -548,12 +548,6 @@ a.current:link, a.current:visited { color: #DD4B39; }
     padding: 0px 5px;
 }
 
-span.points {
-    display: inline-block;
-    font-size: 1em!important;
-    padding: 0 2px;
-}
-
 html {
     background-color: #e2e2e2;
     margin: 0;
@@ -575,7 +569,7 @@ a {
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:link, a:visited,

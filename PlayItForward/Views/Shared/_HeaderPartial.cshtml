@@ -5,14 +5,14 @@
 {
     <div id="SignedInExperience">
         <div id="Avatar" class="SignedIn" title="@AccountHelper.CurrentUser.Username">
-                  <a href="/user/me"><div class="avatar" style="background-image: url(http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg);"></div></a>
+                  <a href="@Url.Action("Profile", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="avatar" style="background-image: url(http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg);"></div></a>
               </div>
         <div id="MeBar" class="SignedIn">
             <div id="StatArea" class="StatArea">
-                <h2 class="username" id="username"><a href="/user/me">@AccountHelper.CurrentUser.Username</a></h2>
+                <h2 class="username" id="username"><a href="@Url.Action("Profile", "Account", new {username=HttpContext.Current.User.Identity.Name})">@HttpContext.Current.User.Identity.Name</a></h2>
                 <div class="Stats">
-                    <a id="messages" href="/user/me/messages"><div class="messages">@AccountHelper.CurrentUser.MessageCount</div></a>
-                    <a id="pifscore" href="user/me/activity"><div class="pifscore">@AccountHelper.CurrentUser.GivenCount</div></a>
+                    <a id="messages" href="@Url.Action("Messages", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="messages">@AccountHelper.CurrentUser.MessageCount</div></a>
+                    <a id="pifscore" href="@Url.Action("Activity", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="pifscore">@AccountHelper.CurrentUser.GivenCount</div></a>
                 </div>
             </div>
             <div class="LinkArea">

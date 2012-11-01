@@ -3,10 +3,8 @@
 
 using System.Linq;
 using System.Web.Mvc;
-
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -49,11 +47,6 @@ namespace PiF.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
-        {
-            return Json(SessionEditGamesRepository.All().ToDataSourceResult(request));
-        }
-
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EggUpdate([DataSourceRequest] DataSourceRequest request, PiFGame pifgame)
         {
@@ -80,6 +73,11 @@ namespace PiF.Controllers
             }
 
             return Json(ModelState.ToDataSourceResult());
+        }
+
+        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(SessionEditGamesRepository.All().ToDataSourceResult(request));
         }
     }
 }

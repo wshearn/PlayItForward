@@ -12,15 +12,15 @@ namespace PiF
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-1.8.*"));
 
             bundles.Add(
-                new ScriptBundle("~/bundles/me").Include(
+                new ScriptBundle("~/bundles/profile").Include(
                     "~/Scripts/jquery.timeago*", "~/Scripts/jquery.bxSlider.min.js"));
 
             bundles.Add(
                 new ScriptBundle("~/bundles/index").Include(
-                    "~/Scripts/jquery.expander*",
-                    "~/Scripts/jquery.timeago*",
-                    "~/Scripts/jquery-ui.*",
-                    "~/Scripts/jquery.bxSlider.min.js",
+                    "~/Scripts/jquery.expander*", 
+                    "~/Scripts/jquery.timeago*", 
+                    "~/Scripts/jquery-ui.*", 
+                    "~/Scripts/jquery.bxSlider.min.js", 
                     "~/Scripts/index.*"));
 
             // The Kendo JavaScript bundle
@@ -47,20 +47,7 @@ namespace PiF
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
-            bundles.Add(
-                new StyleBundle("~/Content/themes/base/css").Include(
-                    "~/Content/themes/base/jquery.ui.core.css",
-                    "~/Content/themes/base/jquery.ui.resizable.css",
-                    "~/Content/themes/base/jquery.ui.selectable.css",
-                    "~/Content/themes/base/jquery.ui.accordion.css",
-                    "~/Content/themes/base/jquery.ui.autocomplete.css",
-                    "~/Content/themes/base/jquery.ui.button.css",
-                    "~/Content/themes/base/jquery.ui.dialog.css",
-                    "~/Content/themes/base/jquery.ui.slider.css",
-                    "~/Content/themes/base/jquery.ui.tabs.css",
-                    "~/Content/themes/base/jquery.ui.datepicker.css",
-                    "~/Content/themes/base/jquery.ui.progressbar.css",
-                    "~/Content/themes/base/jquery.ui.theme.css"));
+            bundles.Add(new StyleBundle("~/Content/themes/base/css"));
         }
     }
 }

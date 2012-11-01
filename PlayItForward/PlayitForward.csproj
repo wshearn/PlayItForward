@@ -120,7 +120,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\CompleteGridController.cs" />
     <Compile Include="Controllers\EditGameGridController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -241,7 +243,7 @@
     <Content Include="Views\PiF\View.cshtml" />
     <Content Include="Views\PiF\EditorTemplates\GameList.cshtml" />
     <Content Include="Views\PiF\EditorTemplates\UserList.cshtml" />
-    <Content Include="Views\Account\Me.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Home\Rules.cshtml" />
     <Content Include="Views\Home\Points.cshtml" />
     <Content Include="Views\Home\Exceptions.cshtml" />

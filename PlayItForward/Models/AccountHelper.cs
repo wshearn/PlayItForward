@@ -1,7 +1,6 @@
 ﻿// <copyright file="AccountHelper.cs" project="PlayitForward">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,31 +25,30 @@ namespace PiF.Models
                                       : HttpContext.Current.Session["Username"].ToString();
                 var db = new PiFDbDataContext();
 
-
                 User user = db.Users.SingleOrDefault(u => u.Username == username);
+
                 // TODO: Move this code to something that is called less often. Needs done at login
-                //string userIP = Utilities.GetHash(HttpContext.Current.Request.UserHostAddress);
-                //if (user == null)
-                //{
-                //    // new user - this is mostly here for debugging so we can reset the database when needed
-                //    var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
-                //    user = new User { Username = username, RecordCreatedDate = DateTime.UtcNow };
+                // string userIP = Utilities.GetHash(HttpContext.Current.Request.UserHostAddress);
+                // if (user == null)
+                // {
+                // // new user - this is mostly here for debugging so we can reset the database when needed
+                // var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
+                // user = new User { Username = username, RecordCreatedDate = DateTime.UtcNow };
 
-                //    user.UserIPs.Add(ip);
-                //    db.Users.InsertOnSubmit(user);
-                //    db.SubmitChanges();
-                //}
-                //else
-                //{
-                //    // existing user
-                //    if (user.UserIPs.All(ips => ips.HashedIP != userIP))
-                //    {
-                //        var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
-                //        user.UserIPs.Add(ip);
-                //        db.SubmitChanges();
-                //    }
-                //}
-
+                // user.UserIPs.Add(ip);
+                // db.Users.InsertOnSubmit(user);
+                // db.SubmitChanges();
+                // }
+                // else
+                // {
+                // // existing user
+                // if (user.UserIPs.All(ips => ips.HashedIP != userIP))
+                // {
+                // var ip = new UserIP { CreatedDate = DateTime.UtcNow, HashedIP = userIP };
+                // user.UserIPs.Add(ip);
+                // db.SubmitChanges();
+                // }
+                // }
                 return user;
             }
         }
