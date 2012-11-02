@@ -10,26 +10,17 @@ namespace PiF
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.LowercaseUrls = true;
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("New", "new", new { controller = "PiF", action = "New" });
-            routes.MapRoute(
-                "Complete", 
-                "pif/{thingID}/complete", 
-                new { controller = "PiF", action = "Complete", thingID = UrlParameter.Optional });
 
             routes.MapRoute(
-                "Delete", 
-                "pif/{thingID}/delete", 
-                new { controller = "PiF", action = "delete", thingID = UrlParameter.Optional });
-
+    "PiF", "pif/{thingID}", new { controller = "PiF", action = "View", thingID = UrlParameter.Optional });
             routes.MapRoute(
-                "Edit", 
-                "pif/{thingID}/edit", 
-                new { controller = "PiF", action = "Edit", thingID = UrlParameter.Optional });
-
-            routes.MapRoute(
-                "PiF", "pif/{thingID}", new { controller = "PiF", action = "View", thingID = UrlParameter.Optional });
+                "PiFAction", 
+                "pif/{thingID}/{action}", 
+                new { controller = "PiF", thingID = UrlParameter.Optional });
 
             routes.MapRoute("About", "about", new { controller = "Home", action = "About" });
 

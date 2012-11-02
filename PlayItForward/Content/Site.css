@@ -51,8 +51,6 @@ width:64px;
 
 .markdown { line-height: 1.65em; }
 
-.markdown p { padding: 7px 0; }
-
 .comment.parent .body_container .author_name, .comment.parent .body_container .author_name a { color: #4F565A; }
 
 .comment.parent .body_container .author_date {
