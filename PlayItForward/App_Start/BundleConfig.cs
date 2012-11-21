@@ -13,7 +13,7 @@ namespace PiF
 
             bundles.Add(
                 new ScriptBundle("~/bundles/profile").Include(
-                    "~/Scripts/jquery.timeago*", "~/Scripts/jquery.bxSlider.min.js"));
+                    "~/Scripts/jquery.timeago*", "~/Scripts/jquery.bxSlider.min.js", "~/Scripts/steam-web-api.js"));
 
             bundles.Add(
                 new ScriptBundle("~/bundles/index").Include(

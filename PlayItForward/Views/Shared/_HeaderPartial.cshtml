@@ -1,51 +1,60 @@
 ﻿@using PiF.Models
-    <div id="MeBarArea">
-        <div id="ShellLogo" class="site-title">@Html.ActionLink("play it forward", "Index", "Home")</div>
-@if (Request.IsAuthenticated)
-{
-    <div id="SignedInExperience">
-        <div id="Avatar" class="SignedIn" title="@AccountHelper.CurrentUser.Username">
-                  <a href="@Url.Action("Profile", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="avatar" style="background-image: url(http://media.steampowered.com/steamcommunity/public/images/avatars/cd/cd8264f284534faa970d6a36f3089521212608a2_medium.jpg);"></div></a>
-              </div>
-        <div id="MeBar" class="SignedIn">
-            <div id="StatArea" class="StatArea">
-                <h2 class="username" id="username"><a href="@Url.Action("Profile", "Account", new {username=HttpContext.Current.User.Identity.Name})">@HttpContext.Current.User.Identity.Name</a></h2>
-                <div class="Stats">
-                    <a id="messages" href="@Url.Action("Messages", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="messages">@AccountHelper.CurrentUser.MessageCount</div></a>
-                    <a id="pifscore" href="@Url.Action("Activity", "Account", new {username=HttpContext.Current.User.Identity.Name})"><div class="pifscore">@AccountHelper.CurrentUser.GivenCount</div></a>
-                </div>
-            </div>
-            <div class="LinkArea">
-                <span id="AdditionalLinks" class="AdditionalLinks">
-                    <span>@Html.ActionLink("Preferences", "Preferences", "Account")</span>
-                </span>
-                <span class="spread">
-                    @Html.ActionLink("Sign out", "Logout", "Account")
-                </span>
-            </div>
-        </div>
-    </div>
 
-}
-else
+@section scripts
 {
-    <div id="SignedOutExperience">
-                <div id="Avatar" class="SignedOut"></div>
-                <div id="MeBar" class="SignedOut">
-                    <div class="StatArea">
-                    <div class="WelcomeText">Give games to support indie developers.</div>
+    
+}
+<div id="MeBarArea">
+    <div id="ShellLogo" class="site-title">@Html.ActionLink("play it forward", "Index", "Home")</div>
+    @if (Request.IsAuthenticated)
+    {
+
+        var user = AccountHelper.CurrentUser;
+        <div id="SignedInExperience">
+            <div id="Avatar" class="SignedIn" title="@user.Username"></div>
+            <div id="MeBar" class="SignedIn">
+                <div id="StatArea" class="StatArea">
+                    <h2 class="username" id="username"><a href="@Url.Action("Profile", "Account", new { username = user.Username })">@user.Username</a></h2>
+                    <div class="Stats">
+                        <a id="messages" href="@Url.Action("Messages", "Account")">
+                            <div class="messages">@user.MessageCount</div>
+                        </a>
+                        <a id="pifscore" href="@Url.Action("Activity", "Account", new { username = user.Username })">
+                            <div class="pifscore">@user.GivenCount</div>
+                        </a>
                     </div>
-                    <div class="LinkArea">
-                         <span id="AdditionalLinks" class="AdditionalLinks">
+                </div>
+                <div class="LinkArea">
+                    <span id="AdditionalLinks" class="AdditionalLinks">
                         <span>@Html.ActionLink("Preferences", "Preferences", "Account")</span>
                     </span>
-                        <span class="spread"><a href="http://www.reddit.com/register">Become a redditor</a></span>
-                        <span class="spread">
-                                @Html.ActionLink("Sign in through reddit", "Login", "Account")
-                        </span>
-                    </div>
+                    <span class="spread">
+                        @Html.ActionLink("Sign out", "Logout", "Account")
+                    </span>
                 </div>
             </div>
+        </div>
+
     }
-    
+    else
+    {
+        <div id="SignedOutExperience">
+            <div id="Avatar" class="SignedOut"></div>
+            <div id="MeBar" class="SignedOut">
+                <div class="StatArea">
+                    <div class="WelcomeText">Give games to support indie developers.</div>
                 </div>
+                <div class="LinkArea">
+                    <span id="AdditionalLinks" class="AdditionalLinks">
+                        <span>@Html.ActionLink("Preferences", "Preferences", "Account")</span>
+                    </span>
+                    <span class="spread"><a href="http://www.reddit.com/register">Become a redditor</a></span>
+                    <span class="spread">
+                        @Html.ActionLink("Sign in through reddit", "Login", "Account")
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -113,7 +114,7 @@ namespace PiF.Controllers
 
             if (thread == null)
             {
-                return RedirectToAction("Me", "Account");
+                return RedirectToAction("Profile", "Account");
             }
 
             ViewData["Games"] = GameHelper.GetGameNameList();
@@ -148,7 +149,7 @@ namespace PiF.Controllers
 
             if (thread == null)
             {
-                return RedirectToAction("Me", "Account");
+                return RedirectToAction("Profile", "Account");
             }
 
             var db = new PiFDbDataContext();
@@ -332,13 +333,13 @@ namespace PiF.Controllers
             // Do the actual connection
             WebResponse response = connect.GetResponse();
 
-            string resp;
+            string json;
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                resp = reader.ReadToEnd();
+                json = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp)["json"];
+            return JObject.Parse(json)["json"];
         }
     }
 }

@@ -1,10 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using PiF.Models
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
         @Styles.Render("~/Content/themes/base/css", "~/Content/Site.css")
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/modernizr")
+        <script type="text/javascript">
+            String.prototype.format = function () {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function (match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match;
+                });
+            };
+            
+            $(document).ready(function() {
+                $.getJSON("/api/users", function(user) {
+                    if (user != null && user.SteamID != 0) {
+                        $("#Avatar").append("<a href=\"/user/{0}\"><div class=\"Avatar\" style=\"background-image:url({1})\"></div></a>".format(user.Username, user.SteamAvatar));
+                    }
+                });
+            });
+        </script>
         @RenderSection("scripts", required: false)
         <meta charset="utf-8" />
         <title>@ViewBag.Title</title>

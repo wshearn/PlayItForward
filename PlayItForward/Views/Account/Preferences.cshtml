@@ -1,0 +1,23 @@
+﻿@model PiF.Models.LoginModel
+@{ ViewBag.Title = "Preferences"; }
+<section id="loginContent">
+    <p>
+        Link your Steam and Reddit account together 
+    </p>
+</section>
+<section id="steamLogin">
+    @using (Html.BeginForm(new { ViewBag.ReturnUrl }))
+    {
+        <fieldset>
+            <legend>Sign in through Steam</legend>
+            @Html.ActionLink("Sign in through Steam", "LinkSteam", null, new{@class="button-steam"})
+            @Html.ValidationMessage("SignIn")
+        </fieldset>
+        <p>
+            You need a <a href="http://reddit.com">reddit</a> and a <a href="http://steampowered.com">steam</a> account to use this site.
+        </p>
+    }
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

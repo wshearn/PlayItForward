@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace PiF.Models
 {
@@ -114,13 +115,13 @@ namespace PiF.Models
             // Do the actual connection
             WebResponse response = connect.GetResponse();
 
-            string resp;
+            string json;
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                resp = reader.ReadToEnd();
+                json = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+            return JObject.Parse(json)["json"];
         }
     }
 }

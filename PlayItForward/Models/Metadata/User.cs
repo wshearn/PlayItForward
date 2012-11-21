@@ -12,6 +12,8 @@ namespace PiF.Models
     public partial class User
     {
         public int MessageCount { get; set; }
+
+        public string SteamAvatar { get; set; }
     }
     
     public class UserMetadata

@@ -10,6 +10,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
+using DotNetOpenAuth.OpenId.RelyingParty;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PiF.Models;
 
 namespace PiF.Controllers
@@ -34,7 +40,6 @@ namespace PiF.Controllers
                 return View(model);
             }
 
-            // If we got this far, something failed, redisplay form
             dynamic response;
             try
             {
@@ -64,16 +69,10 @@ namespace PiF.Controllers
                 return View(model);
             }
 
+            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+
             // Set Session vars in case user doesn't use cookies.
             Session["Username"] = model.UserName;
-
-            // Session is required regardless of cookie state as Auth cookie won't be sent until next request
-            if (AccountHelper.CurrentUser == null)
-            {
-                // Referencing the helper will add the user and/or update the IP if necessary
-                throw new Exception("Account error!");
-            }
-
             Session["ModHash"] = response["data"]["modhash"];
 
             var redditCookie = new HttpCookie("reddit_session")
@@ -92,8 +91,6 @@ namespace PiF.Controllers
                 Response.Cookies["ModHash"].Value = response["data"]["modhash"];
                 Response.Cookies["ModHash"].Expires = DateTime.Now.AddYears(1);
             }
-
-            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
             if (!string.IsNullOrEmpty(returnUrl))
             {
@@ -150,6 +147,53 @@ namespace PiF.Controllers
             return new HttpNotFoundResult();
         }
 
+        //public ActionResult LinkSteam()
+        //{
+        //    var openid = new OpenIdRelyingParty();
+        //    IAuthenticationResponse response = openid.GetResponse();
+
+        //    if (response != null)
+        //    {
+        //        switch (response.Status)
+        //        {
+        //            case AuthenticationStatus.Authenticated:
+        //                FormsAuthentication.RedirectFromLoginPage(
+        //                    response.ClaimedIdentifier, false);
+        //                break;
+        //            case AuthenticationStatus.Canceled:
+        //                ModelState.AddModelError("loginIdentifier",
+        //                    "Login was cancelled at the provider");
+        //                break;
+        //            case AuthenticationStatus.Failed:
+        //                ModelState.AddModelError("loginIdentifier",
+        //                    "Login failed using the provided OpenID identifier");
+        //                break;
+        //        }
+        //    }
+
+        //    return View();
+        //}
+
+        [System.Web.Mvc.AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult LinkSteam()
+        {
+                var openid = new OpenIdRelyingParty();
+                IAuthenticationRequest request = openid.CreateRequest(
+                    Identifier.Parse("http://steamcommunity.com/openid"));
+
+                //// Require some additional data
+                //request.AddExtension(new ClaimsRequest
+                //{
+                //    BirthDate = DemandLevel.NoRequest,
+                //    Email = DemandLevel.Require,
+                //    FullName = DemandLevel.Require
+                //});
+
+            var steamID = openid.GetResponse().ClaimedIdentifier;
+
+                return request.RedirectingResponse.AsActionResult();
+        }
+
         /// <summary>Logs the user in</summary>
         /// <param name="username">Reddit account username</param>
         /// <param name="password">Reddit account password</param>
@@ -173,13 +217,13 @@ namespace PiF.Controllers
             // Do the actual login
             WebResponse response = login.GetResponse();
 
-            string resp;
+            string json;
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                resp = reader.ReadToEnd();
+                json = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp)["json"];
+            return JObject.Parse(json)["json"];
         }
     }
 }

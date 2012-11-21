@@ -12,7 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-
+using Newtonsoft.Json;
 using PiF.Models;
 
 namespace PiF
@@ -104,7 +104,7 @@ namespace PiF
                 resp = reader.ReadToEnd();
             }
 
-            return new JavaScriptSerializer().Deserialize<dynamic>(resp);
+            return JsonConvert.DeserializeObject(resp);
         }
 
         public static Cookie HttpCookieToCookie(HttpCookie httpCookie)
