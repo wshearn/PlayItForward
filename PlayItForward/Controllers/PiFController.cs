@@ -279,7 +279,7 @@ namespace PiF.Controllers
 
         public new ActionResult View(string thingID)
         {
-            if (string.IsNullOrWhiteSpace(thingID))
+            if (string.IsNullOrWhiteSpace(thingID) || thingID == "null")
             {
                 return RedirectToAction("Index", "Home");
             }

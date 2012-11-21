@@ -20,6 +20,8 @@
                 $.getJSON("/api/users", function(user) {
                     if (user != null && user.SteamID != 0) {
                         $("#Avatar").append("<a href=\"/user/{0}\"><div class=\"Avatar\" style=\"background-image:url({1})\"></div></a>".format(user.Username, user.SteamAvatar));
+                    } else {
+  
                     }
                 });
             });

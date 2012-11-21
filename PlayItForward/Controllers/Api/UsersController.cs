@@ -13,15 +13,7 @@ namespace PiF.Controllers.Api
 {
     public class UsersController : ApiController
     {
-        public User GetUserById(int id)
-        {
-            return new PiFDbDataContext().Users.SingleOrDefault(x => x.id == id);
-        }
-
-        public User GetUserByName(string username)
-        {
-            return new PiFDbDataContext().Users.SingleOrDefault(x => x.Username == username);
-        }
+       
 
         /// <summary>
         /// Gets the current user that is currently logged in.
@@ -29,31 +21,54 @@ namespace PiF.Controllers.Api
         /// <returns>The user logged in.</returns>
         public User GetCurrentUser()
         {
-            var user = AccountHelper.CurrentUser;
+            User user = AccountHelper.CurrentUser;
 
-            if (user.SteamID != null)
+            user.SteamAvatar = user.SteamID > 0
+                                   ? AccountHelper.GetSteamPlayerSummary(user.SteamID)["avatarmedium"].Value<string>()
+                                   : "http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg";
+
+            return user;
+        }
+
+        public User GetUserById(int id)
+        {
+            var user = new PiFDbDataContext().Users.SingleOrDefault(x => x.id == id);
+            if (user != null)
             {
-                string uri =
-                    string.Format(
-                        "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=B82FD1C7BC17932B62F8453A2CB2CCE2&steamids={0}",
-                        user.SteamID);
-                var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
-
-                connect.UserAgent = "playitforward site";
-
-                // Do the actual connection
-                WebResponse response = connect.GetResponse();
-
-                string json;
-                using (var reader = new StreamReader(response.GetResponseStream()))
-                {
-                    json = reader.ReadToEnd();
-                }
-
-                var steam = JObject.Parse(json)["response"]["players"][0]["avatarmedium"].Value<string>();
-                user.SteamAvatar = steam;
+                user.SteamAvatar = user.SteamID > 0
+                                       ? AccountHelper.GetSteamPlayerSummary(user.SteamID)["avatarmedium"].Value<string>()
+                                       : "http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg";
             }
-            
+            else
+            {
+                user = new User
+                           {
+                               SteamAvatar =
+                                   "http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"
+                           };
+            }
+
+            return user;
+        }
+
+        public User GetUserByName(string username)
+        {
+            var user = new PiFDbDataContext().Users.SingleOrDefault(x => x.Username == username);
+            if (user != null)
+            {
+                user.SteamAvatar = user.SteamID > 0
+                                       ? AccountHelper.GetSteamPlayerSummary(user.SteamID)["avatarmedium"].Value<string>()
+                                       : "http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg";
+            }
+            else
+            {
+                user = new User
+                {
+                    SteamAvatar =
+                        "http://media.steampowered.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"
+                };
+            }
+
             return user;
         }
     }

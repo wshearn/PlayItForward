@@ -8,7 +8,7 @@
     <script type="text/javascript">
         $(document).ready(function () { jQuery("time.timeago").timeago(); });
         function GetRedditInfo(thingId) {
-           $.getJSON("http://www.reddit.com/comments/" + thingId + ".json?jsonp=?", function (data) {
+            $.getJSON("http://www.reddit.com/comments/" + thingId + ".json?jsonp=?", function (data) {
                 var tempHtml = $('<div/>').html(data[0].data.children[0].data.selftext_html).text();
                 $("#selfText-" + thingId).html(tempHtml);
                 $("#commentCount").text(data[0].data.children[0].data.num_comments + " comments");
@@ -17,8 +17,6 @@
                     function (i, post) {
                         var comment = $('<div/>').html(post.data.body_html).text();
                         var date = jQuery.timeago(new Date([post.data.created_utc] * 1000));
-                        var avatar;
-
 
                         $("#reddit-content").append("<div class=\"parent_container\"><div class=\"comment parent\"><div id=\"avatar-{0}\" class=\"avatar_container\"></div>".format(post.data.id)
                             + "<div class=\"body_container\"><div class=\"author_name\"><a href=\"/user/{0}\">{0}</a><span class=\"author_date\">{1}</span>".format(post.data.author, date) +
@@ -28,12 +26,7 @@
                             function (userData) {
                                 if (userData != null) {
                                     $("#points-" + post.data.id).text("(" + userData.GivenCount + " • " + userData.ReceivedCount + ")");
-
-                                    if (userData.SteamID != 0) {
-                                        $.getJSON("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=B82FD1C7BC17932B62F8453A2CB2CCE2&steamids=" + userData.SteamID + "&callback=?", function (steamData) {
-                                            $("#avatar-" + post.data.id).append("<a href=\"/user/{0}\" class=\"avatar\" style=\"background-image:url({1})\"></a></div>".format(post.data.author, steamData.response.players[0].avatarmedium));
-                                        });
-                                    }
+                                    $("#avatar-" + post.data.id).append("<a href=\"/user/{0}\" class=\"avatar\" style=\"background-image:url({1})\"></a></div>".format(post.data.author, userData.SteamAvatar));
                                 }
                             });
                     }

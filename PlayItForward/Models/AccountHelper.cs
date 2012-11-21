@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace PiF.Models
 {
@@ -53,6 +56,29 @@ namespace PiF.Models
         public static User GetUser(string username)
         {
             return new PiFDbDataContext().Users.SingleOrDefault(e => e.Username == username);
+        }
+
+        [OutputCache(Duration = 60 * 60)]
+        public static JToken GetSteamPlayerSummary(long steamID)
+        {
+            string uri =
+                string.Format(
+                    "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=B82FD1C7BC17932B62F8453A2CB2CCE2&steamids={0}",
+                    steamID);
+            var connect = WebRequest.Create(new Uri(uri)) as HttpWebRequest;
+
+            connect.UserAgent = "playitforward site";
+
+            // Do the actual connection
+            WebResponse response = connect.GetResponse();
+
+            string json;
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            return JObject.Parse(json)["response"]["players"][0];
         }
     }
 }
